@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -e
+
+export VITE_BACKEND_HOST="http://localhost"
+# export VITE_IS_DEMO=true
+
+cd namelist-fe
+npm run dev

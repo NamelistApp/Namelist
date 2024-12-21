@@ -1,0 +1,4 @@
+#!/bin/bash
+
+./bin/start-be &
+./bin/start-fe
