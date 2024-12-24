@@ -22,13 +22,17 @@ class SocialAuthController extends Controller
             ->first();
 
         if (! $user) {
-            $user = User::create([
-                'name' => $googleUser->name,
-                'email' => $googleUser->email,
-                'google_id' => $googleUser->id,
-            ]);
+            $user = User::unguarded(function () use ($googleUser) {
+                return User::create([
+                    'name' => $googleUser->name,
+                    'email' => $googleUser->email,
+                    'google_id' => $googleUser->id,
+                ]);
+            });
         }
 
         Auth::login($user);
+
+        return redirect(env('FE_BASE_PATH'));
     }
 }

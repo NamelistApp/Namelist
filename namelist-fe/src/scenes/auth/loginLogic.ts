@@ -1,10 +1,10 @@
-import { kea, path } from 'kea'
+import { actions, kea, listeners, path } from 'kea'
 import { forms } from 'kea-forms'
 import { router, encodeParams } from 'kea-router'
 import { notifications } from '@mantine/notifications'
 import type { loginLogicType } from './loginLogicType'
 import { appContainer } from '../../container'
-import { isDemo } from '../../domain/constants'
+import { backendHost, isDemo } from '../../domain/constants'
 import { LoginRequest } from './AuthApiClient'
 import { userLogic } from '../../auth/userLogic'
 
@@ -12,6 +12,14 @@ const authApiClient = appContainer.buildAuthApiClient()
 
 const loginLogic = kea<loginLogicType>([
     path(['scenes', 'auth', 'loginLogic']),
+    actions({
+        loginWithGoogle: true,
+    }),
+    listeners(({ actions }) => ({
+        loginWithGoogle: async () => {
+            window.location.href = `${backendHost}/auth/google/redirect`
+        },
+    })),
     forms(({ actions }) => ({
         loginForm: {
             defaults: {

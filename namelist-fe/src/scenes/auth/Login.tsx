@@ -1,8 +1,9 @@
 import { BindLogic, useValues } from "kea"
 import { SceneExport } from "../sceneTypes"
 import loginLogic from "./loginLogic"
-import { Box, Button, Paper, PaperProps, PasswordInput, Stack, TextInput, Title } from "@mantine/core"
+import { Text, Group, Box, Button, Paper, PaperProps, PasswordInput, Stack, TextInput, Title, Divider, Anchor } from "@mantine/core"
 import { Field, Form } from "kea-forms"
+import { GoogleButton } from "./components/GoogleButton"
 
 export const scene: SceneExport = {
     component: Login,
@@ -35,10 +36,16 @@ function LoginForm(props: PaperProps): JSX.Element {
 
     return (
         <>
-            <Paper shadow="sm" mt="xl" radius="md" p="xl" miw={400} withBorder {...props}>
-                <Title order={2}>
+            <Paper radius="md" p="xl" withBorder {...props}>
+                <Text size="lg" fw={1000}>
                     Login
-                </Title>
+                </Text>
+
+                <Group grow mb="md" mt="md">
+                    <GoogleButton radius="xl" onClick={() => loginLogic.actions.loginWithGoogle()}>Sign in with Google</GoogleButton>
+                </Group>
+
+                <Divider label="Or continue with email" labelPosition="center" my="lg" />
 
                 <Form logic={loginLogic} formKey="loginForm" enableFormOnSubmit>
                     <Stack>
@@ -47,7 +54,7 @@ function LoginForm(props: PaperProps): JSX.Element {
                                 <TextInput
                                     required
                                     label="Email"
-                                    placeholder="hello@paywalls.io"
+                                    placeholder="hello@namelist.app"
                                     radius="md"
                                     value={value}
                                     onChange={(e) => onChange(e.currentTarget.value)}
@@ -69,7 +76,16 @@ function LoginForm(props: PaperProps): JSX.Element {
                         </Field>
                     </Stack>
 
-                    <Button type="submit" mt="xl" disabled={isLoginFormSubmitting}>Login</Button>
+                    <Group justify="space-between" mt="xl">
+                        <Anchor component="button" type="button" c="dimmed" onClick={() => toggle()} size="xs">
+                            {'type' === 'register'
+                                ? 'Already have an account? Login'
+                                : "Don't have an account? Register"}
+                        </Anchor>
+                        <Button type="submit" radius="xl" disabled={isLoginFormSubmitting}>
+                            Login
+                        </Button>
+                    </Group>
                 </Form>
             </Paper>
         </>
