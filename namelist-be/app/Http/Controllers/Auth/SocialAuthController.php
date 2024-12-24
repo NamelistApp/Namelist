@@ -17,9 +17,16 @@ class SocialAuthController extends Controller
     public function getGoogleCallback()
     {
         $googleUser = Socialite::driver('google')->user();
-        $user = User::where('google_id', $googleUser->id)
-            ->where('email', $googleUser->email)
-            ->first();
+        $user = User::where('email', $googleUser->email)->first();
+
+        // if the user was already created first without useing
+        // google sign in don't allow them to login with google sign in
+        // they will need to use thir initial login method (ie. user/password)
+        // In the future we can direct the user to a page to confirm their password
+        // and link the accounts
+        if ($user && $user->google_id != $googleUser->id) {
+            return redirect(env('FE_BASE_PATH').'/login?loginError=google');
+        }
 
         if (! $user) {
             $user = User::unguarded(function () use ($googleUser) {
