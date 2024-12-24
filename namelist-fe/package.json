@@ -4,10 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "dev": "concurrently \"npm run dev:kea\" \"npm run dev:vite\" -n KEA,VITE -c green,magenta",
+    "dev:kea": "kea-typegen watch --write-paths",
+    "dev:vite": "vite",
+    "build": "npm run typegen:write && tsc && vite build",
+    "start": "",
+    "prettier": "prettier --write src",
+    "preview": "vite preview",
+    "typegen:write": "kea-typegen write --delete --show-ts-errors"
   },
   "dependencies": {
     "@mantine/carousel": "^7.15.2",
@@ -24,6 +28,7 @@
     "@mantine/spotlight": "^7.15.2",
     "@mantine/tiptap": "^7.15.2",
     "@sentry/react": "^8.47.0",
+    "@tabler/icons-react": "^3.26.0",
     "@tiptap/extension-link": "^2.10.4",
     "@tiptap/pm": "^2.10.4",
     "@tiptap/react": "^2.10.4",
@@ -40,6 +45,7 @@
     "kea-router": "^3.2.0",
     "kea-subscriptions": "^3.0.1",
     "kea-test-utils": "^0.2.4",
+    "kea-typegen": "^3.3.4",
     "kea-waitfor": "^0.2.1",
     "kea-window-values": "^3.0.0",
     "posthog-js": "^1.203.1",
@@ -52,6 +58,7 @@
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.0",
     "eslint": "^9.15.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.14",
