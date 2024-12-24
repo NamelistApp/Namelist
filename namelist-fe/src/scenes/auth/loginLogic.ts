@@ -1,4 +1,4 @@
-import { actions, kea, listeners, path } from 'kea'
+import { actions, defaults, kea, listeners, path, selectors } from 'kea'
 import { forms } from 'kea-forms'
 import { router, encodeParams } from 'kea-router'
 import { notifications } from '@mantine/notifications'
@@ -10,8 +10,21 @@ import { userLogic } from '../../auth/userLogic'
 
 const authApiClient = appContainer.buildAuthApiClient()
 
+enum ServerLoginError {
+    GoogleSignInAccountExists = 'GoogleSignInAccountExists',
+}
+
 const loginLogic = kea<loginLogicType>([
     path(['scenes', 'auth', 'loginLogic']),
+    selectors({
+        serverLoginError: [
+            (s) => [],
+            () => {
+                const params = new URLSearchParams(window.location.search)
+                return params.get('loginError') as ServerLoginError;
+            }
+        ]
+    }),
     actions({
         loginWithGoogle: true,
     }),

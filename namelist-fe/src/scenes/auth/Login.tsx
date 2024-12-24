@@ -1,7 +1,7 @@
 import { BindLogic, useValues } from "kea"
 import { SceneExport } from "../sceneTypes"
 import loginLogic from "./loginLogic"
-import { Text, Group, Box, Button, Paper, PaperProps, PasswordInput, Stack, TextInput, Title, Divider, Anchor } from "@mantine/core"
+import { Text, Group, Box, Button, Paper, PaperProps, PasswordInput, Stack, TextInput, Title, Divider, Anchor, Alert } from "@mantine/core"
 import { Field, Form } from "kea-forms"
 import { GoogleButton } from "./components/GoogleButton"
 
@@ -32,14 +32,21 @@ function LoginScene() {
 }
 
 function LoginForm(props: PaperProps): JSX.Element {
-    const { isLoginFormSubmitting } = useValues(loginLogic)
+    const { isLoginFormSubmitting, serverLoginError } = useValues(loginLogic)
+    console.log(serverLoginError)
 
     return (
         <>
-            <Paper radius="md" p="xl" withBorder {...props}>
+            <Paper radius="md" maw={400} p="xl" withBorder {...props}>
                 <Text size="lg" fw={1000}>
                     Login
                 </Text>
+
+                {serverLoginError && (
+                    <Alert variant="light" mt={"md"} color="yellow" radius="md" title="Account Found">
+                        An account with this email already exists. Please login with your email and password.
+                    </Alert>
+                )}
 
                 <Group grow mb="md" mt="md">
                     <GoogleButton radius="xl" onClick={() => loginLogic.actions.loginWithGoogle()}>Sign in with Google</GoogleButton>
@@ -77,10 +84,8 @@ function LoginForm(props: PaperProps): JSX.Element {
                     </Stack>
 
                     <Group justify="space-between" mt="xl">
-                        <Anchor component="button" type="button" c="dimmed" onClick={() => toggle()} size="xs">
-                            {'type' === 'register'
-                                ? 'Already have an account? Login'
-                                : "Don't have an account? Register"}
+                        <Anchor component="button" type="button" c="dimmed" size="xs">
+                            Don't have an account? Register
                         </Anchor>
                         <Button type="submit" radius="xl" disabled={isLoginFormSubmitting}>
                             Login

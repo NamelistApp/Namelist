@@ -25,7 +25,7 @@ class SocialAuthController extends Controller
         // In the future we can direct the user to a page to confirm their password
         // and link the accounts
         if ($user && $user->google_id != $googleUser->id) {
-            return redirect(env('FE_BASE_PATH').'/login?loginError=google');
+            return redirect(env('FE_BASE_PATH').'/login?loginError=GoogleSignInAccountExists');
         }
 
         if (! $user) {
