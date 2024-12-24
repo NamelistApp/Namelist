@@ -12,11 +12,6 @@ class Portal extends Model
 
     protected $fillable = [
         'name',
-        'restore_behavior',
-    ];
-
-    protected $appends = [
-        'avatar_url',
     ];
 
     public function organization(): BelongsTo
