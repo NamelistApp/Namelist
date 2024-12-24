@@ -1,7 +1,7 @@
 import { actions, BuiltLogic, connect, kea, listeners, path, props, reducers, selectors } from 'kea'
 import { router, urlToAction } from 'kea-router'
-import { routes, redirects, sceneConfigurations, emptySceneParams, preloadedScenes } from './scenes'
-import { Scene, SceneParams, LoadedScene, SceneConfig, SceneExport, Params } from './sceneTypes'
+import { Scene, routes, redirects, sceneConfigurations, emptySceneParams, preloadedScenes } from './scenes'
+import { SceneParams, LoadedScene, SceneConfig, SceneExport, Params } from './sceneTypes'
 
 import posthog from 'posthog-js'
 

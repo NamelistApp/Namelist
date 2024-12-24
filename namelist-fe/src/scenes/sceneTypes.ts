@@ -1,11 +1,5 @@
 import { LogicWrapper } from "kea"
 
-export enum Scene {
-    Login = 'Login',
-    Error404 = '404',
-    ErrorNetwork = '4xx'
-}
-
 export type SceneProps = Record<string, any>
 export type SceneComponent = (params?: SceneProps) => JSX.Element | null
 

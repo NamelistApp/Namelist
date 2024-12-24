@@ -26,6 +26,10 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $appends = [
+        'avatar_url',
+    ];
+
     protected $dispatchesEvents = [
         'created' => UserCreated::class,
     ];
@@ -52,5 +56,10 @@ class User extends Authenticatable
     {
         $this->current_portal_id = $portalId;
         $this->save();
+    }
+
+    public function getAvatarUrlAttribute(): ?string
+    {
+        return 'https://www.gravatar.com/avatar/'.md5(strtolower(trim($this->email)));
     }
 }

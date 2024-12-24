@@ -1,8 +1,15 @@
 import { combineUrl } from "kea-router"
-import { Params, Scene, SceneConfig, LoadedScene } from './sceneTypes'
+import { Params, SceneConfig, LoadedScene } from './sceneTypes'
 import { urls } from '../domain/urls'
 import { Error404 } from "../layout/Error404"
 import { NetworkError } from "../layout/NetworkError"
+
+export enum Scene {
+    Login = 'Login',
+    Dashboard = 'Dashboard',
+    Error404 = '404',
+    ErrorNetwork = '4xx'
+}
 
 export const emptySceneParams = { params: {}, searchParams: {}, hashParams: {} }
 
@@ -28,7 +35,10 @@ export const sceneConfigurations: Record<Scene, SceneConfig> = {
     },
     [Scene.Login]: {
         anonymousOnly: true,
-    }
+    },
+    [Scene.Dashboard]: {
+        layout: 'app'
+    },
 }
 
 const preserveParams = (url: string) => (_params: Params, searchParams: Params, hashParams: Params) => {
@@ -41,5 +51,6 @@ export const redirects: Record<string, string | ((params: Params, searchParams: 
 }
 
 export const routes: Record<string, Scene> = {
-    [urls.login()]: Scene.Login
+    [urls.login()]: Scene.Login,
+    [urls.default()]: Scene.Dashboard
 }

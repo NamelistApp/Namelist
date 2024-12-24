@@ -1,9 +1,11 @@
-import { AppShell, Burger, Button, Container, Flex, Group, Text } from '@mantine/core'
+import { AppShell, Container } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 
 import { Notifications } from '@mantine/notifications'
 import { DemoBanner } from './shared/DemoBanner'
 import { isDemo } from '../../../domain/constants'
+import AppHeader from '../components/AppHeader'
+import AppNavigation from '../components/AppNavigation'
 
 interface AppLayoutProps {
     children: React.ReactNode
@@ -26,8 +28,12 @@ const AppLayout = ({ children }: AppLayoutProps): JSX.Element => {
                 padding="md"
             >
                 <AppShell.Header>
-                    Hello world
+                    <AppHeader opened={opened} toggle={toggle} />
                 </AppShell.Header>
+
+                <AppShell.Navbar>
+                    <AppNavigation />
+                </AppShell.Navbar>
 
                 <AppShell.Main>
                     {children}
