@@ -1,4 +1,4 @@
-import { AppShell, Container } from '@mantine/core'
+import { AppShell, Container, Divider } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 
 import { Notifications } from '@mantine/notifications'
@@ -15,27 +15,22 @@ const AppLayout = ({ children }: AppLayoutProps): JSX.Element => {
     const [opened, { toggle }] = useDisclosure()
 
     return (
-        <Container size="responsive">
+        <Container size="responsive" p={0}>
             {isDemo && <DemoBanner />}
             <Notifications position="bottom-right" zIndex={1000} />
             <AppShell
-                header={{ height: 60 }}
                 navbar={{
-                    width: 300,
+                    width: 230,
                     breakpoint: 'sm',
                     collapsed: { mobile: !opened },
                 }}
-                padding="md"
             >
-                <AppShell.Header>
-                    <AppHeader opened={opened} toggle={toggle} />
-                </AppShell.Header>
-
                 <AppShell.Navbar>
                     <AppNavigation />
                 </AppShell.Navbar>
 
                 <AppShell.Main>
+                    <AppHeader opened={opened} toggle={toggle} />
                     {children}
                 </AppShell.Main>
             </AppShell>

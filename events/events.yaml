@@ -1,0 +1,4 @@
+UserSignIn:
+  action: "user-signed-in"
+  description: "User signed in"
+  properties:

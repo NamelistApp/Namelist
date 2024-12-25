@@ -1,5 +1,5 @@
 import { useValues } from 'kea'
-import { Burger, Button, Flex, Group, Text } from '@mantine/core'
+import { Burger, Button, Divider, Flex, Group, Stack, Text } from '@mantine/core'
 import { router } from 'kea-router'
 import { sceneLogic } from '../../sceneLogic';
 import { userLogic } from '../../../auth/userLogic';
@@ -7,6 +7,7 @@ import AppLogo from './AppLogo';
 import { Scene } from '../../scenes';
 import { urls } from '../../../domain/urls';
 import { UserButton } from './UserButton';
+import Breadcrumb from './breadcrumb/Breadcrumb';
 
 export default function AppHeader({ opened, toggle }: { opened: boolean; toggle: () => void }) {
     const { activeScene, sceneParams } = useValues(sceneLogic)
@@ -14,37 +15,13 @@ export default function AppHeader({ opened, toggle }: { opened: boolean; toggle:
 
     return (
         <>
-            <Flex justify="space-between" align="center" h="100%" pr="md">
-                <Group h="100%" px="md">
+            <Flex justify="space-between" align="center" h={60} px={20}>
+                <Group h="100%">
                     <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-                    <AppLogo />
+                    <Breadcrumb />
                 </Group >
-
-                <Group gap={5} visibleFrom="sm">
-                    <Button
-                        key={'dashboard'}
-                        onClick={() => router.actions.push(urls.default())}
-                        {...(activeScene === Scene.Dashboard ? { variant: 'light' } : { variant: 'transparent' })}
-                    >
-                        <Text>Dashboard</Text>
-                    </Button>
-                    <Button
-                        key={'customers'}
-                        onClick={() => router.actions.push(urls.default())}
-                        {...(false ? { variant: 'light' } : { variant: 'transparent' })}
-                    >
-                        <Text>Customers</Text>
-                    </Button>
-                </Group>
-
-                <Group visibleFrom="sm">
-                    <UserButton
-                        imageUrl={user?.avatar_url || null}
-                        name={user?.name || ""}
-                        detail={user?.portal?.name || ""}
-                    />
-                </Group>
-            </Flex >
+            </Flex>
+            <Divider />
         </>
     );
 }

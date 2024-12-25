@@ -35,10 +35,6 @@ export default function AppNavigation() {
 
     return (
         <nav className={classes.navbar}>
-            <AppLogo />
-
-            <Divider mt={"lg"} />
-
             <div className={classes.navbarMain}>{links}</div>
 
             <div className={classes.footer}>
