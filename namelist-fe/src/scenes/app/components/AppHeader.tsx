@@ -15,13 +15,16 @@ export default function AppHeader({ opened, toggle }: { opened: boolean; toggle:
 
     return (
         <>
-            <Flex justify="space-between" align="center" h={60} px={20}>
+            <Flex justify="space-between" align="center" h={60} px="sm">
                 <Group h="100%">
                     <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
                     <Breadcrumb />
                 </Group >
+
+                <Group visibleFrom="sm">
+                    <Button variant="default">Button</Button>
+                </Group>
             </Flex>
-            <Divider />
         </>
     );
 }

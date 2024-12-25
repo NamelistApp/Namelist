@@ -1,18 +1,21 @@
-import { Anchor, Button, Flex, Text } from '@mantine/core';
+import { Anchor, Avatar, Breadcrumbs, Button, Flex, Text } from '@mantine/core';
 import OrganizationCombobox from './OrganizationCombobox';
 import { IconCheck, IconChevronDown } from '@tabler/icons-react';
 
 export default function Breadcrumb() {
     return (
         <>
-            <OrganizationCombobox>
-                <Anchor underline="never">
-                    <Flex align="center" gap="sm">
-                        <Text>Organization</Text>
-                        <IconChevronDown size={14} />
-                    </Flex>
-                </Anchor>
-            </OrganizationCombobox>
+            <Breadcrumbs>
+                <OrganizationCombobox>
+                    <Button variant="transparent" p="0" c="dimmed">
+                        <Avatar variant="filled" radius="sm" size="sm" color="yellow" mr={5}>LB</Avatar>
+                        Legacy Bits LLC
+                    </Button>
+                </OrganizationCombobox>
+                <OrganizationCombobox>
+                    <Button variant="transparent" size="compact-sm" p="0" c="dimmed" rightSection={<IconChevronDown size={14} />}>Namelist</Button>
+                </OrganizationCombobox>
+            </Breadcrumbs>
         </>
     );
 }

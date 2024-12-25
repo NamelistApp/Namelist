@@ -7,6 +7,7 @@ import { userLogic } from "../../auth/userLogic"
 import { SceneComponent } from "../sceneTypes"
 import { PlainLayout } from "./layouts/PlainLayout"
 import AppLayout from "./layouts/AppLayout"
+import './styles/AppStyle.scss'
 
 const Spinner = () => (
     <LoadingOverlay visible={true} zIndex={1000} overlayProps={{ radius: 'sm', blur: 2 }} />

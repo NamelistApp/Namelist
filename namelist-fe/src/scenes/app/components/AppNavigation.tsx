@@ -5,19 +5,16 @@ import { useActions, useValues } from 'kea';
 import { userLogic } from '../../../auth/userLogic';
 import { sceneLogic } from '../../sceneLogic';
 import AppLogo from './AppLogo';
-import { IconLifebuoy, IconLogout, IconUsers } from '@tabler/icons-react'
+import { IconHome, IconLifebuoy, IconLogout, IconUsers } from '@tabler/icons-react'
 
 export default function AppNavigation() {
     const { activeScene } = useValues(sceneLogic)
     const { logout } = useActions(userLogic)
 
-    const project = {
-        id: 1,
-        name: 'Demo Project',
-        avatar_url: 'https://www.appatar.io/com.apple.Music',
-    }
-
     const tabs = [
+        { link: '', label: 'Home', scenes: ['AppUsers'], icon: IconHome },
+        { link: '', label: 'Users', scenes: ['AppUsers'], icon: IconUsers },
+        { link: '', label: 'Users', scenes: ['AppUsers'], icon: IconUsers },
         { link: '', label: 'Users', scenes: ['AppUsers'], icon: IconUsers },
     ]
 
@@ -35,6 +32,10 @@ export default function AppNavigation() {
 
     return (
         <nav className={classes.navbar}>
+            <AppLogo />
+
+            <Divider my={10} />
+
             <div className={classes.navbarMain}>{links}</div>
 
             <div className={classes.footer}>
