@@ -6,4 +6,5 @@ export const appScenes: Record<Scene, () => any> = {
     [Scene.ErrorNetwork]: () => ({ default: preloadedScenes[Scene.ErrorNetwork].component }),
     [Scene.Login]: () => import('./auth/Login'),
     [Scene.Dashboard]: () => import('./dashboard/Dashboard'),
+    [Scene.Contacts]: () => import('./contacts/Contacts'),
 }

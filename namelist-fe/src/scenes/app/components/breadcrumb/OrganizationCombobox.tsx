@@ -49,7 +49,7 @@ const OrganizationCombobox = ({ children }: CustomComboboxProps): JSX.Element =>
     return (
         <Combobox
             store={combobox}
-            styles={{ dropdown: { minWidth: 200 } }}
+            styles={{ dropdown: { minWidth: 200, shadow: 'sm' } }}
             position="bottom-start"
             transitionProps={{ transition: 'pop-bottom-left', duration: 150 }}
             onOptionSubmit={(val) => {

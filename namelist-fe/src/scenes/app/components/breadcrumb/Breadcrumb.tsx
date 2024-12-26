@@ -7,13 +7,13 @@ export default function Breadcrumb() {
         <>
             <Breadcrumbs>
                 <OrganizationCombobox>
-                    <Button variant="transparent" p="0" c="dimmed">
+                    <Button variant="transparent" p="0" c="gray.7">
                         <Avatar variant="filled" radius="sm" size="sm" color="yellow" mr={5}>LB</Avatar>
                         Legacy Bits LLC
                     </Button>
                 </OrganizationCombobox>
                 <OrganizationCombobox>
-                    <Button variant="transparent" size="compact-sm" p="0" c="dimmed" rightSection={<IconChevronDown size={14} />}>Namelist</Button>
+                    <Button variant="transparent" size="compact-sm" p="0" c="gray.7" rightSection={<IconChevronDown size={14} />}>Namelist</Button>
                 </OrganizationCombobox>
             </Breadcrumbs>
         </>

@@ -6,16 +6,15 @@ import { userLogic } from '../../../auth/userLogic';
 import { sceneLogic } from '../../sceneLogic';
 import AppLogo from './AppLogo';
 import { IconHome, IconLifebuoy, IconLogout, IconUsers } from '@tabler/icons-react'
+import { urls } from '../../../domain/urls';
 
 export default function AppNavigation() {
     const { activeScene } = useValues(sceneLogic)
     const { logout } = useActions(userLogic)
 
     const tabs = [
-        { link: '', label: 'Home', scenes: ['AppUsers'], icon: IconHome },
-        { link: '', label: 'Users', scenes: ['AppUsers'], icon: IconUsers },
-        { link: '', label: 'Users', scenes: ['AppUsers'], icon: IconUsers },
-        { link: '', label: 'Users', scenes: ['AppUsers'], icon: IconUsers },
+        { link: urls.dashboard(), label: 'Dashboard', scenes: ['Dashboard'], icon: IconHome },
+        { link: urls.contacts(), label: 'People', scenes: ['Contacts'], icon: IconUsers }
     ]
 
     const links = tabs.map((item) => (

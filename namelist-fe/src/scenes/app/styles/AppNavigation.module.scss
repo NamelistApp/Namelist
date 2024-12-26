@@ -35,26 +35,26 @@
     padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
     border-radius: var(--mantine-radius-sm);
     font-weight: 500;
+    margin-bottom: var(--mantine-spacing-xs);
 
     @mixin hover {
-        background-color: var(--mantine-color-blue-7);
-        color: var(--mantine-color-white);
+        background-color: var(--mantine-color-gray-light-hover);
+    }
 
-        .linkIcon {
-            color: var(--mantine-color-white);
-        }
+    &:hover {
+        @include hover;
     }
 
     &[data-active] {
 
         &,
         &:hover {
-            box-shadow: var(--mantine-shadow-sm);
-            background-color: var(--mantine-color-black);
-            color: var(--mantine-color-blue-filled);
+            box-shadow: var(--mantine-shadow-xs);
+            background-color: var(--mantine-color-white);
+            color: var(--mantine-color-black);
 
             .linkIcon {
-                color: var(--mantine-color-blue-filled);
+                color: var(--mantine-color-black);
             }
         }
     }

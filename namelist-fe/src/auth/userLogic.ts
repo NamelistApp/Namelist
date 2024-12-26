@@ -2,7 +2,7 @@ import { actions, afterMount, defaults, kea, listeners, path } from "kea"
 import type { userLogicType } from "./userLogicType"
 import { loaders } from "kea-loaders"
 import { router } from "kea-router"
-import { UserType } from "../domain/types"
+import { User } from "../domain/types"
 import { urls } from "../domain/urls"
 import { appContainer } from "../container"
 
@@ -25,7 +25,7 @@ export const userLogic = kea<userLogicType>([
     })),
     loaders(({ actions }) => ({
         user: [
-            null as UserType | null,
+            null as User | null,
             {
                 loadUser: async () => {
                     try {

@@ -7,6 +7,7 @@ import { NetworkError } from "../layout/NetworkError"
 export enum Scene {
     Login = 'Login',
     Dashboard = 'Dashboard',
+    Contacts = 'Contacts',
     Error404 = '404',
     ErrorNetwork = '4xx'
 }
@@ -39,6 +40,9 @@ export const sceneConfigurations: Record<Scene, SceneConfig> = {
     [Scene.Dashboard]: {
         layout: 'app'
     },
+    [Scene.Contacts]: {
+        layout: 'app'
+    },
 }
 
 const preserveParams = (url: string) => (_params: Params, searchParams: Params, hashParams: Params) => {
@@ -52,5 +56,6 @@ export const redirects: Record<string, string | ((params: Params, searchParams: 
 
 export const routes: Record<string, Scene> = {
     [urls.login()]: Scene.Login,
-    [urls.default()]: Scene.Dashboard
+    [urls.dashboard()]: Scene.Dashboard,
+    [urls.contacts()]: Scene.Contacts
 }
