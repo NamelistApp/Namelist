@@ -38,6 +38,7 @@ export default function AppNavigation() {
             <div className={classes.navbarMain}>{links}</div>
 
             <div className={classes.footer}>
+                <Divider my={10} />
                 <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
                     <IconLifebuoy className={classes.linkIcon} stroke={1.5} />
                     <span>Support</span>

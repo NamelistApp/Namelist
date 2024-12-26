@@ -6,24 +6,16 @@
     padding-top: var(--mantine-spacing-xs);
     display: flex;
     flex-direction: column;
-    background-color: #f4f1ed; // # fcfaf8
+    background-color: #f4f1ed;
 }
 
 .navbarMain {
     flex: 1;
 }
 
-.header {
-    padding-bottom: var(--mantine-spacing-md);
-    margin-bottom: calc(var(--mantine-spacing-md) * 1.5);
-    border-bottom: 1px solid var(--mantine-color-blue-7);
-}
-
 .footer {
     padding-top: var(--mantine-spacing-md);
     padding-bottom: var(--mantine-spacing-md);
-    margin-top: var(--mantine-spacing-md);
-    border-top: 1px solid var(--mantine-color-gray-4);
 }
 
 .link {
