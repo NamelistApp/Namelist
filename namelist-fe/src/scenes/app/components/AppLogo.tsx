@@ -8,7 +8,7 @@ export default function AppLogo() {
             <Flex
                 align="center"
                 gap="xs"
-                c="red"
+                c="green"
             >
                 <IconInnerShadowBottom style={{ width: rem(30), height: rem(30) }} stroke={1.5} />
                 <Title order={5} style={{ fontWeight: 500 }}>

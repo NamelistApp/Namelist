@@ -19,7 +19,7 @@ return new class extends Migration
         });
 
         Schema::create('object_types', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->id();
             $table->string('name');
             $table->timestamps();
             $table->softDeletes();
@@ -27,15 +27,13 @@ return new class extends Migration
 
         Schema::create('property_definitions', function (Blueprint $table) {
             $table->id();
-            $table->string('object_type_id');
+            $table->foreignId('object_type_id')->constrained()->onDelete('restrict');
             $table->string('name');
-            $table->enum('type', ['text', 'number', 'date', 'boolean', 'list']);
+            $table->string('type');
             $table->jsonb('metadata')->nullable();
             $table->integer('version')->default(0);
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('object_type_id')->references('id')->on('object_types')->onDelete('restrict');
         });
 
         Schema::create('object_properties', function (Blueprint $table) {

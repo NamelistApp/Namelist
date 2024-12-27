@@ -1,8 +1,11 @@
-import { Burger, Button, Combobox, Flex, Group, Text, useCombobox } from '@mantine/core'
+import { Drawer, Burger, Button, Combobox, Flex, Group, Text, useCombobox } from '@mantine/core'
 import Breadcrumb from './breadcrumb/Breadcrumb';
 import { IconPlus, IconUser } from '@tabler/icons-react';
+import { useDisclosure } from '@mantine/hooks';
+import { CreateContactForm } from '../../contacts/create/CreateContactForm';
 
 export default function AppHeader({ opened, toggle }: { opened: boolean; toggle: () => void }) {
+    const [contactOpened, contactHandler] = useDisclosure(false);
     const combobox = useCombobox({
         onDropdownClose: () => combobox.resetSelectedOption(),
     });
@@ -24,6 +27,11 @@ export default function AppHeader({ opened, toggle }: { opened: boolean; toggle:
                         withArrow
                         withinPortal={false}
                         onOptionSubmit={(val) => {
+                            switch (val) {
+                                case 'contact':
+                                    contactHandler.open();
+                                    break;
+                            }
                             combobox.closeDropdown();
                         }}
                     >
@@ -44,6 +52,9 @@ export default function AppHeader({ opened, toggle }: { opened: boolean; toggle:
                     </Combobox>
                 </Group>
             </Flex>
+            <Drawer opened={contactOpened} onClose={contactHandler.close} title="Create Person" position="right">
+                <CreateContactForm />
+            </Drawer>
         </>
     );
 }

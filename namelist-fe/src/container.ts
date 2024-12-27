@@ -8,6 +8,8 @@ import { resetContext } from 'kea'
 import posthog from 'posthog-js'
 import * as Sentry from "@sentry/react"
 import { notifications } from '@mantine/notifications';
+import { ContactsApiClient, ContactsApiClientInterface } from "./scenes/contacts/data/ContactsApiClient";
+import { ContactsRepository, ContactsRepositoryInterface } from "./scenes/contacts/data/ContactsRepository";
 
 class AppContainer {
     private apiClient: BaseApiClientInterface
@@ -16,13 +18,21 @@ class AppContainer {
         this.apiClient = apiClient
     }
 
-    public init() {
+    init() {
         this.initMonitoring()
         this.initKea()
     }
 
-    public buildAuthApiClient(): AuthApiClientInterface {
+    buildAuthApiClient(): AuthApiClientInterface {
         return new AuthApiClient(this.apiClient)
+    }
+
+    buildContactsRepository(): ContactsRepositoryInterface {
+        return new ContactsRepository(this.buildContactsApiClient())
+    }
+
+    private buildContactsApiClient(): ContactsApiClientInterface {
+        return new ContactsApiClient(this.apiClient)
     }
 
     private initMonitoring() {

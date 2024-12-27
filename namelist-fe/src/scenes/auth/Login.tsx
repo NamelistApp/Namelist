@@ -4,6 +4,7 @@ import loginLogic from "./loginLogic"
 import { Text, Group, Box, Button, Paper, PaperProps, PasswordInput, Stack, TextInput, Title, Divider, Anchor, Alert } from "@mantine/core"
 import { Field, Form } from "kea-forms"
 import { GoogleButton } from "./components/GoogleButton"
+import AppLogo from "../app/components/AppLogo"
 
 export const scene: SceneExport = {
     component: Login,
@@ -23,7 +24,7 @@ function LoginScene() {
         <>
             <Box style={{ marginTop: 100 }}>
                 <Stack align="center">
-                    Namelist
+                    <AppLogo />
                     <LoginForm />
                 </Stack>
             </Box>
