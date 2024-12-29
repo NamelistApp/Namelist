@@ -12,15 +12,15 @@ import { ContactsApiClient, ContactsApiClientInterface } from "./scenes/contacts
 import { ContactsRepository, ContactsRepositoryInterface } from "./scenes/contacts/data/ContactsRepository";
 
 class AppContainer {
-    private apiClient: BaseApiClientInterface
-
-    constructor(apiClient: BaseApiClientInterface) {
-        this.apiClient = apiClient
-    }
+    private apiClient: BaseApiClientInterface = this.buildBaseApiClient()
 
     init() {
         this.initMonitoring()
         this.initKea()
+    }
+
+    private buildBaseApiClient(): BaseApiClientInterface {
+        return new BaseApiClient()
     }
 
     buildAuthApiClient(): AuthApiClientInterface {
@@ -80,6 +80,4 @@ class AppContainer {
     }
 }
 
-const apiClient = new BaseApiClient()
-
-export const appContainer = new AppContainer(apiClient)
+export const appContainer = new AppContainer()

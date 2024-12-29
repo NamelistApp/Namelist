@@ -52,7 +52,7 @@ export default function AppHeader({ opened, toggle }: { opened: boolean; toggle:
                     </Combobox>
                 </Group>
             </Flex>
-            <Drawer opened={contactOpened} onClose={contactHandler.close} title="Create Person" position="right">
+            <Drawer overlayProps={{ backgroundOpacity: 0.5, blur: 4 }} opened={contactOpened} onClose={contactHandler.close} title="Create Contact" position="right">
                 <CreateContactForm />
             </Drawer>
         </>

@@ -117,7 +117,7 @@ export const sceneLogic = kea<sceneLogicType>([
                     if (scene === Scene.Login) {
                         handleLoginRedirect()
                     } else {
-                        router.actions.replace(urls.default())
+                        router.actions.replace(urls.dashboard())
                     }
                     return
                 }

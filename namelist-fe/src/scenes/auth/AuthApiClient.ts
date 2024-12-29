@@ -18,7 +18,7 @@ export interface AuthApiClientInterface {
 }
 
 export class AuthApiClient implements AuthApiClientInterface {
-    constructor(public api: BaseApiClientInterface) { }
+    constructor(private api: BaseApiClientInterface) { }
 
     async csrfToken(): Promise<string> {
         return await this.api.get('/sanctum/csrf-cookie')

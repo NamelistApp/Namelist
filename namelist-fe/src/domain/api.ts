@@ -31,10 +31,11 @@ export interface BaseApiClientInterface {
 }
 
 export class BaseApiClient implements BaseApiClientInterface {
-    constructor() {
+    constructor(portalId: number) {
         axios.defaults.withCredentials = true
         axios.defaults.withXSRFToken = true
         axios.defaults.baseURL = backendHost
+        axios.defaults.headers.common['portal_id'] = portalId;
 
         this.setupRefreshLogic()
     }

@@ -34,7 +34,6 @@ function LoginScene() {
 
 function LoginForm(props: PaperProps): JSX.Element {
     const { isLoginFormSubmitting, serverLoginError } = useValues(loginLogic)
-    console.log(serverLoginError)
 
     return (
         <>

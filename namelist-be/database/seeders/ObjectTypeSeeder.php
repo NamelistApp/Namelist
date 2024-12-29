@@ -14,7 +14,7 @@ class ObjectTypeSeeder extends Seeder
     public function run(): void
     {
         $contactObjectType = ObjectType::create([
-            'name' => 'Person',
+            'name' => 'Contact',
         ]);
 
         $contactProperties = [
