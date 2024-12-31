@@ -22,7 +22,7 @@ const createContactLogic = kea<createContactLogicType>([
                 last_name: null,
             } as CreateContactRequest,
             errors: (req: CreateContactRequest) => ({
-                email_address: (req.email_address && !/^\S+@\S+$/.test(req.email_address) && !req.first_name) ? 'First name or valid email address is required' : null,
+                email_address: ((!req.email_address || !/^\S+@\S+$/.test(req.email_address)) && !req.first_name) ? 'First name or valid email address is required' : null,
             }),
             submit: async (req) => {
                 try {

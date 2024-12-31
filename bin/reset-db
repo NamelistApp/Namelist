@@ -1,3 +1,4 @@
 #!/bin/bash
 
 ./vendor/bin/sail artisan migrate:fresh --seed --seeder=DevSeeder
+./vendor/bin/sail artisan db:seed --class=ObjectTypeSeeder

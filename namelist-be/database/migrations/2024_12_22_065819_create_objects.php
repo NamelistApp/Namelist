@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('objects', function (Blueprint $table) {
+        Schema::create('object_types', function (Blueprint $table) {
             $table->id();
-            $table->morphs('object_type');
-            $table->foreignId('portal_id')->constrained()->cascadeOnDelete();
+            $table->string('name');
             $table->timestamps();
             $table->softDeletes();
         });
 
-        Schema::create('object_types', function (Blueprint $table) {
+        Schema::create('objects', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->foreignId('object_type_id')->constrained()->onDelete('restrict');
+            $table->foreignId('portal_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

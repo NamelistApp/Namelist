@@ -2,13 +2,20 @@
 
 namespace App\Models\Objects;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
+use App\Models\BaseObject;
+use App\Models\Enum\ObjectTypeId;
+use Illuminate\Database\Eloquent\Builder;
 
-class Contact extends Model
+class Contact extends BaseObject
 {
-    public function objectType(): MorphTo
+    protected static function booted(): void
     {
-        return $this->morphTo();
+        static::addGlobalScope('ancient', function (Builder $builder) {
+            $builder->where('object_type_id', ObjectTypeId::Contact);
+        });
+
+        static::creating(function ($contact) {
+            $contact->object_type_id = ObjectTypeId::Contact;
+        });
     }
 }

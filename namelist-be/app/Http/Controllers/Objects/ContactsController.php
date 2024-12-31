@@ -16,7 +16,7 @@ class ContactsController extends Controller
 
     public function store(Portal $portal, ContactRequest $request)
     {
-        $portal->contacts()->create($request->validated());
+        $object = $portal->contacts()->create();
     }
 
     public function show(Portal $portal, Contact $contact)
