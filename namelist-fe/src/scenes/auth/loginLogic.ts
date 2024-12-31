@@ -1,4 +1,4 @@
-import { actions, defaults, kea, listeners, path, selectors } from 'kea'
+import { actions, connect, defaults, kea, listeners, path, selectors } from 'kea'
 import { forms } from 'kea-forms'
 import { router, encodeParams } from 'kea-router'
 import { notifications } from '@mantine/notifications'
@@ -16,6 +16,10 @@ enum ServerLoginError {
 
 const loginLogic = kea<loginLogicType>([
     path(['scenes', 'auth', 'loginLogic']),
+    connect({
+        logic: [userLogic],
+        actions: [userLogic, ['loadUserSuccess']], // Import specific actions from userLogic
+    }),
     selectors({
         serverLoginError: [
             (s) => [],
@@ -33,30 +37,36 @@ const loginLogic = kea<loginLogicType>([
             window.location.href = `${backendHost}/auth/google/redirect`
         },
     })),
+    listeners(({ actions }) => ({
+        loadUserSuccess: () => {
+            notifications.show({
+                color: 'green',
+                title: '👋 Welcome back!',
+                message: 'Great to see you.',
+                radius: 'md',
+            })
+            actions.resetLoginForm()
+            handleLoginRedirect()
+        },
+        submitLoginFormSuccess: () => {
+            userLogic.actions.loadUser()
+        },
+    })),
     forms(({ actions }) => ({
         loginForm: {
             defaults: {
-                email: isDemo ? 'demo@paywalls.io' : '',
-                password: isDemo ? 'DemoPassword' : '',
+                email: isDemo ? 'demo@namelist.app' : 'david@namelist.app',
+                password: isDemo ? 'DemoPassword' : 'password',
             } as LoginRequest,
             errors: ({ email, password }: LoginRequest) => ({
                 email: email ? (/^\S+@\S+$/.test(email) ? null : 'Please enter a valid email') : 'Please enter an email',
                 password: password.length <= 6 ? 'Password should include at least 6 characters' : null,
             }),
-            submit: async ({ email, password }) => {
+            submit: async ({ email, password }, breakpoint) => {
+                breakpoint()
                 try {
-                    await authApiClient.csrfToken() // ❌ TODO is this required?
-                    await authApiClient.login({ email, password })
-
-                    userLogic.actions.loadUser()
-
-                    notifications.show({
-                        color: 'green',
-                        title: '👋 Welcome back!',
-                        message: 'Great to see you.',
-                        radius: 'md',
-                    })
-                    actions.resetLoginForm()
+                    await authApiClient.csrfToken()
+                    return await authApiClient.login({ email, password })
                 } catch (error: any) {
                     notifications.show({
                         color: 'red',
@@ -64,6 +74,7 @@ const loginLogic = kea<loginLogicType>([
                         message: 'Could not login. Please try again',
                         radius: 'md',
                     })
+                    throw error
                 }
             },
         },

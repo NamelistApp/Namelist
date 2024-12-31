@@ -10,7 +10,6 @@ import * as Sentry from "@sentry/react"
 import { notifications } from '@mantine/notifications';
 import { ContactsApiClient, ContactsApiClientInterface } from "./scenes/contacts/data/ContactsApiClient";
 import { ContactsRepository, ContactsRepositoryInterface } from "./scenes/contacts/data/ContactsRepository";
-import { User } from "./domain/types";
 import { addPortalIdIfMissing, removePortalIdIfPresent } from "./lib/router-utils";
 
 interface InitKeaProps {

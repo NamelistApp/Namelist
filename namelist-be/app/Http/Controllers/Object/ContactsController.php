@@ -3,64 +3,34 @@
 namespace App\Http\Controllers\Objects;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Contacts\CreateContactRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\Contacts\ContactRequest;
+use App\Models\Objects\Contact;
+use App\Models\Portal;
 
 class ContactsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Portal $portal)
     {
-        //
+        return $portal->contacts()->paginate();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(Portal $portal, ContactRequest $request)
     {
-        //
+        $portal->contacts()->create($request->validated());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(CreateContactRequest $request)
+    public function show(Portal $portal, Contact $contact)
     {
-        //
+        return $contact;
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function destroy(Portal $portal, Contact $contact)
     {
-        //
+        $contact->delete();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function restore(Portal $portal, Contact $contact)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $contact->restore();
     }
 }

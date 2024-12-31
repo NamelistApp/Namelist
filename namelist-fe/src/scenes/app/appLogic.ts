@@ -8,10 +8,9 @@ export const appLogic = kea<appLogicType>([
     selectors({
         isLoading: [
             (s) => [
-                userLogic.selectors.userLoading,
-                userLogic.selectors.user
+                userLogic.selectors.userLoading
             ],
-            (userLoading, user) => userLoading || !user
+            (userLoading) => userLoading
         ]
     })
 ])

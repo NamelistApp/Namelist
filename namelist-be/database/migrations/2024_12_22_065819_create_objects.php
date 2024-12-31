@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('objects', function (Blueprint $table) {
             $table->id();
             $table->morphs('object_type');
+            $table->foreignId('portal_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

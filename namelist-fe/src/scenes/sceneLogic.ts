@@ -108,25 +108,36 @@ export const sceneLogic = kea<sceneLogicType>([
             // get most up to date user on the userLogic
             const user = userLogic.values.user
 
+            console.log(user)
+
+            console.log('1')
+
             const currentPathname = router.values.location.pathname
             const canonicalPathname = addPortalIdIfMissing(router.values.location.pathname)
             if (currentPathname !== canonicalPathname) {
+                console.log('1.1')
                 router.actions.replace(canonicalPathname, router.values.searchParams, router.values.hashParams)
                 return
             }
 
             if (!user) {
+                console.log('1.2')
                 if (!sceneConfig.anonymousOnly && !sceneConfig.anonymousAllowed) {
+                    console.log('1.3')
                     router.actions.replace(urls.login() + `?next=${window.location.pathname}`)
                     return
                 }
             } else {
+                console.log('2')
                 if (sceneConfig.anonymousOnly) {
                     if (scene === Scene.Login) {
+                        console.log("3")
                         handleLoginRedirect()
                     } else {
+                        console.log('4')
                         router.actions.replace(urls.default())
                     }
+                    console.log('5')
                     return
                 }
             }
@@ -134,6 +145,7 @@ export const sceneLogic = kea<sceneLogicType>([
             actions.loadScene(scene, params, method)
         },
         loadScene: async ({ scene, params, method }, breakpoint) => {
+            console.log('-1')
             const clickedLink = method === 'PUSH'
             if (values.scene === scene) {
                 actions.setScene(scene, params, clickedLink)
