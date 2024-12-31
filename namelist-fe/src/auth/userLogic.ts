@@ -4,9 +4,9 @@ import { loaders } from "kea-loaders"
 import { router } from "kea-router"
 import { User } from "../domain/types"
 import { urls } from "../domain/urls"
-import { appContainer } from "../container"
+import { AppContext, mainContainer } from "../MainContainer"
 
-const authApiClient = appContainer.buildAuthApiClient()
+const authApiClient = mainContainer.buildAuthApiClient()
 
 export const userLogic = kea<userLogicType>([
     path(["src", "userLogic"]),
@@ -21,6 +21,11 @@ export const userLogic = kea<userLogicType>([
             actions.loadUserSuccess(null)
 
             router.actions.push(urls.login())
+        },
+        loadUserSuccess: ({ user }) => {
+            if (user) {
+                AppContext.setCurrentPortalId(user.portal.id)
+            }
         }
     })),
     loaders(({ actions }) => ({

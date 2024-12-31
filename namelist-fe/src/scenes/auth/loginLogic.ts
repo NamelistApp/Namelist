@@ -3,12 +3,12 @@ import { forms } from 'kea-forms'
 import { router, encodeParams } from 'kea-router'
 import { notifications } from '@mantine/notifications'
 import type { loginLogicType } from './loginLogicType'
-import { appContainer } from '../../container'
+import { mainContainer } from '../../MainContainer'
 import { backendHost, isDemo } from '../../domain/constants'
 import { LoginRequest } from './AuthApiClient'
 import { userLogic } from '../../auth/userLogic'
 
-const authApiClient = appContainer.buildAuthApiClient()
+const authApiClient = mainContainer.buildAuthApiClient()
 
 enum ServerLoginError {
     GoogleSignInAccountExists = 'GoogleSignInAccountExists',

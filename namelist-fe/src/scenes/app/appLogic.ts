@@ -7,8 +7,11 @@ export const appLogic = kea<appLogicType>([
     connect([userLogic]),
     selectors({
         isLoading: [
-            (s) => [userLogic.selectors.userLoading],
-            (userLoading) => userLoading
+            (s) => [
+                userLogic.selectors.userLoading,
+                userLogic.selectors.user
+            ],
+            (userLoading, user) => userLoading || !user
         ]
     })
 ])

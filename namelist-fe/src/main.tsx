@@ -1,11 +1,13 @@
 import '@mantine/core/styles.css'
 import '@mantine/notifications/styles.css'
 import { createTheme, MantineProvider, virtualColor } from '@mantine/core'
-import { ModalsProvider } from '@mantine/modals';
+import { ModalsProvider } from '@mantine/modals'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { appContainer } from './container'
-import { App } from './scenes/app/App';
+import { App } from './scenes/app/App'
+import { mainContainer } from './MainContainer'
+
+mainContainer.init()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

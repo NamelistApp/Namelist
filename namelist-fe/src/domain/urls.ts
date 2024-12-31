@@ -9,7 +9,10 @@
 
 export const urls = {
     absolute: (path = ''): string => window.location.origin + path,
-    dashboard: (): string => '/',
-    contacts: (): string => '/contacts',
+    default: (): string => '/dashboard',
     login: (): string => '/login',
+
+    // portal urls
+    dashboard: (): string => '/dashboard',
+    contacts: (): string => '/contacts',
 }

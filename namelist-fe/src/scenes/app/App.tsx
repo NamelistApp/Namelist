@@ -31,7 +31,7 @@ function AppScene(): JSX.Element {
     let sceneElement: JSX.Element
     if (activeScene && activeScene in loadedScenes) {
         const { component: SceneComponent } = loadedScenes[activeScene]
-        sceneElement = <SceneComponent {...params} />
+        sceneElement = <SceneComponent user={user} {...params} />
     } else {
         sceneElement = <Spinner />
     }
@@ -59,6 +59,6 @@ function AppScene(): JSX.Element {
     return (
         <AppLayout>
             {currentSceneElement}
-        </AppLayout>
+        </AppLayout >
     )
 }

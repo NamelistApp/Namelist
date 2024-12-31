@@ -6,9 +6,9 @@ export interface ContactsApiClientInterface {
 }
 
 export class ContactsApiClient implements ContactsApiClientInterface {
-    constructor(private apiClient: BaseApiClientInterface) { }
+    constructor(private apiClient: BaseApiClientInterface, private portalId: number) { }
 
     async createContact(request: CreateContactRequest): Promise<void> {
-        return this.apiClient.post(`/api/contacts`, request)
+        return this.apiClient.post(`/api/portal/${this.portalId}/contacts`, request)
     }
 }

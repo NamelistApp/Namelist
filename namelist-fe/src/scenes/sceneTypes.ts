@@ -32,6 +32,8 @@ export interface SceneConfig {
     anonymousOnly?: boolean
     /** Route **can** be accessed when logged out */
     anonymousAllowed?: boolean
+    /** Route requires portal access */
+    portalBased?: boolean
     /**
      * If `app`, navigation is shown, and the scene has default padding.
      * If `plain`, there's no navigation present, and the scene has no padding. (ie. auth)

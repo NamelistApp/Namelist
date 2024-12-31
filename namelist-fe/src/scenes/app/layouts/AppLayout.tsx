@@ -1,5 +1,6 @@
 import { AppShell, Container, Divider } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import React, { createContext, useContext } from 'react';
 
 import { Notifications } from '@mantine/notifications'
 import { DemoBanner } from './shared/DemoBanner'

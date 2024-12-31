@@ -1,14 +1,11 @@
-export type Organization = {
+export interface Portal {
     id: number
-    name: string
-    created_at: Date
-    updated_at: Date
 }
 
-export type User = {
-    id: string
-    organization: Organization
-    avatar_url?: string
+export interface User {
+    id: number
+    portal: Portal
+    avatar_url: string | null
     email: string
     name: string
 }

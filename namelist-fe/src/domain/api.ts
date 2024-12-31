@@ -1,5 +1,5 @@
 import { backendHost } from "./constants"
-import axios from "axios"
+import axios, { AxiosInstance } from "axios"
 import createAuthRefreshInterceptor from "axios-auth-refresh"
 import { objectClean } from "./utils"
 
@@ -31,35 +31,47 @@ export interface BaseApiClientInterface {
 }
 
 export class BaseApiClient implements BaseApiClientInterface {
-    constructor(portalId: number) {
-        axios.defaults.withCredentials = true
-        axios.defaults.withXSRFToken = true
-        axios.defaults.baseURL = backendHost
-        axios.defaults.headers.common['portal_id'] = portalId;
+    protected axiosInstance: AxiosInstance
+
+    constructor() {
+        this.axiosInstance = axios.create({
+            baseURL: backendHost,
+            withCredentials: true,
+            withXSRFToken: true
+        })
 
         this.setupRefreshLogic()
     }
 
     private setupRefreshLogic() {
         const refreshAuthLogic = async (): Promise<any> => {
-            await axios.get("/sanctum/csrf-cookie")
+            await this.axiosInstance.get("/sanctum/csrf-cookie")
         }
         createAuthRefreshInterceptor(axios, refreshAuthLogic, { statusCodes: [419] })
     }
 
     async get(url: string, options?: ApiMethodOptions): Promise<any> {
-        return (await axios.get(url, { headers: objectClean(options?.headers ?? {}) })).data
+        return (await this.axiosInstance.get(url, { headers: objectClean(options?.headers ?? {}) })).data
     }
 
     async post(url: string, data?: any, options?: ApiMethodOptions): Promise<any> {
-        return (await axios.post(url, data, { headers: objectClean(options?.headers ?? {}) })).data
+        return (await this.axiosInstance.post(url, data, { headers: objectClean(options?.headers ?? {}) })).data
     }
 
     async patch(url: string, data?: any, options?: ApiMethodOptions): Promise<any> {
-        return (await axios.patch(url, data, { headers: objectClean(options?.headers ?? {}) })).data
+        return (await this.axiosInstance.patch(url, data, { headers: objectClean(options?.headers ?? {}) })).data
     }
 
     async delete(url: string, options?: ApiMethodOptions): Promise<any> {
-        return (await axios.delete(url, { headers: objectClean(options?.headers ?? {}) })).data
+        return (await this.axiosInstance.delete(url, { headers: objectClean(options?.headers ?? {}) })).data
+    }
+}
+
+export class PortalApiClient extends BaseApiClient {
+    constructor(portalId: number | undefined) {
+        super()
+        this.axiosInstance.defaults.params = {
+            portalId: portalId
+        }
     }
 }

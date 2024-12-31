@@ -7,14 +7,15 @@ import { sceneLogic } from '../../sceneLogic';
 import AppLogo from './AppLogo';
 import { IconHome, IconLifebuoy, IconLogout, IconUsers } from '@tabler/icons-react'
 import { urls } from '../../../domain/urls';
+import { addPortalIdIfMissing } from '../../../lib/router-utils';
 
 export default function AppNavigation() {
     const { activeScene } = useValues(sceneLogic)
     const { logout } = useActions(userLogic)
 
     const tabs = [
-        { link: urls.dashboard(), label: 'Dashboard', scenes: ['Dashboard'], icon: IconHome },
-        { link: urls.contacts(), label: 'People', scenes: ['Contacts'], icon: IconUsers }
+        { link: addPortalIdIfMissing(urls.dashboard()), label: 'Dashboard', scenes: ['Dashboard'], icon: IconHome },
+        { link: addPortalIdIfMissing(urls.contacts()), label: 'People', scenes: ['Contacts'], icon: IconUsers }
     ]
 
     const links = tabs.map((item) => (

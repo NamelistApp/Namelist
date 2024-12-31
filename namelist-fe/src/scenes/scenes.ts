@@ -37,11 +37,15 @@ export const sceneConfigurations: Record<Scene, SceneConfig> = {
     [Scene.Login]: {
         anonymousOnly: true,
     },
+
+    // Portal based routes
     [Scene.Dashboard]: {
-        layout: 'app'
+        layout: 'app',
+        portalBased: true
     },
     [Scene.Contacts]: {
-        layout: 'app'
+        layout: 'app',
+        portalBased: true
     },
 }
 
@@ -56,6 +60,7 @@ export const redirects: Record<string, string | ((params: Params, searchParams: 
 
 export const routes: Record<string, Scene> = {
     [urls.login()]: Scene.Login,
+    [urls.dashboard()]: Scene.Dashboard,
     [urls.dashboard()]: Scene.Dashboard,
     [urls.contacts()]: Scene.Contacts
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Objects;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Contacts\CreateContactRequest;
 use Illuminate\Http\Request;
 
 class ContactsController extends Controller
@@ -26,7 +27,7 @@ class ContactsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateContactRequest $request)
     {
         //
     }

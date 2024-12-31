@@ -25,7 +25,7 @@ export function CreateContactForm(): JSX.Element {
                                 label="Email Address"
                                 placeholder="Email Address"
                                 radius="md"
-                                value={value}
+                                value={value || ''}
                                 onChange={(e) => onChange(e.currentTarget.value)}
                             />
                         )}
@@ -36,7 +36,7 @@ export function CreateContactForm(): JSX.Element {
                                 label="First Name"
                                 placeholder="First Name"
                                 radius="md"
-                                value={value}
+                                value={value || ''}
                                 onChange={(e) => onChange(e.currentTarget.value)}
                             />
                         )}
@@ -47,7 +47,7 @@ export function CreateContactForm(): JSX.Element {
                                 label="Last Name"
                                 placeholder="Last Name"
                                 radius="md"
-                                value={value}
+                                value={value || ''}
                                 onChange={(e) => onChange(e.currentTarget.value)}
                             />
                         )}
@@ -58,7 +58,7 @@ export function CreateContactForm(): JSX.Element {
                                 label="Phone Number"
                                 placeholder="Phone Number"
                                 radius="md"
-                                value={value}
+                                value={value || ''}
                                 onChange={(e) => onChange(e.currentTarget.value)}
                             />
                         )}

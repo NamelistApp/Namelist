@@ -1,14 +1,18 @@
 import { BindLogic } from 'kea'
 import { SceneExport } from '../sceneTypes'
 import cx from 'clsx';
-import contactsLogic from './contactsLogic'
+import contactsLogic, { ContactsProps } from './contactsLogic'
 import { Avatar, Box, Checkbox, Group, Paper, Table, Text, Title } from '@mantine/core'
 import { useState } from 'react'
 import { IconUsers } from '@tabler/icons-react';
 
+interface ContactsSceneProps {
+    portalId: number
+}
+
 export const scene: SceneExport = {
     component: Contacts,
-    logic: contactsLogic,
+    logic: contactsLogic
 }
 
 function Contacts(): JSX.Element {

@@ -9,6 +9,7 @@ import type { sceneLogicType } from "./sceneLogicType";
 import { userLogic } from '../auth/userLogic'
 import { handleLoginRedirect } from './auth/loginLogic'
 import { urls } from '../domain/urls'
+import { addPortalIdIfMissing } from '../lib/router-utils'
 
 export const sceneLogic = kea<sceneLogicType>([
     props(
@@ -107,6 +108,13 @@ export const sceneLogic = kea<sceneLogicType>([
             // get most up to date user on the userLogic
             const user = userLogic.values.user
 
+            const currentPathname = router.values.location.pathname
+            const canonicalPathname = addPortalIdIfMissing(router.values.location.pathname)
+            if (currentPathname !== canonicalPathname) {
+                router.actions.replace(canonicalPathname, router.values.searchParams, router.values.hashParams)
+                return
+            }
+
             if (!user) {
                 if (!sceneConfig.anonymousOnly && !sceneConfig.anonymousAllowed) {
                     router.actions.replace(urls.login() + `?next=${window.location.pathname}`)
@@ -117,7 +125,7 @@ export const sceneLogic = kea<sceneLogicType>([
                     if (scene === Scene.Login) {
                         handleLoginRedirect()
                     } else {
-                        router.actions.replace(urls.dashboard())
+                        router.actions.replace(urls.default())
                     }
                     return
                 }
