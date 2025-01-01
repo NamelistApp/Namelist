@@ -18,7 +18,7 @@ const AppLayout = ({ children }: AppLayoutProps): JSX.Element => {
     return (
         <Container size="responsive" p={0}>
             {isDemo && <DemoBanner />}
-            <Notifications position="bottom-right" zIndex={1000} />
+            <Notifications position="top-center" zIndex={1000} />
             <AppShell
                 navbar={{
                     width: 230,

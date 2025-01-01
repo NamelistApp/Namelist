@@ -2,15 +2,15 @@
 
 namespace App\Models\Objects;
 
-use App\Models\BaseObject;
+use App\Models\CRMObject;
 use App\Models\Enum\ObjectTypeId;
 use Illuminate\Database\Eloquent\Builder;
 
-class Contact extends BaseObject
+class Contact extends CRMObject
 {
     protected static function booted(): void
     {
-        static::addGlobalScope('ancient', function (Builder $builder) {
+        static::addGlobalScope('object_type', function (Builder $builder) {
             $builder->where('object_type_id', ObjectTypeId::Contact);
         });
 

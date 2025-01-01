@@ -1,17 +1,20 @@
-import { afterMount, connect, kea, path, props } from 'kea'
+import { connect, kea, path, props } from 'kea'
 import { forms } from 'kea-forms'
 import { notifications } from '@mantine/notifications'
-import { router } from 'kea-router'
-import { modals } from '@mantine/modals'
 
 import type { createContactLogicType } from './createContactLogicType'
 import { mainContainer } from '../../../MainContainer'
-import { CreateContactRequest } from '../data/models'
 import { toastError } from '../../app/utils'
 import { userLogic } from '../../../auth/userLogic'
+import { CreateContactRequest } from '../data/models'
+
+export type CreateContactProps = {
+    onSuccess?: () => void
+}
 
 const createContactLogic = kea<createContactLogicType>([
     path(['scenes', 'contacts', 'create', 'createContactLogic']),
+    props({} as CreateContactProps),
     connect([userLogic]),
     forms(({ actions, props }) => ({
         createContactForm: {
@@ -30,6 +33,7 @@ const createContactLogic = kea<createContactLogicType>([
                     await contactsRepository.createContact(req)
 
                     actions.resetCreateContactForm()
+                    props.onSuccess?.()
 
                     notifications.show({
                         color: 'green',

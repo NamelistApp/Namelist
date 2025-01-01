@@ -1,21 +1,19 @@
-import { useValues } from 'kea'
+import { useMountedLogic, useValues } from 'kea'
 import { Stack, TextInput, Button, rem } from '@mantine/core'
 import { Form } from 'kea-forms'
 import { Field } from '../../app/components/Field'
 
-import createContactLogic from './createContactLogic'
+import createContactLogic, { CreateContactProps } from './createContactLogic'
 import { IconAt } from '@tabler/icons-react'
 
-interface CreateContactFormProps {
-
-}
-
-export function CreateContactForm(): JSX.Element {
-    const { isCreateContactFormSubmitting } = useValues(createContactLogic)
+export function CreateContactForm({ onSuccess }: CreateContactProps): JSX.Element {
+    const logicProps = { onSuccess } as CreateContactProps
+    const contactLogic = createContactLogic(logicProps)
+    const { isCreateContactFormSubmitting } = useValues(contactLogic)
 
     return (
         <>
-            <Form logic={createContactLogic} formKey="createContactForm" enableFormOnSubmit>
+            <Form logic={createContactLogic} props={logicProps} formKey="createContactForm" enableFormOnSubmit>
                 <Stack>
                     <Field name="email_address">
                         {({ value, onChange }) => (
@@ -65,7 +63,7 @@ export function CreateContactForm(): JSX.Element {
                     </Field>
                 </Stack>
 
-                <Button type="submit" mt="xl" disabled={isCreateContactFormSubmitting}>Create Contact</Button>
+                <Button type="submit" mt="xl" disabled={isCreateContactFormSubmitting}>Create Person</Button>
             </Form>
         </>
     )

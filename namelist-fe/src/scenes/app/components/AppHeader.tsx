@@ -44,7 +44,7 @@ export default function AppHeader({ opened, toggle }: { opened: boolean; toggle:
                                 <Combobox.Option value={'contact'} key={'contact'}>
                                     <Group>
                                         <IconUser />
-                                        <Text fw={700} size={"sm"}>Contact</Text>
+                                        <Text fw={700} size={"sm"}>Person</Text>
                                     </Group>
                                 </Combobox.Option>
                             </Combobox.Options>
@@ -52,8 +52,8 @@ export default function AppHeader({ opened, toggle }: { opened: boolean; toggle:
                     </Combobox>
                 </Group>
             </Flex>
-            <Drawer overlayProps={{ backgroundOpacity: 0.5, blur: 4 }} opened={contactOpened} onClose={contactHandler.close} title="Create Contact" position="right">
-                <CreateContactForm />
+            <Drawer overlayProps={{ backgroundOpacity: 0.5, blur: 4 }} opened={contactOpened} onClose={contactHandler.close} title="Create Person" position="right">
+                <CreateContactForm onSuccess={contactHandler.close} />
             </Drawer>
         </>
     );

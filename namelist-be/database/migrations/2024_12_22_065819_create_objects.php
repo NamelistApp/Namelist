@@ -29,21 +29,23 @@ return new class extends Migration
         Schema::create('property_definitions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('object_type_id')->constrained()->onDelete('restrict');
-            $table->string('name');
+            $table->string('name')->index();
             $table->string('type');
             $table->jsonb('metadata')->nullable();
-            $table->integer('version')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
 
         Schema::create('object_properties', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('object_id')
                 ->constrained()
                 ->onDelete('cascade');
             $table->foreignId('property_definition_id')
                 ->constrained()
                 ->onDelete('restrict');
+            $table->string('name')->index();
+            $table->integer('version')->default(1);
             $table->jsonb('value');
             $table->timestamps();
             $table->softDeletes();

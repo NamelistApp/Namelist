@@ -1,14 +1,10 @@
-import { BindLogic } from 'kea'
+import { BindLogic, useValues } from 'kea'
 import { SceneExport } from '../sceneTypes'
 import cx from 'clsx';
-import contactsLogic, { ContactsProps } from './contactsLogic'
-import { Avatar, Box, Checkbox, Group, Paper, Table, Text, Title } from '@mantine/core'
-import { useState } from 'react'
+import contactsLogic from './contactsLogic'
+import { Avatar, Box, Button, Center, Group, Loader, Paper, Stack, Table, Text, Title } from '@mantine/core'
 import { IconUsers } from '@tabler/icons-react';
-
-interface ContactsSceneProps {
-    portalId: number
-}
+import { Contact } from './data/models';
 
 export const scene: SceneExport = {
     component: Contacts,
@@ -25,78 +21,8 @@ function Contacts(): JSX.Element {
     )
 }
 
-const data = [
-    {
-        id: '1',
-        avatar:
-            'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png',
-        name: 'Robert Wolfkisser',
-        job: 'Engineer',
-        email: 'rob_wolf@gmail.com',
-    },
-    {
-        id: '2',
-        avatar:
-            'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png',
-        name: 'Jill Jailbreaker',
-        job: 'Engineer',
-        email: 'jj@breaker.com',
-    },
-    {
-        id: '3',
-        avatar:
-            'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png',
-        name: 'Henry Silkeater',
-        job: 'Designer',
-        email: 'henry@silkeater.io',
-    },
-    {
-        id: '4',
-        avatar:
-            'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-3.png',
-        name: 'Bill Horsefighter',
-        job: 'Designer',
-        email: 'bhorsefighter@gmail.com',
-    },
-    {
-        id: '5',
-        avatar:
-            'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-10.png',
-        name: 'Jeremy Footviewer',
-        job: 'Manager',
-        email: 'jeremy@foot.dev',
-    },
-];
-
 export function ContactsScene() {
-    const [selection, setSelection] = useState(['1']);
-    const toggleRow = (id: string) =>
-        setSelection((current) =>
-            current.includes(id) ? current.filter((item) => item !== id) : [...current, id]
-        );
-    const toggleAll = () =>
-        setSelection((current) => (current.length === data.length ? [] : data.map((item) => item.id)));
-
-    const rows = data.map((item) => {
-        const selected = selection.includes(item.id);
-        return (
-            <Table.Tr key={item.id} className={cx({ ['red']: selected })}>
-                <Table.Td>
-                    <Checkbox checked={selection.includes(item.id)} onChange={() => toggleRow(item.id)} />
-                </Table.Td>
-                <Table.Td>
-                    <Group gap="sm">
-                        <Avatar size={26} src={item.avatar} radius={26} />
-                        <Text size="sm" fw={500}>
-                            {item.name}
-                        </Text>
-                    </Group>
-                </Table.Td>
-                <Table.Td>{item.email}</Table.Td>
-                <Table.Td>{item.job}</Table.Td>
-            </Table.Tr>
-        );
-    });
+    const { contacts, contactsLoading } = useValues(contactsLogic)
 
     return (
         <>
@@ -104,25 +30,52 @@ export function ContactsScene() {
                 <IconUsers size={30} />
                 <Title order={2}>People</Title>
             </Group>
-            <Paper radius="md" withBorder p="md">
-                <Table miw={800} verticalSpacing="sm">
-                    <Table.Thead>
-                        <Table.Tr>
-                            <Table.Th w={40}>
-                                <Checkbox
-                                    onChange={toggleAll}
-                                    checked={selection.length === data.length}
-                                    indeterminate={selection.length > 0 && selection.length !== data.length}
-                                />
-                            </Table.Th>
-                            <Table.Th>User</Table.Th>
-                            <Table.Th>Email</Table.Th>
-                            <Table.Th>Job</Table.Th>
-                        </Table.Tr>
-                    </Table.Thead>
-                    <Table.Tbody>{rows}</Table.Tbody>
-                </Table>
-            </Paper>
+            {
+                contactsLoading ? (
+                    <Center style={{ height: '100vh' }}><Loader color="blue" /></Center>
+                ) : contacts.data.length ? (
+                    <Paper radius="md" withBorder p="md">
+                        <Table miw={800} verticalSpacing="sm">
+                            <Table.Thead>
+                                <Table.Tr>
+                                    <Table.Th>Name</Table.Th>
+                                    <Table.Th>Email</Table.Th>
+                                    <Table.Th>Source</Table.Th>
+                                    <Table.Th>Created</Table.Th>
+                                </Table.Tr>
+                            </Table.Thead>
+                            <Table.Tbody>
+                                {contacts.data.map((contact: Contact) => {
+                                    return (
+                                        <Table.Tr key={contact.id}>
+                                            <Table.Td>
+                                                <Group gap="sm">
+                                                    <Avatar size={26} radius={26} />
+                                                    <Text size="sm" fw={500}>
+                                                        {contact.fullName}
+                                                    </Text>
+                                                </Group>
+                                            </Table.Td>
+                                            <Table.Td>{contact.emailAddress || '-'}</Table.Td>
+                                            <Table.Td>{contact.source}</Table.Td>
+                                            <Table.Td>{contact.createdAt.toLocaleString()}</Table.Td>
+                                        </Table.Tr>
+                                    );
+                                })}
+                            </Table.Tbody>
+                        </Table>
+                    </Paper>
+                ) : (
+                    <Center>
+                        <Stack align="center">
+                            <Title order={3}>No People Yet</Title>
+                            <Button>
+                                Create Person
+                            </Button>
+                        </Stack>
+                    </Center>
+                )
+            }
         </>
     );
 }

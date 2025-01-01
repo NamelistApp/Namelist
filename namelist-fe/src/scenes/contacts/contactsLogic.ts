@@ -1,14 +1,28 @@
-import { kea, key, path, props } from 'kea'
+import { afterMount, defaults, kea, key, path, props } from 'kea'
 import type { contactsLogicType } from './contactsLogicType'
+import { Paginated } from '../../domain/api'
+import { Contact } from './data/models'
+import { loaders } from 'kea-loaders'
+import { mainContainer } from '../../MainContainer'
 
-export type ContactsProps = {
-    portalId: number
-}
+const contactsRepository = mainContainer.buildContactsRepository()
 
 const contactsLogic = kea<contactsLogicType>([
-    props({} as ContactsProps),
-    path((key) => ['scenes', 'contacts', 'contactsLogic', key]),
-    key((props) => `paywalls-${props.portalId}`),
+    path(['scenes', 'contacts', 'contactsLogic']),
+    defaults({
+        contacts: {} as Paginated<Contact>,
+        page: 1
+    }),
+    loaders(({ values }) => ({
+        contacts: {
+            loadContacts: async () => {
+                return await contactsRepository.getContacts(values.page)
+            }
+        }
+    })),
+    afterMount(({ actions }) => {
+        actions.loadContacts()
+    })
 ])
 
 export default contactsLogic
