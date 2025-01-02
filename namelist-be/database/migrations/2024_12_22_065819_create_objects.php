@@ -41,6 +41,12 @@ return new class extends Migration
             $table->foreignId('crm_object_id')
                 ->constrained()
                 ->onDelete('cascade');
+            $table->foreignId('portal_id')
+                ->constrained()
+                ->onDelete('cascade');
+            $table->foreignId('object_type_id')
+                ->constrained()
+                ->onDelete('restrict');
             $table->foreignId('property_definition_id')
                 ->constrained()
                 ->onDelete('restrict');

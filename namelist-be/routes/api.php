@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Objects\CrmObjectController;
+use App\Http\Controllers\Crm\CrmObjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

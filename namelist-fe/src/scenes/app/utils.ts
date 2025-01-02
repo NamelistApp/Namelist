@@ -1,10 +1,10 @@
 import { notifications } from "@mantine/notifications";
 
-export function toastError() {
+export function toastError(message: string = 'Something went wrong. Please try again.') {
     notifications.show({
         color: 'red',
         title: 'Error',
-        message: 'Something went wrong. Please try again.',
+        message: message,
         radius: 'md',
     })
 }

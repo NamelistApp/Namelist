@@ -10,7 +10,7 @@ class ObjectType extends Model
         'name',
     ];
 
-    public function properties()
+    public function propertyDefinitions()
     {
         return $this->hasMany(PropertyDefinition::class);
     }

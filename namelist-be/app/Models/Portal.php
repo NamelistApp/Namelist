@@ -27,6 +27,11 @@ class Portal extends Model
         return $this->hasMany(CrmObject::class);
     }
 
+    public function objectProperties(): HasMany
+    {
+        return $this->hasMany(ObjectProperties::class);
+    }
+
     public function contacts(): HasMany
     {
         return $this->hasMany(Contact::class)->where('object_type_id', ObjectTypeId::Contact);

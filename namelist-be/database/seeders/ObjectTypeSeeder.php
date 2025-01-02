@@ -31,7 +31,7 @@ class ObjectTypeSeeder extends Seeder
             [
                 'name' => 'email_address',
                 'type' => PropertyDefinitionType::email,
-                'validations' => 'required_without:first_name|nullable|email|namelist:unique_property:email_address',
+                'validations' => 'required_without:first_name|nullable|email',
             ],
             [
                 'name' => 'phone_number',
@@ -41,7 +41,7 @@ class ObjectTypeSeeder extends Seeder
         ];
 
         foreach ($contactProperties as $property) {
-            $contactObjectType->properties()->create([
+            $contactObjectType->propertyDefinitions()->create([
                 'name' => $property['name'],
                 'type' => $property['type'],
                 'validations' => $property['validations'],

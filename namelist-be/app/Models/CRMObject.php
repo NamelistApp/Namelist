@@ -22,6 +22,6 @@ class CrmObject extends Model
 
     public function properties(): HasMany
     {
-        return $this->hasMany(ObjectProperties::class, 'object_id');
+        return $this->hasMany(ObjectProperties::class);
     }
 }

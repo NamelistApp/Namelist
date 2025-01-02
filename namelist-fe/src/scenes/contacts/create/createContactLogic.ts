@@ -7,6 +7,7 @@ import { mainContainer } from '../../../MainContainer'
 import { toastError } from '../../app/utils'
 import { CreateContactRequest } from '../data/models'
 import contactsLogic from '../contactsLogic'
+import { AxiosError } from 'axios'
 
 export type CreateContactProps = {
     onSuccess?: () => void
@@ -45,7 +46,11 @@ const createContactLogic = kea<createContactLogicType>([
                         radius: 'md',
                     })
                 } catch (error: any) {
-                    console.error(error)
+                    if (error instanceof AxiosError) {
+                        toastError(error.response?.data?.message || 'Something went wrong')
+                        return
+                    }
+
                     toastError()
                 }
             },
