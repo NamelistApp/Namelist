@@ -5,8 +5,8 @@ import { notifications } from '@mantine/notifications'
 import type { createContactLogicType } from './createContactLogicType'
 import { mainContainer } from '../../../MainContainer'
 import { toastError } from '../../app/utils'
-import { userLogic } from '../../../auth/userLogic'
 import { CreateContactRequest } from '../data/models'
+import contactsLogic from '../contactsLogic'
 
 export type CreateContactProps = {
     onSuccess?: () => void
@@ -15,7 +15,9 @@ export type CreateContactProps = {
 const createContactLogic = kea<createContactLogicType>([
     path(['scenes', 'contacts', 'create', 'createContactLogic']),
     props({} as CreateContactProps),
-    connect([userLogic]),
+    connect(() => ({
+        actions: [contactsLogic, ['loadContacts']],
+    })),
     forms(({ actions, props }) => ({
         createContactForm: {
             defaults: {
@@ -34,6 +36,7 @@ const createContactLogic = kea<createContactLogicType>([
 
                     actions.resetCreateContactForm()
                     props.onSuccess?.()
+                    actions.loadContacts()
 
                     notifications.show({
                         color: 'green',

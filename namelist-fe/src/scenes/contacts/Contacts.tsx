@@ -5,6 +5,7 @@ import contactsLogic from './contactsLogic'
 import { Avatar, Box, Button, Center, Group, Loader, Paper, Stack, Table, Text, Title } from '@mantine/core'
 import { IconUsers } from '@tabler/icons-react';
 import { Contact } from './data/models';
+import { humanFriendlyDetailedTime, valueOrEmpty } from '../../lib/utils';
 
 export const scene: SceneExport = {
     component: Contacts,
@@ -52,13 +53,13 @@ export function ContactsScene() {
                                                 <Group gap="sm">
                                                     <Avatar size={26} radius={26} />
                                                     <Text size="sm" fw={500}>
-                                                        {contact.fullName}
+                                                        {valueOrEmpty(contact.displayName)}
                                                     </Text>
                                                 </Group>
                                             </Table.Td>
-                                            <Table.Td>{contact.emailAddress || '-'}</Table.Td>
-                                            <Table.Td>{contact.source}</Table.Td>
-                                            <Table.Td>{contact.createdAt.toLocaleString()}</Table.Td>
+                                            <Table.Td>{valueOrEmpty(contact.emailAddress)}</Table.Td>
+                                            <Table.Td>{valueOrEmpty(contact.source)}</Table.Td>
+                                            <Table.Td>{humanFriendlyDetailedTime(contact.createdAt)}</Table.Td>
                                         </Table.Tr>
                                     );
                                 })}

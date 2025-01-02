@@ -23,7 +23,7 @@
     align-items: center;
     text-decoration: none;
     font-size: var(--mantine-font-size-sm);
-    color: var(--mantine-color-gray-7);
+    color: var(--mantine-color-dark);
     padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
     border-radius: var(--mantine-radius-sm);
     font-weight: 500;
@@ -53,7 +53,7 @@
 }
 
 .linkIcon {
-    color: var(--mantine-color-gray-7);
+    color: var(--mantine-color-dark);
     margin-right: var(--mantine-spacing-sm);
     width: 20px;
     height: 20px;

@@ -11,8 +11,9 @@ export class Contact {
         public updatedAt: Date | null
     ) { }
 
-    get fullName() {
-        return [this.firstName, this.lastName].filter(Boolean).join(' ')
+    get displayName(): string | null {
+        const name = [this.firstName, this.lastName].filter(Boolean).join(' ')
+        return name.trim() ? name : null
     }
 }
 

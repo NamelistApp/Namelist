@@ -5,8 +5,6 @@ import { Contact } from './data/models'
 import { loaders } from 'kea-loaders'
 import { mainContainer } from '../../MainContainer'
 
-const contactsRepository = mainContainer.buildContactsRepository()
-
 const contactsLogic = kea<contactsLogicType>([
     path(['scenes', 'contacts', 'contactsLogic']),
     defaults({
@@ -16,7 +14,7 @@ const contactsLogic = kea<contactsLogicType>([
     loaders(({ values }) => ({
         contacts: {
             loadContacts: async () => {
-                return await contactsRepository.getContacts(values.page)
+                return await mainContainer.buildContactsRepository().getContacts(values.page)
             }
         }
     })),
