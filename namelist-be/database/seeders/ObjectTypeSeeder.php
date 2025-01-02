@@ -21,7 +21,7 @@ class ObjectTypeSeeder extends Seeder
             [
                 'name' => 'first_name',
                 'type' => PropertyDefinitionType::text,
-                'validations' => 'required_without:email_address|nullable|string|max:120',
+                'validations' => 'required_without:properties.email_address|nullable|string|max:120',
             ],
             [
                 'name' => 'last_name',
@@ -31,7 +31,7 @@ class ObjectTypeSeeder extends Seeder
             [
                 'name' => 'email_address',
                 'type' => PropertyDefinitionType::email,
-                'validations' => 'required_without:first_name|nullable|email',
+                'validations' => 'required_without:properties.first_name|nullable|email',
             ],
             [
                 'name' => 'phone_number',

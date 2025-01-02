@@ -7,10 +7,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ObjectProperties extends Model
 {
-    protected $casts = [
-        'value' => 'json',
-    ];
-
     public function crmObject(): BelongsTo
     {
         return $this->belongsTo(CrmObject::class);

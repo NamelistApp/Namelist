@@ -52,7 +52,7 @@ return new class extends Migration
                 ->onDelete('restrict');
             $table->string('name')->index();
             $table->integer('version')->default(1);
-            $table->jsonb('value');
+            $table->text('value');
             $table->timestamps();
             $table->softDeletes();
 

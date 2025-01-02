@@ -40,12 +40,14 @@ class UniquePropertyValue implements DataAwareRule, ValidationRule
             'value' => $value,
         ]);
 
+        //where json contains case insensitive
+
         $exists = $this->portal->objectProperties()
             ->where([
                 'object_type_id' => $this->objectTypeId,
                 'name' => $this->propertyName,
             ])
-            ->whereJsonContains('value', $value)
+            ->whereRaw('LOWER(value) = LOWER(?)', $value)
             ->exists();
 
         if ($exists) {
