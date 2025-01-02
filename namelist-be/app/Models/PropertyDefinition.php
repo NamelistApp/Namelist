@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Enum\ObjectTypeId;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,8 +16,8 @@ class PropertyDefinition extends Model
         'metadata' => 'array',
     ];
 
-    public static function for(ObjectTypeId $objectTypeId, array $propertyNames): Builder
+    public static function for(ObjectType $objectType, array $propertyNames): Builder
     {
-        return PropertyDefinition::where('object_type_id', $objectTypeId->value)->whereIn('name', $propertyNames);
+        return PropertyDefinition::where('object_type_id', $objectType->id)->whereIn('name', $propertyNames);
     }
 }

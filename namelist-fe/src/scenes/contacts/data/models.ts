@@ -18,8 +18,8 @@ export class Contact {
 }
 
 export type CreateContactRequest = {
-    email_address: string | null
-    phone_number: string | null
-    first_name: string | null
-    last_name: string | null
+    emailAddress: string | null
+    phoneNumber: string | null
+    firstName: string | null
+    lastName: string | null
 }

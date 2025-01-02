@@ -11,8 +11,8 @@ class ObjectProperties extends Model
         'value' => 'json',
     ];
 
-    public function object(): BelongsTo
+    public function crmObject(): BelongsTo
     {
-        return $this->belongsTo(BaseObject::class);
+        return $this->belongsTo(CrmObject::class);
     }
 }

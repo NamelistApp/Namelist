@@ -1,18 +1,21 @@
 <?php
 
-namespace App\Http\Requests\Contacts;
+namespace App\Http\Requests\Crm;
 
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ContactRequest extends FormRequest
+class CrmObjectRequest extends FormRequest
 {
     public function authorize(): bool
     {
         return true;
     }
 
-    public function rules(): array
+    public function rules(Request $request): array
     {
+        dd('hello world');
+
         // TODO check for unique email addresses
         return [
             'email_address' => ['required_without:first_name', 'nullable', 'email'],

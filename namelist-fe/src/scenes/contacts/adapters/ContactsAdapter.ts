@@ -1,7 +1,6 @@
-import { ObjectAdapter } from "../../../data/objects/adapters/ObjectAdapter";
-import { CrmObjectProperty, RawCrmObject } from "../../../data/objects/models/CrmObject";
+import { CreateCrmObjectRequest, CreateCrmObjectRequestInterface, CrmObjectProperty, CrmObjectSource, RawCrmObject } from "../../../data/crm/models/CrmObject";
 import { Paginated } from "../../../domain/api";
-import { Contact } from "../data/models";
+import { Contact, CreateContactRequest } from "../data/models";
 
 export class ContactsAdapter {
     static fromPaginatedObjects(response: Paginated<RawCrmObject>): Paginated<Contact> {
@@ -9,6 +8,16 @@ export class ContactsAdapter {
             ...response,
             data: response.data.map((object) => this.toContact(object))
         }
+    }
+
+    static toCrmObjectRequest(contactRequest: CreateContactRequest): CreateCrmObjectRequestInterface {
+        return new CreateCrmObjectRequest({
+            first_name: contactRequest.firstName,
+            last_name: contactRequest.lastName,
+            email_address: contactRequest.emailAddress,
+            phone_number: contactRequest.phoneNumber,
+            source: CrmObjectSource.Manual
+        })
     }
 
     private static toContact(object: RawCrmObject): Contact {

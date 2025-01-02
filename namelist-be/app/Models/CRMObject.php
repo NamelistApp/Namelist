@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class CRMObject extends Model
+class CrmObject extends Model
 {
-    protected $table = 'objects';
+    protected $table = 'crm_objects';
 
     public function portal(): BelongsTo
     {

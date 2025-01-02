@@ -8,7 +8,7 @@ import { KeaPlugin, resetContext } from 'kea'
 import posthog from 'posthog-js'
 import * as Sentry from "@sentry/react"
 import { notifications } from '@mantine/notifications';
-import { ContactsApiClient, ContactsApiClientInterface } from "./scenes/contacts/data/ContactsApiClient";
+import { CrmObjectApiClient, CrmObjectApiClientInterface } from "./data/crm/api/CrmObjectsApiClient";
 import { ContactsRepository, ContactsRepositoryInterface } from "./scenes/contacts/data/ContactsRepository";
 import { addPortalIdIfMissing, removePortalIdIfPresent } from "./lib/router-utils";
 
@@ -44,7 +44,7 @@ class MainContainer {
 
     // Repositories
     buildContactsRepository(): ContactsRepositoryInterface {
-        return new ContactsRepository(this.buildContactsApiClient(AppContext.getCurrentPortalId()))
+        return new ContactsRepository(this.buildCrmObjectApiClient(AppContext.getCurrentPortalId()))
     }
 
     // Api Clients
@@ -53,8 +53,8 @@ class MainContainer {
     }
 
     // Private
-    private buildContactsApiClient(portalId: number): ContactsApiClientInterface {
-        return new ContactsApiClient(this.apiClient, AppContext.getCurrentPortalId())
+    private buildCrmObjectApiClient(portalId: number): CrmObjectApiClientInterface {
+        return new CrmObjectApiClient(this.apiClient, AppContext.getCurrentPortalId())
     }
 
     private buildBaseApiClient(): BaseApiClientInterface {

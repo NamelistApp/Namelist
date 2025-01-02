@@ -18,7 +18,7 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('objects', function (Blueprint $table) {
+        Schema::create('crm_objects', function (Blueprint $table) {
             $table->id();
             $table->foreignId('object_type_id')->constrained()->onDelete('restrict');
             $table->foreignId('portal_id')->constrained()->cascadeOnDelete();
@@ -31,14 +31,14 @@ return new class extends Migration
             $table->foreignId('object_type_id')->constrained()->onDelete('restrict');
             $table->string('name')->index();
             $table->string('type');
-            $table->jsonb('metadata')->nullable();
+            $table->text('validations')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
 
         Schema::create('object_properties', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('object_id')
+            $table->foreignId('crm_object_id')
                 ->constrained()
                 ->onDelete('cascade');
             $table->foreignId('property_definition_id')
@@ -50,7 +50,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->primary(['property_definition_id', 'object_id']);
+            $table->primary(['property_definition_id', 'crm_object_id']);
         });
     }
 

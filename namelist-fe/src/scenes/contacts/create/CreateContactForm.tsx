@@ -15,7 +15,7 @@ export function CreateContactForm({ onSuccess }: CreateContactProps): JSX.Elemen
         <>
             <Form logic={createContactLogic} props={logicProps} formKey="createContactForm" enableFormOnSubmit>
                 <Stack>
-                    <Field name="email_address">
+                    <Field name="emailAddress">
                         {({ value, onChange }) => (
                             <TextInput
                                 data-autofocus
@@ -28,7 +28,7 @@ export function CreateContactForm({ onSuccess }: CreateContactProps): JSX.Elemen
                             />
                         )}
                     </Field>
-                    <Field name="first_name">
+                    <Field name="firstName">
                         {({ value, onChange }) => (
                             <TextInput
                                 label="First Name"
@@ -39,7 +39,7 @@ export function CreateContactForm({ onSuccess }: CreateContactProps): JSX.Elemen
                             />
                         )}
                     </Field>
-                    <Field name="last_name">
+                    <Field name="lastName">
                         {({ value, onChange }) => (
                             <TextInput
                                 label="Last Name"
@@ -50,7 +50,7 @@ export function CreateContactForm({ onSuccess }: CreateContactProps): JSX.Elemen
                             />
                         )}
                     </Field>
-                    <Field name="phone_number">
+                    <Field name="phoneNumber">
                         {({ value, onChange }) => (
                             <TextInput
                                 label="Phone Number"

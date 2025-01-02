@@ -21,13 +21,13 @@ const createContactLogic = kea<createContactLogicType>([
     forms(({ actions, props }) => ({
         createContactForm: {
             defaults: {
-                email_address: null,
-                phone_number: null,
-                first_name: null,
-                last_name: null,
+                emailAddress: null,
+                phoneNumber: null,
+                firstName: null,
+                lastName: null,
             } as CreateContactRequest,
             errors: (req: CreateContactRequest) => ({
-                email_address: ((!req.email_address || !/^\S+@\S+$/.test(req.email_address)) && !req.first_name) ? 'First name or valid email address is required' : null,
+                emailAddress: ((!req.emailAddress || !/^\S+@\S+$/.test(req.emailAddress)) && !req.firstName) ? 'First name or valid email address is required' : null,
             }),
             submit: async (req) => {
                 try {

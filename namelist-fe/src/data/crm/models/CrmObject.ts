@@ -1,4 +1,20 @@
-import { Paginated } from "../../../domain/api";
+export enum CrmObjectTypeId {
+    Contact = 1
+}
+
+export enum CrmObjectSource {
+    Manual = "manual"
+}
+
+export interface CreateCrmObjectRequestInterface {
+    properties: Record<string, string | number | null>
+}
+
+export class CreateCrmObjectRequest {
+    constructor(
+        public properties: Record<string, string | number | null>
+    ) { }
+}
 
 export class RawCrmProperty {
     constructor(

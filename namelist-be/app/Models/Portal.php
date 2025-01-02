@@ -22,9 +22,9 @@ class Portal extends Model
         return $this->belongsTo(Organization::class);
     }
 
-    public function objects(): HasMany
+    public function crmObjects(): HasMany
     {
-        return $this->hasMany(BaseObject::class);
+        return $this->hasMany(CrmObject::class);
     }
 
     public function contacts(): HasMany
