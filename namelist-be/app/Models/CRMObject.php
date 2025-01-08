@@ -10,6 +10,11 @@ class CrmObject extends Model
 {
     protected $table = 'crm_objects';
 
+    // include properties
+    protected $with = [
+        'properties',
+    ];
+
     public function portal(): BelongsTo
     {
         return $this->belongsTo(Portal::class);

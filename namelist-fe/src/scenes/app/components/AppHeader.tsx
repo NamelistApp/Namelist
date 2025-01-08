@@ -3,18 +3,22 @@ import Breadcrumb from './breadcrumb/Breadcrumb';
 import { IconPlus, IconUser } from '@tabler/icons-react';
 import { useDisclosure } from '@mantine/hooks';
 import { CreateContactForm } from '../../contacts/create/CreateContactForm';
+import { useActions, useValues } from 'kea';
+import navigationLogic from './navigationLogic';
 
-export default function AppHeader({ opened, toggle }: { opened: boolean; toggle: () => void }) {
+export default function AppHeader() {
     const [contactOpened, contactHandler] = useDisclosure(false);
     const combobox = useCombobox({
         onDropdownClose: () => combobox.resetSelectedOption(),
     });
+    const { setOpened } = useActions(navigationLogic)
+    const { opened } = useValues(navigationLogic);
 
     return (
         <>
             <Flex justify="space-between" align="center" h={60} px="sm">
                 <Group h="100%">
-                    <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+                    <Burger opened={opened} onClick={() => setOpened(!opened)} hiddenFrom="sm" size="sm" />
                     <Breadcrumb />
                 </Group >
 

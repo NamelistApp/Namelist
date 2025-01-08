@@ -1,11 +1,13 @@
 import { BindLogic, useValues } from 'kea'
 import { SceneExport } from '../sceneTypes'
-import cx from 'clsx';
 import contactsLogic from './contactsLogic'
 import { Avatar, Box, Button, Center, Group, Loader, Paper, Stack, Table, Text, Title } from '@mantine/core'
 import { IconUsers } from '@tabler/icons-react';
 import { Contact } from './data/models';
 import { humanFriendlyDetailedTime, valueOrEmpty } from '../../lib/utils';
+import AppHeader from '../app/components/AppHeader';
+import { router } from 'kea-router';
+import classes from './styles/Contacts.module.scss'
 
 export const scene: SceneExport = {
     component: Contacts,
@@ -15,11 +17,16 @@ export const scene: SceneExport = {
 function Contacts(): JSX.Element {
     return (
         <BindLogic logic={contactsLogic} props={{}}>
-            <Box p="sm">
+            <AppHeader />
+            <Box px="sm">
                 <ContactsScene />
             </Box>
         </BindLogic>
     )
+}
+
+function didClickContact(contactId: number) {
+    router.actions.push(`/contacts/${contactId}`)
 }
 
 export function ContactsScene() {
@@ -36,7 +43,7 @@ export function ContactsScene() {
                     <Center style={{ height: '100vh' }}><Loader color="blue" /></Center>
                 ) : contacts.data.length ? (
                     <Paper radius="md" withBorder p="md">
-                        <Table miw={800} verticalSpacing="sm">
+                        <Table styles={classes} miw={800} verticalSpacing="sm">
                             <Table.Thead>
                                 <Table.Tr>
                                     <Table.Th>Name</Table.Th>
@@ -48,7 +55,7 @@ export function ContactsScene() {
                             <Table.Tbody>
                                 {contacts.data.map((contact: Contact) => {
                                     return (
-                                        <Table.Tr key={contact.id}>
+                                        <Table.Tr style={{ cursor: 'pointer' }} onClick={() => { didClickContact(contact.id) }} key={contact.id}>
                                             <Table.Td>
                                                 <Group gap="sm">
                                                     <Avatar size={26} radius={26} />

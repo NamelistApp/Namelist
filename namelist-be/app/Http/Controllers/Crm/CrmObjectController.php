@@ -17,7 +17,6 @@ class CrmObjectController extends Controller
         return $portal
             ->crmObjects()
             ->where('object_type_id', $objectType->id)
-            ->with('properties')
             ->paginate();
     }
 
@@ -49,7 +48,7 @@ class CrmObjectController extends Controller
         });
     }
 
-    public function show(Portal $portal, CrmObject $crmObject)
+    public function show(Portal $portal, ObjectType $objectType, CrmObject $crmObject)
     {
         return $crmObject;
     }

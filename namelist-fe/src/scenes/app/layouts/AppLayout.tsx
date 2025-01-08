@@ -1,20 +1,19 @@
 import { AppShell, Container, Divider } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
-import React, { createContext, useContext } from 'react';
+import React from 'react';
 
 import { Notifications } from '@mantine/notifications'
 import { DemoBanner } from './shared/DemoBanner'
 import { isDemo } from '../../../domain/constants'
-import AppHeader from '../components/AppHeader'
 import AppNavigation from '../components/AppNavigation'
+import { useValues } from 'kea';
+import navigationLogic from '../components/navigationLogic';
 
 interface AppLayoutProps {
     children: React.ReactNode
 }
 
 const AppLayout = ({ children }: AppLayoutProps): JSX.Element => {
-    const [opened, { toggle }] = useDisclosure()
-
+    const { opened } = useValues(navigationLogic);
     return (
         <Container size="responsive" p={0}>
             {isDemo && <DemoBanner />}
@@ -31,7 +30,6 @@ const AppLayout = ({ children }: AppLayoutProps): JSX.Element => {
                 </AppShell.Navbar>
 
                 <AppShell.Main>
-                    <AppHeader opened={opened} toggle={toggle} />
                     {children}
                 </AppShell.Main>
             </AppShell>

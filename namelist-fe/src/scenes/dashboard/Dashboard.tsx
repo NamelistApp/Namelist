@@ -5,6 +5,7 @@ import { Box, Divider, Group, Paper, SimpleGrid, Stack, Text, ThemeIcon, Title }
 import { LineChart } from '@mantine/charts'
 import '@mantine/charts/styles.css'
 import { IconArrowDownRight, IconArrowUpRight, IconHome } from '@tabler/icons-react'
+import AppHeader from '../app/components/AppHeader'
 
 export const scene: SceneExport = {
     component: Dashboard,
@@ -13,9 +14,12 @@ export const scene: SceneExport = {
 
 function Dashboard(): JSX.Element {
     return (
-        <BindLogic logic={dashboardLogic} props={{}}>
-            <DashboardScene />
-        </BindLogic>
+        <>
+            <AppHeader />
+            <BindLogic logic={dashboardLogic} props={{}}>
+                <DashboardScene />
+            </BindLogic>
+        </>
     )
 }
 

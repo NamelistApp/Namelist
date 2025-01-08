@@ -1,4 +1,4 @@
-import { afterMount, defaults, kea, key, path, props } from 'kea'
+import { actions, afterMount, defaults, kea, key, path, props } from 'kea'
 import type { contactsLogicType } from './contactsLogicType'
 import { Paginated } from '../../domain/api'
 import { Contact } from './data/models'

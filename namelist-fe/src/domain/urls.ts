@@ -15,4 +15,5 @@ export const urls = {
     // portal urls
     dashboard: (): string => '/',
     contacts: (): string => '/contacts',
+    contact: (contactId: string): string => `/contacts/${contactId}`,
 }

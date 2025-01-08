@@ -1,4 +1,4 @@
-import { Divider } from '@mantine/core'
+import { CloseButton, Divider, Group } from '@mantine/core'
 import classes from '../styles/AppNavigation.module.scss'
 import { A } from 'kea-router';
 import { useActions, useValues } from 'kea';
@@ -8,14 +8,16 @@ import AppLogo from './AppLogo';
 import { IconHome, IconLifebuoy, IconLogout, IconUsers } from '@tabler/icons-react'
 import { urls } from '../../../domain/urls';
 import { addPortalIdIfMissing } from '../../../lib/router-utils';
+import navigationLogic from './navigationLogic';
 
 export default function AppNavigation() {
     const { activeScene } = useValues(sceneLogic)
     const { logout } = useActions(userLogic)
+    const { setOpened } = useActions(navigationLogic)
 
     const tabs = [
         { link: addPortalIdIfMissing(urls.dashboard()), label: 'Dashboard', scenes: ['Dashboard'], icon: IconHome },
-        { link: addPortalIdIfMissing(urls.contacts()), label: 'People', scenes: ['Contacts'], icon: IconUsers }
+        { link: addPortalIdIfMissing(urls.contacts()), label: 'People', scenes: ['Contacts', 'Contact'], icon: IconUsers }
     ]
 
     const links = tabs.map((item) => (
@@ -32,7 +34,10 @@ export default function AppNavigation() {
 
     return (
         <nav className={classes.navbar}>
-            <AppLogo />
+            <Group justify="space-between">
+                <AppLogo />
+                <CloseButton hiddenFrom="sm" onClick={() => { setOpened(false) }} />
+            </Group>
 
             <Divider my={10} />
 

@@ -20,7 +20,7 @@ export class ContactsAdapter {
         })
     }
 
-    private static toContact(object: RawCrmObject): Contact {
+    static toContact(object: RawCrmObject): Contact {
         const propertiesMap = new Map(object.properties.map((property: CrmObjectProperty) => [property.name, property]))
 
         return new Contact(

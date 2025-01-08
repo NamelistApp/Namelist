@@ -1,0 +1,7 @@
+table {
+    tbody tr {
+        &:hover {
+            background-color: var(--mantine-color-gray-light-hover);
+        }
+    }
+}
