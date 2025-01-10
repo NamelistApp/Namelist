@@ -16,10 +16,10 @@ class NewUserSetup
             'name' => $user->name,
         ]);
 
-        $portal = $org->portals()->create([
-            'name' => 'Default portal',
+        $team = $org->teams()->create([
+            'name' => 'Default team',
         ]);
 
-        $user->setCurrentPortalId($portal->id);
+        $user->setCurrentTeam($team);
     }
 }

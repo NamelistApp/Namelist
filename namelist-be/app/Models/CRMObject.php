@@ -2,22 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use MongoDB\Laravel\Eloquent\Model;
+use MongoDB\Laravel\Relations\BelongsTo;
+use MongoDB\Laravel\Relations\HasMany;
 
 class CrmObject extends Model
 {
-    protected $table = 'crm_objects';
+    protected $table = 'Contact';
+
+    const CREATED_AT = 'createdAt';
+
+    const UPDATED_AT = 'updatedAt';
 
     // include properties
     protected $with = [
         'properties',
     ];
 
-    public function portal(): BelongsTo
+    public function team(): BelongsTo
     {
-        return $this->belongsTo(Portal::class);
+        return $this->belongsTo(Team::class);
     }
 
     public function objectType(): BelongsTo
@@ -27,6 +31,6 @@ class CrmObject extends Model
 
     public function properties(): HasMany
     {
-        return $this->hasMany(ObjectProperties::class);
+        return $this->hasMany(ObjectProperty::class);
     }
 }

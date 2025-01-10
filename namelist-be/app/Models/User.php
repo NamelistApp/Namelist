@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
 use App\Events\UserCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Notifications\Notifiable;
 use MongoDB\Laravel\Auth\User as Authenticatable;
+use MongoDB\Laravel\Relations\BelongsTo;
+use MongoDB\Laravel\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -17,9 +15,14 @@ class User extends Authenticatable
 
     protected $table = 'User';
 
+    const CREATED_AT = 'createdAt';
+
+    const UPDATED_AT = 'updatedAt';
+
     protected $fillable = [
         'name',
         'emailAddress',
+        'currentTeam',
         'password',
     ];
 
@@ -46,17 +49,17 @@ class User extends Authenticatable
 
     public function organizations(): BelongsToMany
     {
-        return $this->belongsToMany(Organization::class, OrganizationUser::class);
+        return $this->belongsToMany(Organization::class);
     }
 
-    public function currentPortal(): BelongsTo
+    public function currentTeam(): BelongsTo
     {
-        return $this->belongsTo(Portal::class, 'current_portal_id');
+        return $this->belongsTo(Team::class, 'currentTeam');
     }
 
-    public function setCurrentPortalId($portalId)
+    public function setCurrentTeam(Team $team): void
     {
-        $this->current_portal_id = $portalId;
+        $this->currentTeam = $team;
         $this->save();
     }
 

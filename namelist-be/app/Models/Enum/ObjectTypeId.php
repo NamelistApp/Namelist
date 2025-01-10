@@ -2,7 +2,7 @@
 
 namespace App\Models\Enum;
 
-enum ObjectTypeId: int
+enum ObjectTypeId: string
 {
-    case Contact = 1;
+    case Contact = 'contact';
 }

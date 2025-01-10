@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -12,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('organizations', function (Blueprint $table) {
+        Schema::create('Organization', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->softDeletes();
             $table->timestamps();
         });
 
-        Schema::create('portals', function (Blueprint $table) {
+        Schema::create('Team', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->foreignId('organization_id')->constrained()->restrictOnDelete();
@@ -27,28 +26,20 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('User', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('emailAddress')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
-            $table->string('google_id')->nullable()->unique();
-            $table->string('apple_id')->nullable()->unique();
-            $table->boolean('is_staff')->default(false);
-            $table->foreignId('current_portal_id')
+            $table->string('googleId')->nullable()->unique();
+            $table->string('appleId')->nullable()->unique();
+            $table->boolean('isStaff')->default(false);
+            $table->foreignId('currentTeam')
                 ->nullable()
                 ->onDelete('set null');
             $table->rememberToken();
             $table->softDeletes();
-            $table->timestamps();
-        });
-
-        Schema::create('organization_user', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('organization_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->jsonb('scopes')->default(DB::raw("'[]'::jsonb"));
             $table->timestamps();
         });
 
@@ -57,15 +48,6 @@ return new class extends Migration
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
-
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->longText('payload');
-            $table->integer('last_activity')->index();
-        });
     }
 
     /**
@@ -73,11 +55,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('portals');
-        Schema::dropIfExists('organization_user');
-        Schema::dropIfExists('organizations');
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('Team');
+        Schema::dropIfExists('Organization');
+        Schema::dropIfExists('User');
         Schema::dropIfExists('password_reset_tokens');
-        Schema::dropIfExists('sessions');
     }
 };

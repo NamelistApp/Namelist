@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use MongoDB\Laravel\Eloquent\Model;
+use MongoDB\Laravel\Relations\BelongsTo;
 use MongoDB\Laravel\Relations\HasMany;
 
-class Organization extends Model
+class Team extends Model
 {
     use HasFactory;
 
-    protected $table = 'Organization';
+    protected $table = 'Team';
 
     const CREATED_AT = 'createdAt';
 
@@ -20,12 +21,13 @@ class Organization extends Model
         'name',
     ];
 
-    protected $with = [
-        'teams',
-    ];
-
-    public function teams(): HasMany
+    public function organization(): BelongsTo
     {
-        return $this->hasMany(Team::class);
+        return $this->belongsTo(Organization::class);
+    }
+
+    public function contacts(): HasMany
+    {
+        return $this->hasMany(CrmObject::class);
     }
 }

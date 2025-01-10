@@ -4,11 +4,14 @@ namespace App\Models\Enum;
 
 enum PropertyDefinitionType: string
 {
-    case text = 'TEXT';
-    case email = 'EMAIL';
-    case number = 'NUMBER';
-    case phoneNumber = 'PHONE_NUMBER';
-    case date = 'DATE';
-    case boolean = 'BOOLEAN';
-    case list = 'LIST';
+    case text = 'textInput';
+    case textArea = 'textArea';
+    case address = 'address';
+    case emailAddress = 'emailAddress';
+    case number = 'number';
+    case phoneNumber = 'phoneNumber';
+    case date = 'date';
+    case boolean = 'boolean';
+    case list = 'list';
+    case website = 'website';
 }

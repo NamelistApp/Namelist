@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Enum\ObjectTypeId;
 use App\Models\Enum\PropertyDefinitionType;
 use App\Models\ObjectType;
 use Illuminate\Database\Seeder;
@@ -13,7 +14,8 @@ class ObjectTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        $contactObjectType = ObjectType::create([
+        $contactObjectType = ObjectType::forceCreate([
+            'id' => ObjectTypeId::Contact->value,
             'name' => 'Contact',
         ]);
 
@@ -30,7 +32,7 @@ class ObjectTypeSeeder extends Seeder
             ],
             [
                 'name' => 'email_address',
-                'type' => PropertyDefinitionType::email,
+                'type' => PropertyDefinitionType::emailAddress,
                 'validations' => 'required_without:properties.first_name|nullable|email',
             ],
             [
@@ -41,9 +43,9 @@ class ObjectTypeSeeder extends Seeder
         ];
 
         foreach ($contactProperties as $property) {
-            $contactObjectType->propertyDefinitions()->create([
-                'name' => $property['name'],
-                'type' => $property['type'],
+            $contactObjectType->customFields()->create([
+                'title' => $property['name'],
+                'fieldType' => $property['type'],
                 'validations' => $property['validations'],
             ]);
         }

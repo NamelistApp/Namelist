@@ -20,7 +20,7 @@ class CreateUser extends Command
 
         $user = User::create([
             'name' => $name,
-            'email' => $email,
+            'emailAddress' => $email,
             'password' => Hash::make($password),
         ]);
 

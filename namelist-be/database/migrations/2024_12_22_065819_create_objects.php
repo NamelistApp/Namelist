@@ -11,53 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('object_types', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
-            $table->softDeletes();
-        });
+        Schema::create('ObjectType', function (Blueprint $table) {});
 
-        Schema::create('crm_objects', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('object_type_id')->constrained()->onDelete('restrict');
-            $table->foreignId('portal_id')->constrained()->cascadeOnDelete();
-            $table->timestamps();
-            $table->softDeletes();
-        });
+        Schema::create('Contact', function (Blueprint $table) {});
 
-        Schema::create('property_definitions', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('object_type_id')->constrained()->onDelete('restrict');
-            $table->string('name')->index();
-            $table->string('type');
-            $table->text('validations')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
-        });
+        Schema::create('CustomField', function (Blueprint $table) {});
 
-        Schema::create('object_properties', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('crm_object_id')
-                ->constrained()
-                ->onDelete('cascade');
-            $table->foreignId('portal_id')
-                ->constrained()
-                ->onDelete('cascade');
-            $table->foreignId('object_type_id')
-                ->constrained()
-                ->onDelete('restrict');
-            $table->foreignId('property_definition_id')
-                ->constrained()
-                ->onDelete('restrict');
-            $table->string('name')->index();
-            $table->integer('version')->default(1);
-            $table->text('value');
-            $table->timestamps();
-            $table->softDeletes();
-
-            $table->primary(['property_definition_id', 'crm_object_id']);
-        });
+        Schema::create('CustomFieldEntry', function (Blueprint $table) {});
     }
 
     /**
@@ -65,9 +25,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('object_properties');
-        Schema::dropIfExists('property_definitions');
-        Schema::dropIfExists('object_types');
-        Schema::dropIfExists('objects');
+        Schema::dropIfExists('ObjectType');
+        Schema::dropIfExists('Contact');
+        Schema::dropIfExists('CustomField');
+        Schema::dropIfExists('CustomFieldEntry');
     }
 };
