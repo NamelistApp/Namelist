@@ -66,7 +66,7 @@ const loginLogic = kea<loginLogicType>([
                 breakpoint()
                 try {
                     await authApiClient.csrfToken()
-                    return await authApiClient.login({ email, password })
+                    await authApiClient.login({ email, password })
                 } catch (error: any) {
                     notifications.show({
                         color: 'red',
