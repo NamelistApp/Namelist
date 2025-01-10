@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd namelist-be
+./vendor/bin/sail artisan app:create-user $1 $2 $3

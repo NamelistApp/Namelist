@@ -8,16 +8,18 @@ use App\Events\UserCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use MongoDB\Laravel\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $table = 'User';
+
     protected $fillable = [
         'name',
-        'email',
+        'emailAddress',
         'password',
     ];
 
