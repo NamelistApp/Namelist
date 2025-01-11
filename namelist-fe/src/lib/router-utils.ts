@@ -1,23 +1,23 @@
-import { Portal } from '../domain/types'
+import { Team } from '../domain/types'
 import { AppContext } from '../MainContainer'
 
-const pathsWithoutPortalId = [
+const pathsWithoutTeamId = [
     'login',
 ]
 
-function isPathWithoutPortalId(path: string): boolean {
+function isPathWithoutTeamId(path: string): boolean {
     const firstPart = path.split('/')[1]
-    return pathsWithoutPortalId.includes(firstPart)
+    return pathsWithoutTeamId.includes(firstPart)
 }
 
-function addPortalIdUnlessPresent(path: string, portalId?: Portal['id']): string {
-    if (path.match(/^\/portal\/\d+/)) {
+function addTeamIdUnlessPresent(path: string, teamId?: Team['id']): string {
+    if (path.match(/^\/team\/\d+/)) {
         return path
     }
 
     let prefix = ''
     try {
-        prefix = `/portal/${portalId ?? AppContext.getCurrentPortalId()}`
+        prefix = `/team/${teamId ?? AppContext.getCurrentTeamId()}`
         if (path == '/') {
             return prefix
         }
@@ -30,15 +30,15 @@ function addPortalIdUnlessPresent(path: string, portalId?: Portal['id']): string
     return `${prefix}/${path.startsWith('/') ? path.slice(1) : path}`
 }
 
-export function removePortalIdIfPresent(path: string): string {
-    if (path.match(/^\/portal\/\d+/)) {
+export function removeTeamIdIfPresent(path: string): string {
+    if (path.match(/^\/team\/\d+/)) {
         return '/' + path.split('/').splice(3).join('/')
     }
     return path
 }
 
-export function addPortalIdIfMissing(path: string, portalId?: Portal['id']): string {
-    return isPathWithoutPortalId(removePortalIdIfPresent(path))
-        ? removePortalIdIfPresent(path)
-        : addPortalIdUnlessPresent(path, portalId)
+export function addTeamIdIfMissing(path: string, teamId?: Team['id']): string {
+    return isPathWithoutTeamId(removeTeamIdIfPresent(path))
+        ? removeTeamIdIfPresent(path)
+        : addTeamIdUnlessPresent(path, teamId)
 }

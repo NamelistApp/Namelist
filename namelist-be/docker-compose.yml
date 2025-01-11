@@ -1,13 +1,29 @@
 services:
     mongodb:
+        container_name: mongodb
         image: mongo
         ports:
             - 27017:27017
         environment:
             MONGO_INITDB_ROOT_USERNAME: root
             MONGO_INITDB_ROOT_PASSWORD: example
+        command: >
+            bash -c "
+            echo 'Generating keyfile...' &&
+            openssl rand -base64 756 > /data/configdb/keyfile &&
+            chmod 600 /data/configdb/keyfile &&
+            mongod --replSet rs0 --bind_ip_all --keyFile /data/configdb/keyfile --auth --port 27017 &
+            until mongo --quiet --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 1; done &&
+            mongo --eval 'rs.initiate({_id: \"rs0\", members: [{_id: 0, host: \"mongodb:27017\"}]})'"
         volumes:
             - mongodb-data:/data/db
+            - mongodb-config:/data/configdb
+        healthcheck:
+            test: >
+                mongo --eval "db.adminCommand({ replSetGetStatus: 1 })" --quiet
+            interval: 10s
+            timeout: 5s
+            retries: 5
     laravel.test:
         build:
             context: ./docker/8.4
@@ -82,4 +98,6 @@ volumes:
     sail-redis:
         driver: local
     mongodb-data:
+        driver: local
+    mongodb-config:
         driver: local

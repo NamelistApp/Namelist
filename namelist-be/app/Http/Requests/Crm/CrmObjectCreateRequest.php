@@ -16,7 +16,7 @@ class CrmObjectCreateRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'properties.email_address' => 'email address',
+            'properties.emailAddress' => 'email address',
         ];
     }
 
@@ -28,18 +28,20 @@ class CrmObjectCreateRequest extends FormRequest
     public function rules(): array
     {
         $uniqueObjectTypeProperties = [
-            ObjectTypeId::Contact => ['emailAddress'],
+            ObjectTypeId::Contact->value => ['emailAddress'],
         ];
 
-        $validations = $this->objectType->propertyDefinitions
+        Log::debug($this->objectType);
+
+        $validations = $this->objectType->customFields
             ->pluck('validations', 'name')
-            ->mapWithKeys(fn ($validations, $name) => ["properties.$name" => explode('|', $validations)])
+            ->mapWithKeys(fn ($validations, $name) => ["properties.$name" => $validations])
             ->toArray();
 
         $uniqueProperties = $uniqueObjectTypeProperties[$this->objectType->id] ?? [];
 
         foreach ($uniqueProperties as $property) {
-            $validations["properties.$property"][] = new UniquePropertyValue($this->portal, $this->objectType->id, 'emailAddress');
+            $validations["properties.$property"][] = new UniquePropertyValue($this->team, $this->objectType->id, 'emailAddress');
         }
 
         Log::debug('validations', $validations);

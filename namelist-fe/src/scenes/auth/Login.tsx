@@ -56,7 +56,7 @@ function LoginForm(props: PaperProps): JSX.Element {
 
                 <Form logic={loginLogic} formKey="loginForm" enableFormOnSubmit>
                     <Stack>
-                        <Field name="email">
+                        <Field name="emailAddress">
                             {({ value, onChange }) => (
                                 <TextInput
                                     required

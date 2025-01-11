@@ -12,7 +12,7 @@ export const urls = {
     default: (): string => '/',
     login: (): string => '/login',
 
-    // portal urls
+    // team urls
     dashboard: (): string => '/',
     contacts: (): string => '/contacts',
     contact: (contactId: string): string => `/contacts/${contactId}`,

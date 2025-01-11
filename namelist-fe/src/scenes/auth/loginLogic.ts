@@ -55,18 +55,18 @@ const loginLogic = kea<loginLogicType>([
     forms(({ actions }) => ({
         loginForm: {
             defaults: {
-                email: isDemo ? 'demo@namelist.app' : 'david@namelist.app',
+                emailAddress: isDemo ? 'demo@namelist.app' : 'david@namelist.app',
                 password: isDemo ? 'DemoPassword' : 'password',
             } as LoginRequest,
-            errors: ({ email, password }: LoginRequest) => ({
-                email: email ? (/^\S+@\S+$/.test(email) ? null : 'Please enter a valid email') : 'Please enter an email',
+            errors: ({ emailAddress, password }: LoginRequest) => ({
+                emailAddress: emailAddress ? (/^\S+@\S+$/.test(emailAddress) ? null : 'Please enter a valid email') : 'Please enter an email',
                 password: password.length <= 6 ? 'Password should include at least 6 characters' : null,
             }),
-            submit: async ({ email, password }, breakpoint) => {
+            submit: async ({ emailAddress, password }, breakpoint) => {
                 breakpoint()
                 try {
                     await authApiClient.csrfToken()
-                    await authApiClient.login({ email, password })
+                    await authApiClient.login({ emailAddress, password })
                 } catch (error: any) {
                     notifications.show({
                         color: 'red',

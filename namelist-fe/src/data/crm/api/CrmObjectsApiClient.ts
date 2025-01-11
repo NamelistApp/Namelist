@@ -2,23 +2,23 @@ import { CreateCrmObjectRequest, CreateCrmObjectRequestInterface, RawCrmObject }
 import { BaseApiClientInterface, Paginated } from "../../../domain/api"
 
 export interface CrmObjectApiClientInterface {
-    createObject(objectTypeId: number, request: CreateCrmObjectRequest): Promise<void>
-    getObjects(objectTypeId: number, page: number): Promise<Paginated<RawCrmObject>>
-    getObject(objectTypeId: number, objectId: number): Promise<RawCrmObject>
+    createObject(objectTypeId: string, request: CreateCrmObjectRequest): Promise<void>
+    getObjects(objectTypeId: string, page: number): Promise<Paginated<RawCrmObject>>
+    getObject(objectTypeId: string, objectId: string): Promise<RawCrmObject>
 }
 
 export class CrmObjectApiClient implements CrmObjectApiClientInterface {
-    constructor(private apiClient: BaseApiClientInterface, private portalId: number) { }
+    constructor(private apiClient: BaseApiClientInterface, private teamId: string) { }
 
-    async getObjects(objectTypeId: number, page: number): Promise<Paginated<RawCrmObject>> {
-        return this.apiClient.get(`/api/portal/${this.portalId}/crm-objects/${objectTypeId}?page=${page ?? ''}`)
+    async getObjects(objectTypeId: string, page: number): Promise<Paginated<RawCrmObject>> {
+        return this.apiClient.get(`/api/team/${this.teamId}/crm-objects/${objectTypeId}?page=${page ?? ''}`)
     }
 
-    async getObject(objectTypeId: number, objectId: number): Promise<RawCrmObject> {
-        return this.apiClient.get(`/api/portal/${this.portalId}/crm-objects/${objectTypeId}/${objectId}`)
+    async getObject(objectTypeId: string, objectId: string): Promise<RawCrmObject> {
+        return this.apiClient.get(`/api/team/${this.teamId}/crm-objects/${objectTypeId}/${objectId}`)
     }
 
-    async createObject(objectTypeId: number, request: CreateCrmObjectRequestInterface): Promise<void> {
-        return this.apiClient.post(`/api/portal/${this.portalId}/crm-objects/${objectTypeId}`, request)
+    async createObject(objectTypeId: string, request: CreateCrmObjectRequestInterface): Promise<void> {
+        return this.apiClient.post(`/api/team/${this.teamId}/crm-objects/${objectTypeId}`, request)
     }
 }

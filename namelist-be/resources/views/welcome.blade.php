@@ -137,7 +137,7 @@
                                     <h2 class="text-xl font-semibold text-black dark:text-white">Laravel News</h2>
 
                                     <p class="mt-4 text-sm/relaxed">
-                                        Laravel News is a community driven portal and newsletter aggregating all of the latest and most important news in the Laravel ecosystem, including new package releases and tutorials.
+                                        Laravel News is a community driven team and newsletter aggregating all of the latest and most important news in the Laravel ecosystem, including new package releases and tutorials.
                                     </p>
                                 </div>
 

@@ -24,7 +24,7 @@ export const userLogic = kea<userLogicType>([
         },
         loadUserSuccess: ({ user }) => {
             if (user) {
-                AppContext.setCurrentPortalId(user.portal.id)
+                AppContext.setCurrentTeamId(user.team.id)
             }
         }
     })),

@@ -7,7 +7,7 @@ import { CrmObjectTypeId } from "../../../data/crm/models/CrmObject"
 export interface ContactsRepositoryInterface {
     createContact(contact: CreateContactRequest): Promise<void>
     getContacts(page: number): Promise<Paginated<Contact>>
-    getContact(id: number): Promise<Contact>
+    getContact(id: string): Promise<Contact>
 }
 
 export class ContactsRepository implements ContactsRepositoryInterface {
@@ -18,7 +18,7 @@ export class ContactsRepository implements ContactsRepositoryInterface {
         return ContactsAdapter.fromPaginatedObjects(response)
     }
 
-    async getContact(id: number): Promise<Contact> {
+    async getContact(id: string): Promise<Contact> {
         const response = await this.apiClient.getObject(CrmObjectTypeId.Contact, id)
         return ContactsAdapter.toContact(response)
     }

@@ -6,7 +6,7 @@ import { loaders } from "kea-loaders";
 import { mainContainer } from "../../MainContainer";
 
 export type ContactLogicProps = {
-    contactId: number
+    contactId: string
 }
 
 const contactLogic = kea<contactLogicType>([
@@ -14,7 +14,7 @@ const contactLogic = kea<contactLogicType>([
     path((key) => ["src", "scenes", "contacts", "contactLogic", key]),
     key((props) => props.contactId),
     selectors({
-        contactId: [() => [(_, props) => props.contactId], (contactId): number => contactId],
+        contactId: [() => [(_, props) => props.contactId], (contactId): string => contactId],
     }),
     loaders(({ props }) => ({
         contact: {

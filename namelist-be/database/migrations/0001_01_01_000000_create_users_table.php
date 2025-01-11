@@ -34,7 +34,6 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->string('googleId')->nullable()->unique();
             $table->string('appleId')->nullable()->unique();
-            $table->boolean('isStaff')->default(false);
             $table->foreignId('currentTeam')
                 ->nullable()
                 ->onDelete('set null');

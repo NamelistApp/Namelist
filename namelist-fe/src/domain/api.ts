@@ -67,11 +67,11 @@ export class BaseApiClient implements BaseApiClientInterface {
     }
 }
 
-export class PortalApiClient extends BaseApiClient {
-    constructor(portalId: number | undefined) {
+export class TeamApiClient extends BaseApiClient {
+    constructor(teamId: number | undefined) {
         super()
         this.axiosInstance.defaults.params = {
-            portalId: portalId
+            teamId: teamId
         }
     }
 }

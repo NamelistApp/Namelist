@@ -6,27 +6,27 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Crm\CrmObjectCreateRequest;
 use App\Models\CrmObject;
 use App\Models\ObjectType;
-use App\Models\Portal;
+use App\Models\Team;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class CrmObjectController extends Controller
 {
-    public function index(Portal $portal, ObjectType $objectType)
+    public function index(Team $team, ObjectType $objectType)
     {
-        return $portal
+        return $team
             ->crmObjects()
             ->where('object_type_id', $objectType->id)
             ->paginate();
     }
 
-    public function store(Portal $portal, ObjectType $objectType, CrmObjectCreateRequest $request)
+    public function store(Team $team, ObjectType $objectType, CrmObjectCreateRequest $request)
     {
-        return DB::transaction(function () use ($portal, $objectType, $request) {
-            $crmObject = $portal->crmObjects()->forceCreate([
+        return DB::transaction(function () use ($team, $objectType, $request) {
+            $crmObject = $team->crmObjects()->forceCreate([
                 'object_type_id' => $objectType->id,
             ]);
-            $properties = $objectType->propertyDefinitions;
+            $properties = $objectType->customFields;
 
             foreach ($properties as $property) {
                 $propertySetValue = $request->validated('properties.'.$property->name);
@@ -36,7 +36,7 @@ class CrmObjectController extends Controller
                 if ($propertySetValue) {
                     $crmObject->properties()->forceCreate([
                         'property_definition_id' => $property->id,
-                        'portal_id' => $portal->id,
+                        'team_id' => $team->id,
                         'object_type_id' => $objectType->id,
                         'name' => $property->name,
                         'value' => $propertySetValue,
@@ -48,17 +48,17 @@ class CrmObjectController extends Controller
         });
     }
 
-    public function show(Portal $portal, ObjectType $objectType, CrmObject $crmObject)
+    public function show(Team $team, ObjectType $objectType, CrmObject $crmObject)
     {
         return $crmObject;
     }
 
-    public function destroy(Portal $portal, CrmObject $crmObject)
+    public function destroy(Team $team, CrmObject $crmObject)
     {
         $crmObject->delete();
     }
 
-    public function restore(Portal $portal, CrmObject $crmObject)
+    public function restore(Team $team, CrmObject $crmObject)
     {
         $crmObject->restore();
     }

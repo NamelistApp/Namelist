@@ -35,4 +35,14 @@ class Team extends Model
     {
         return $this->hasMany(CrmObject::class);
     }
+
+    public function crmObjects(): HasMany
+    {
+        return $this->hasMany(CrmObject::class);
+    }
+
+    public function customFields()
+    {
+        return $this->hasMany(CustomField::class, 'team');
+    }
 }

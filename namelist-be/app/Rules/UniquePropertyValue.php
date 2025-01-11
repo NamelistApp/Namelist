@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Models\Portal;
+use App\Models\Team;
 use Closure;
 use Illuminate\Contracts\Validation\DataAwareRule;
 use Illuminate\Contracts\Validation\ValidationRule;
@@ -12,15 +12,15 @@ class UniquePropertyValue implements DataAwareRule, ValidationRule
 {
     protected $data = [];
 
-    protected $portal;
+    protected $team;
 
     protected $objectTypeId;
 
     protected $propertyName;
 
-    public function __construct(Portal $portal, int $objectTypeId, string $propertyName)
+    public function __construct(Team $team, string $objectTypeId, string $propertyName)
     {
-        $this->portal = $portal;
+        $this->team = $team;
         $this->objectTypeId = $objectTypeId;
         $this->propertyName = $propertyName;
     }
@@ -40,11 +40,9 @@ class UniquePropertyValue implements DataAwareRule, ValidationRule
             'value' => $value,
         ]);
 
-        //where json contains case insensitive
-
-        $exists = $this->portal->objectProperties()
+        $exists = $this->team->customFields()
             ->where([
-                'object_type_id' => $this->objectTypeId,
+                'id' => $this->objectTypeId,
                 'name' => $this->propertyName,
             ])
             ->whereRaw('LOWER(value) = LOWER(?)', $value)

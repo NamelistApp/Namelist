@@ -39,18 +39,18 @@ export const sceneConfigurations: Record<Scene, SceneConfig> = {
         anonymousOnly: true,
     },
 
-    // Portal based routes
+    // Team based routes
     [Scene.Dashboard]: {
         layout: 'app',
-        portalBased: true
+        teamBased: true
     },
     [Scene.Contacts]: {
         layout: 'app',
-        portalBased: true
+        teamBased: true
     },
     [Scene.Contact]: {
         layout: 'app',
-        portalBased: true
+        teamBased: true
     },
 }
 

@@ -7,7 +7,7 @@ import { sceneLogic } from '../../sceneLogic';
 import AppLogo from './AppLogo';
 import { IconHome, IconLifebuoy, IconLogout, IconUsers } from '@tabler/icons-react'
 import { urls } from '../../../domain/urls';
-import { addPortalIdIfMissing } from '../../../lib/router-utils';
+import { addTeamIdIfMissing } from '../../../lib/router-utils';
 import navigationLogic from './navigationLogic';
 
 export default function AppNavigation() {
@@ -16,8 +16,8 @@ export default function AppNavigation() {
     const { setOpened } = useActions(navigationLogic)
 
     const tabs = [
-        { link: addPortalIdIfMissing(urls.dashboard()), label: 'Dashboard', scenes: ['Dashboard'], icon: IconHome },
-        { link: addPortalIdIfMissing(urls.contacts()), label: 'People', scenes: ['Contacts', 'Contact'], icon: IconUsers }
+        { link: addTeamIdIfMissing(urls.dashboard()), label: 'Dashboard', scenes: ['Dashboard'], icon: IconHome },
+        { link: addTeamIdIfMissing(urls.contacts()), label: 'People', scenes: ['Contacts', 'Contact'], icon: IconUsers }
     ]
 
     const links = tabs.map((item) => (
@@ -45,7 +45,7 @@ export default function AppNavigation() {
 
             <div className={classes.footer}>
                 <Divider my={10} />
-                <a hrefApp="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+                <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
                     <IconLifebuoy className={classes.linkIcon} stroke={1.5} />
                     <span>Support</span>
                 </a>

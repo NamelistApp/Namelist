@@ -38,7 +38,8 @@ return [
             'username' => env('DB_USERNAME'),
             'password' => env('DB_PASSWORD'),
             'options' => [
-                'database' => 'admin',
+                'replicaSet' => 'rs0',
+                'serverSelectionTryOnce' => true,
             ],
         ],
 

@@ -1,5 +1,5 @@
 import { AuthApiClient, AuthApiClientInterface } from "./scenes/auth/AuthApiClient";
-import { BaseApiClient, BaseApiClientInterface, PortalApiClient } from "./domain/api";
+import { BaseApiClient, BaseApiClientInterface, TeamApiClient } from "./domain/api";
 import { posthogKey, sentryDsn } from './domain/constants'
 import { formsPlugin } from 'kea-forms'
 import { loadersPlugin } from 'kea-loaders'
@@ -10,7 +10,7 @@ import * as Sentry from "@sentry/react"
 import { notifications } from '@mantine/notifications';
 import { CrmObjectApiClient, CrmObjectApiClientInterface } from "./data/crm/api/CrmObjectsApiClient";
 import { ContactsRepository, ContactsRepositoryInterface } from "./scenes/contacts/data/ContactsRepository";
-import { addPortalIdIfMissing, removePortalIdIfPresent } from "./lib/router-utils";
+import { addTeamIdIfMissing, removeTeamIdIfPresent } from "./lib/router-utils";
 
 interface InitKeaProps {
     state?: Record<string, any>
@@ -20,17 +20,17 @@ interface InitKeaProps {
 }
 
 export class AppContext {
-    private static _currentPortalId: number | null = null
+    private static _currentTeamId: string | null = null
 
-    static setCurrentPortalId(portalId: number) {
-        this._currentPortalId = portalId
+    static setCurrentTeamId(teamId: string) {
+        this._currentTeamId = teamId
     }
 
-    static getCurrentPortalId(): number {
-        if (!this._currentPortalId) {
-            throw new Error('No Current Portal')
+    static getCurrentTeamId(): string {
+        if (!this._currentTeamId) {
+            throw new Error('No Current Team')
         }
-        return this._currentPortalId
+        return this._currentTeamId
     }
 }
 
@@ -44,7 +44,7 @@ class MainContainer {
 
     // Repositories
     buildContactsRepository(): ContactsRepositoryInterface {
-        return new ContactsRepository(this.buildCrmObjectApiClient(AppContext.getCurrentPortalId()))
+        return new ContactsRepository(this.buildCrmObjectApiClient(AppContext.getCurrentTeamId()))
     }
 
     // Api Clients
@@ -53,8 +53,8 @@ class MainContainer {
     }
 
     // Private
-    private buildCrmObjectApiClient(portalId: number): CrmObjectApiClientInterface {
-        return new CrmObjectApiClient(this.apiClient, AppContext.getCurrentPortalId())
+    private buildCrmObjectApiClient(teamId: string): CrmObjectApiClientInterface {
+        return new CrmObjectApiClient(this.apiClient, AppContext.getCurrentTeamId())
     }
 
     private buildBaseApiClient(): BaseApiClientInterface {
@@ -98,13 +98,13 @@ class MainContainer {
                         segmentValueCharset: "a-zA-Z0-9-_~ %.@()!'|",
                     },
                     pathFromRoutesToWindow: (path) => {
-                        return addPortalIdIfMissing(path)
+                        return addTeamIdIfMissing(path)
                     },
                     transformPathInActions: (path) => {
-                        return addPortalIdIfMissing(path)
+                        return addTeamIdIfMissing(path)
                     },
                     pathFromWindowToRoutes: (path) => {
-                        return removePortalIdIfPresent(path)
+                        return removeTeamIdIfPresent(path)
                     },
                 }),
                 formsPlugin,

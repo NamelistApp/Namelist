@@ -1,5 +1,5 @@
 export enum CrmObjectTypeId {
-    Contact = 1
+    Contact = 'contact',
 }
 
 export enum CrmObjectSource {
@@ -34,7 +34,7 @@ export class RawCrmObject {
     constructor(
         public id: number,
         public object_type_id: number,
-        public portal_id: number,
+        public team_id: number,
         public created_at: Date,
         public updated_at: Date | null,
         public deleted_at: Date | null,

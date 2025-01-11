@@ -66,7 +66,7 @@ const OrganizationCombobox = ({ children }: CustomComboboxProps): JSX.Element =>
                 <Combobox.Search
                     value={search}
                     onChange={(event) => setSearch(event.currentTarget.value)}
-                    placeholder="Search portals"
+                    placeholder="Search teams"
                 />
                 {false ? (
                     <LoadingOverlay />
@@ -81,7 +81,7 @@ const OrganizationCombobox = ({ children }: CustomComboboxProps): JSX.Element =>
                             combobox.closeDropdown()
                             // TODO
                         }}>
-                            New Portal
+                            New Team
                         </Anchor>
                     </Group>
                 </Combobox.Footer>

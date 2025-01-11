@@ -16,7 +16,6 @@ class DevSeeder extends Seeder
             'emailAddress' => 'david@namelist.app',
             'name' => 'David',
             'password' => 'password',
-            'isStaff' => true,
         ]);
     }
 }

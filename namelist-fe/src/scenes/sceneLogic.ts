@@ -9,7 +9,7 @@ import type { sceneLogicType } from "./sceneLogicType";
 import { userLogic } from '../auth/userLogic'
 import { handleLoginRedirect } from './auth/loginLogic'
 import { urls } from '../domain/urls'
-import { addPortalIdIfMissing } from '../lib/router-utils'
+import { addTeamIdIfMissing } from '../lib/router-utils'
 
 export const sceneLogic = kea<sceneLogicType>([
     props(
@@ -109,7 +109,7 @@ export const sceneLogic = kea<sceneLogicType>([
             const user = userLogic.values.user
 
             const currentPathname = router.values.location.pathname
-            const canonicalPathname = addPortalIdIfMissing(router.values.location.pathname)
+            const canonicalPathname = addTeamIdIfMissing(router.values.location.pathname)
             if (currentPathname !== canonicalPathname) {
                 router.actions.replace(canonicalPathname, router.values.searchParams, router.values.hashParams)
                 return

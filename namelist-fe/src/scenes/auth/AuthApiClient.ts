@@ -3,7 +3,7 @@ import { User } from "../../domain/types"
 import { UserAdapter } from "./adapters/UserAdapter"
 
 export interface LoginRequest {
-    email: string
+    emailAddress: string
     password: string
 }
 
@@ -11,19 +11,18 @@ export interface LoginResponse {
     two_factor: string
 }
 
+export interface TeamResponse {
+    id: string
+}
+
 export interface UserResponse {
-    id: number
-    name: string
-    email: string
-    email_verified_at: string | null
-    google_id: string | null
-    apple_id: string | null
-    is_staff: boolean
-    current_portal_id: number
-    deleted_at: string | null
-    created_at: string
-    updated_at: string
-    avatar_url: string
+    id: string
+    emailAddress: string
+    name: string | null
+    team: TeamResponse
+    createdAt: string
+    updatedAt: string
+    avatarUrl: string
 }
 
 export interface AuthApiClientInterface {
