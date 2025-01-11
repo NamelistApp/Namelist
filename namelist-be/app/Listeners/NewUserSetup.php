@@ -20,6 +20,7 @@ class NewUserSetup
             'name' => 'Default team',
         ]);
 
+        $user->refresh();
         $user->setCurrentTeam($team);
     }
 }

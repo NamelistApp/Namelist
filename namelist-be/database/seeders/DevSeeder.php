@@ -12,11 +12,11 @@ class DevSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::create([
-            'email' => 'david@namelist.app',
+        User::create([
+            'emailAddress' => 'david@namelist.app',
             'name' => 'David',
             'password' => 'password',
-            'is_staff' => true,
+            'isStaff' => true,
         ]);
     }
 }

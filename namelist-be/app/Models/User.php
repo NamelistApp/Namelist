@@ -3,15 +3,25 @@
 namespace App\Models;
 
 use App\Events\UserCreated;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\MustVerifyEmail;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
-use MongoDB\Laravel\Auth\User as Authenticatable;
+use MongoDB\Laravel\Eloquent\DocumentModel;
+use MongoDB\Laravel\Eloquent\Model;
 use MongoDB\Laravel\Relations\BelongsTo;
 use MongoDB\Laravel\Relations\BelongsToMany;
 
-class User extends Authenticatable
+class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
-    use HasFactory, Notifiable;
+    use Authenticatable, Authorizable, CanResetPassword, DocumentModel, HasFactory, MustVerifyEmail, Notifiable;
+
+    protected $keyType = 'string';
 
     protected $table = 'User';
 
@@ -32,7 +42,7 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'avatar_url',
+        'avatarUrl',
     ];
 
     protected $dispatchesEvents = [
@@ -52,19 +62,20 @@ class User extends Authenticatable
         return $this->belongsToMany(Organization::class);
     }
 
-    public function currentTeam(): BelongsTo
+    public function team(): BelongsTo
     {
-        return $this->belongsTo(Team::class, 'currentTeam');
+        return $this->belongsTo(Team::class, 'team_id');
     }
 
     public function setCurrentTeam(Team $team): void
     {
-        $this->currentTeam = $team;
-        $this->save();
+        $this->update([
+            'team_id' => $team->id,
+        ]);
     }
 
     public function getAvatarUrlAttribute(): ?string
     {
-        return 'https://www.gravatar.com/avatar/'.md5(strtolower(trim($this->email)));
+        return 'https://www.gravatar.com/avatar/'.md5(strtolower(trim($this->emailAddress)));
     }
 }

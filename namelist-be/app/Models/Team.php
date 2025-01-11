@@ -26,6 +26,11 @@ class Team extends Model
         return $this->belongsTo(Organization::class);
     }
 
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
+
     public function contacts(): HasMany
     {
         return $this->hasMany(CrmObject::class);

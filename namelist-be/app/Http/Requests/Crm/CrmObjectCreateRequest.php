@@ -4,14 +4,14 @@ namespace App\Http\Requests\Crm;
 
 use App\Models\Enum\ObjectTypeId;
 use App\Models\ObjectType;
-use App\Models\Portal;
+use App\Models\Team;
 use App\Rules\UniquePropertyValue;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Log;
 
 class CrmObjectCreateRequest extends FormRequest
 {
-    public function __construct(Portal $portal, ObjectType $objectType) {}
+    public function __construct(Team $team, ObjectType $objectType) {}
 
     public function attributes(): array
     {
@@ -28,7 +28,7 @@ class CrmObjectCreateRequest extends FormRequest
     public function rules(): array
     {
         $uniqueObjectTypeProperties = [
-            ObjectTypeId::Contact->value => ['email_address'],
+            ObjectTypeId::Contact => ['emailAddress'],
         ];
 
         $validations = $this->objectType->propertyDefinitions
@@ -39,7 +39,7 @@ class CrmObjectCreateRequest extends FormRequest
         $uniqueProperties = $uniqueObjectTypeProperties[$this->objectType->id] ?? [];
 
         foreach ($uniqueProperties as $property) {
-            $validations["properties.$property"][] = new UniquePropertyValue($this->portal, $this->objectType->id, 'email_address');
+            $validations["properties.$property"][] = new UniquePropertyValue($this->portal, $this->objectType->id, 'emailAddress');
         }
 
         Log::debug('validations', $validations);

@@ -21,24 +21,24 @@ class ObjectTypeSeeder extends Seeder
 
         $contactProperties = [
             [
-                'name' => 'first_name',
+                'name' => 'firstName',
                 'type' => PropertyDefinitionType::text,
-                'validations' => 'required_without:properties.email_address|nullable|string|max:120',
+                'validations' => explode('|', 'required_without:properties.emailAddress|nullable|string|max:120'),
             ],
             [
-                'name' => 'last_name',
+                'name' => 'lastName',
                 'type' => PropertyDefinitionType::text,
-                'validations' => 'nullable|string|max:120',
+                'validations' => explode('|', 'nullable|string|max:120'),
             ],
             [
-                'name' => 'email_address',
+                'name' => 'emailAddress',
                 'type' => PropertyDefinitionType::emailAddress,
-                'validations' => 'required_without:properties.first_name|nullable|email',
+                'validations' => explode('|', 'required_without:properties.firstName|nullable|email'),
             ],
             [
-                'name' => 'phone_number',
+                'name' => 'phoneNumber',
                 'type' => PropertyDefinitionType::phoneNumber,
-                'validations' => 'nullable|string|max:30',
+                'validations' => explode('|', 'nullable|string|max:30'),
             ],
         ];
 
