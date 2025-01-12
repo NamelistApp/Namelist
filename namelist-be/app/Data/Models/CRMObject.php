@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Data\Models;
 
 use MongoDB\Laravel\Eloquent\Model;
 use MongoDB\Laravel\Relations\BelongsTo;
@@ -13,19 +13,6 @@ class CrmObject extends Model
     const CREATED_AT = 'createdAt';
 
     const UPDATED_AT = 'updatedAt';
-
-    // include properties
-    protected string $id;
-
-    protected Team $team;
-
-    protected ObjectType $objectType;
-
-    protected $createdAt;
-
-    protected $updatedAt;
-
-    protected array $properties;
 
     protected $fillable = [
         'team',

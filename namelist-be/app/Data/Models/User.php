@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Data\Models;
 
 use App\Events\UserCreated;
 use Illuminate\Auth\Authenticatable;
