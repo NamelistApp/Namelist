@@ -4,7 +4,7 @@ namespace App\Models;
 
 use MongoDB\Laravel\Eloquent\Model;
 use MongoDB\Laravel\Relations\BelongsTo;
-use MongoDB\Laravel\Relations\HasMany;
+use MongoDB\Laravel\Relations\EmbedsMany;
 
 class CrmObject extends Model
 {
@@ -15,7 +15,21 @@ class CrmObject extends Model
     const UPDATED_AT = 'updatedAt';
 
     // include properties
-    protected $with = [
+    protected string $id;
+
+    protected Team $team;
+
+    protected ObjectType $objectType;
+
+    protected $createdAt;
+
+    protected $updatedAt;
+
+    protected array $properties;
+
+    protected $fillable = [
+        'team',
+        'objectType',
         'properties',
     ];
 
@@ -29,8 +43,8 @@ class CrmObject extends Model
         return $this->belongsTo(ObjectType::class);
     }
 
-    public function properties(): HasMany
+    public function properties(): EmbedsMany
     {
-        return $this->hasMany(ObjectProperty::class);
+        return $this->embedsMany(CustomFieldEntry::class);
     }
 }
