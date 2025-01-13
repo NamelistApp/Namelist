@@ -1,10 +1,11 @@
 import { BindLogic, useValues } from 'kea'
 import { SceneExport } from '../sceneTypes'
-import { Avatar, Box, Button, Card, Center, Group, Loader, Paper, Text, SimpleGrid, Title, Grid, Timeline } from '@mantine/core'
-import { IconGitBranch, IconGitCommit, IconGitPullRequest, IconMessageDots, IconUsers } from '@tabler/icons-react';
+import { Avatar, Box, Button, Card, Center, Group, Loader, Paper, Text, SimpleGrid, Title, Grid, Timeline, Stack } from '@mantine/core'
+import { IconGitBranch, IconGitCommit, IconGitPullRequest, IconMail, IconMessageDots, IconPhone, IconUsers } from '@tabler/icons-react';
 import AppHeader from '../app/components/AppHeader';
 import contactLogic, { ContactLogicProps } from './contactLogic';
 import classes from './styles/Contact.module.scss'
+import { getGravatarUrl } from '../app/utils';
 
 interface ContactSceneProps {
     contactId: number
@@ -46,41 +47,38 @@ export function ContactScene() {
                         </Group>
                         <Grid>
                             <Grid.Col span={3}>
-                                <Card withBorder padding="xl" radius="md" className={classes.card}>
-                                    <Card.Section
-                                        h={140}
-                                        style={{
-                                            backgroundImage:
-                                                'url(https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80)',
-                                        }}
-                                    />
+                                <Card withBorder padding="md" radius="md" className={classes.card}>
                                     <Avatar
-                                        src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-9.png"
+                                        src={getGravatarUrl(contact.emailAddress)}
                                         size={80}
                                         radius={80}
                                         mx="auto"
-                                        mt={-30}
                                         className={classes.avatar}
                                     />
                                     <Text ta="center" fz="lg" fw={500} mt="sm">
                                         {contact.displayName}
                                     </Text>
-                                    <Text ta="center" fz="sm" c="dimmed">
-                                        Fullstack engineer
-                                    </Text>
+                                    {contact.companyName && (
+                                        <Text ta="center" fz="sm" c="dimmed">
+                                            {contact.companyName}
+                                        </Text>
+                                    )
+                                    }
                                     <Group mt="md" justify="center" gap={30}>
-                                        <Box>
-                                            <Text ta="center" fz="lg" fw={500}>
-                                                100
-                                            </Text>
-                                            <Text ta="center" fz="sm" c="dimmed" lh={1}>
-                                                label
-                                            </Text>
-                                        </Box>
+                                        <Stack align="center" gap={5}>
+                                            <Button radius={'xl'} p={0} w={40} h={40}>
+                                                <IconPhone size={18} stroke={1.5} />
+                                            </Button>
+                                            <Text size="xs" c="dimmed">Call</Text>
+                                        </Stack>
+
+                                        <Stack align="center" gap={5}>
+                                            <Button radius={'xl'} p={0} w={40} h={40}>
+                                                <IconMail size={18} stroke={1.5} />
+                                            </Button>
+                                            <Text size="xs" c="dimmed">Email</Text>
+                                        </Stack>
                                     </Group>
-                                    <Button fullWidth radius="md" mt="xl" size="md" variant="default">
-                                        Follow
-                                    </Button>
                                 </Card>
                             </Grid.Col>
                             <Grid.Col span={6}>

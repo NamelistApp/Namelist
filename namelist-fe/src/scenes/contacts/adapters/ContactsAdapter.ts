@@ -26,6 +26,7 @@ export class ContactsAdapter {
             object.crm_object_type_id,
             object.properties['first_name'],
             object.properties['last_name'],
+            object.properties['company_name'],
             object.properties['email_address'],
             object.properties['phone_number'],
             object.properties['source'],

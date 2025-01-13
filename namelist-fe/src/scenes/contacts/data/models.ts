@@ -4,6 +4,7 @@ export class Contact {
         public objectTypeId: string,
         public firstName: string | null,
         public lastName: string | null,
+        public companyName: string | null,
         public emailAddress: string | null,
         public phoneNumber: string | null,
         public source: string | null,

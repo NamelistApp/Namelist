@@ -6,6 +6,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { App } from './scenes/app/App'
 import { appContainer } from './core/app-container'
+import { chatwootKey } from './core/constants'
+import ChatwootWidget from './scenes/app/components/ChatwootWidget'
 
 appContainer.init()
 
@@ -41,6 +43,8 @@ function Initial(): JSX.Element {
     <MantineProvider theme={theme} defaultColorScheme="auto">
       <ModalsProvider>
         <App />
+
+        {chatwootKey && <ChatwootWidget />}
       </ModalsProvider>
     </MantineProvider >
   )

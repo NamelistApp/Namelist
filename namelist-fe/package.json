@@ -38,6 +38,7 @@
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "embla-carousel-react": "^8.5.1",
+    "js-sha256": "^0.11.0",
     "kea": "^3.1.6",
     "kea-forms": "^3.2.0",
     "kea-loaders": "^3.0.1",
