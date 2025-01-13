@@ -35,14 +35,17 @@ class UniquePropertyValue implements DataAwareRule, ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         Log::debug('UniquePropertyValue', [
-            'object_type_id' => $this->objectTypeId,
+            'crm_object_type_id' => $this->objectTypeId,
             'name' => $this->propertyName,
             'value' => $value,
         ]);
 
-        $exists = $this->portal->crmObjects()
-            ->where('crm_object_type_id', $this->objectTypeId)
-            ->whereRaw('LOWER(properties->>?) = LOWER(?)', [$this->propertyName, $value])
+        $exists = $this->portal->objectProperties()
+            ->where([
+                'crm_object_type_id' => $this->objectTypeId,
+                'name' => $this->propertyName,
+            ])
+            ->whereRaw('LOWER(value) = LOWER(?)', $value)
             ->exists();
 
         if ($exists) {

@@ -5,6 +5,7 @@ class ChatwootWidget extends React.Component {
     componentDidMount() {
         window.chatwootSettings = {
             hideMessageBubble: false,
+            launcherTitle: 'Chat with us',
             position: 'right', // This can be left or right
             locale: 'en', // Language to be set
             type: 'standard', // [standard, expanded_bubble]

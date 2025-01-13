@@ -43,13 +43,13 @@ export function ContactScene() {
                     <>
                         <Group mb="md">
                             <IconUsers size={30} />
-                            <Title order={2}>{contact.firstName}</Title>
+                            <Title order={2}>{contact.property('first_name')}</Title>
                         </Group>
                         <Grid>
                             <Grid.Col span={3}>
                                 <Card withBorder padding="md" radius="md" className={classes.card}>
                                     <Avatar
-                                        src={getGravatarUrl(contact.emailAddress)}
+                                        src={getGravatarUrl(contact.property('email_address'))}
                                         size={80}
                                         radius={80}
                                         mx="auto"
@@ -58,12 +58,11 @@ export function ContactScene() {
                                     <Text ta="center" fz="lg" fw={500} mt="sm">
                                         {contact.displayName}
                                     </Text>
-                                    {contact.companyName && (
+                                    {contact.property('company_name') && (
                                         <Text ta="center" fz="sm" c="dimmed">
-                                            {contact.companyName}
+                                            {contact.property('company_name')}
                                         </Text>
-                                    )
-                                    }
+                                    )}
                                     <Group mt="md" justify="center" gap={30}>
                                         <Stack align="center" gap={5}>
                                             <Button radius={'xl'} p={0} w={40} h={40}>
@@ -79,9 +78,46 @@ export function ContactScene() {
                                             <Text size="xs" c="dimmed">Email</Text>
                                         </Stack>
                                     </Group>
+
+                                    <Stack mt="md" gap="xs">
+                                        {contact.displayProperties.map((property) => {
+                                            return (
+                                                <Stack key={property.key} gap={0}>
+                                                    <Text c="dimmed" tt="uppercase" fw={600} fz={10}>
+                                                        {property.name}
+                                                    </Text>
+                                                    <Text fw={500} fz={15}>
+                                                        {property.value}
+                                                    </Text>
+                                                </Stack>
+                                            )
+                                        })}
+                                    </Stack>
                                 </Card>
                             </Grid.Col>
                             <Grid.Col span={6}>
+                                <Title pb={20} order={3} fw={500}>Upcoming</Title>
+                                <Timeline active={1} bulletSize={24} lineWidth={2}>
+                                    <Timeline.Item bullet={<IconGitBranch size={12} />} title="New branch">
+                                        <Text c="dimmed" size="sm">You&apos;ve created new branch <Text variant="link" component="span" inherit>fix-notifications</Text> from master</Text>
+                                        <Text size="xs" mt={4}>2 hours ago</Text>
+                                    </Timeline.Item>
+
+                                    <Timeline.Item bullet={<IconGitCommit size={12} />} title="Commits">
+                                        <Text c="dimmed" size="sm">You&apos;ve pushed 23 commits to<Text variant="link" component="span" inherit>fix-notifications branch</Text></Text>
+                                        <Text size="xs" mt={4}>52 minutes ago</Text>
+                                    </Timeline.Item>
+
+                                    <Timeline.Item title="Pull request" bullet={<IconGitPullRequest size={12} />} lineVariant="dashed">
+                                        <Text c="dimmed" size="sm">You&apos;ve submitted a pull request<Text variant="link" component="span" inherit>Fix incorrect notification message (#187)</Text></Text>
+                                        <Text size="xs" mt={4}>34 minutes ago</Text>
+                                    </Timeline.Item>
+
+                                    <Timeline.Item title="Code review" bullet={<IconMessageDots size={12} />}>
+                                        <Text c="dimmed" size="sm"><Text variant="link" component="span" inherit>Robert Gluesticker</Text> left a code review on your pull request</Text>
+                                        <Text size="xs" mt={4}>12 minutes ago</Text>
+                                    </Timeline.Item>
+                                </Timeline>
                                 <Title pb={20} order={3} fw={500}>Recent Activity</Title>
                                 <Timeline active={1} bulletSize={24} lineWidth={2}>
                                     <Timeline.Item bullet={<IconGitBranch size={12} />} title="New branch">

@@ -32,8 +32,8 @@ class CrmObjectCreateRequest extends FormRequest
         ];
 
         $validations = $this->objectType->propertyDefinitions
-            ->pluck('validations', 'name')
-            ->mapWithKeys(fn ($validations, $name) => ["properties.$name" => $validations])
+            ->pluck('validations', 'key')
+            ->mapWithKeys(fn ($validations, $key) => ["properties.$key" => $validations])
             ->toArray();
 
         $uniqueProperties = $uniqueObjectTypeProperties[$this->objectType->id] ?? [];

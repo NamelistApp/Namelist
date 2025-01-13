@@ -3,7 +3,7 @@ export enum CrmObjectTypeId {
 }
 
 export enum CrmObjectSource {
-    Manual = "web_app"
+    WebApp = "web_app"
 }
 
 export interface CreateCrmObjectRequestInterface {
@@ -16,7 +16,22 @@ export class CreateCrmObjectRequest {
     ) { }
 }
 
-export class RawCrmObject {
+export class CrmProperty {
+    constructor(
+        public id: number,
+        public object_id: number,
+        public property_definition_id: number,
+        public key: string,
+        public name: string,
+        public version: number,
+        public value: any,
+        public created_at: Date,
+        public updated_at: Date | null,
+        public deleted_at: Date | null,
+    ) { }
+}
+
+export class CrmObject {
     constructor(
         public id: number,
         public crm_object_type_id: string,
@@ -24,22 +39,20 @@ export class RawCrmObject {
         public created_at: Date,
         public updated_at: Date | null,
         public deleted_at: Date | null,
-        public properties: Record<string, any>
+        public properties: CrmProperty[]
     ) { }
+
+    property(name: string): string | null {
+        const property = this.properties.find(property => property.name === name)
+        return property ? property.value : null
+    }
 }
 
 export interface CrmObjectPropertyInterface {
     id: number
+    key: string
     name: string
     value: any
-}
-
-export class CrmObjectProperty implements CrmObjectPropertyInterface {
-    constructor(
-        public id: number,
-        public name: string,
-        public value: any
-    ) { }
 }
 
 export interface CrmObjectInterface {

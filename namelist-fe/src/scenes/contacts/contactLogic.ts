@@ -1,9 +1,9 @@
 import { afterMount, kea, key, listeners, path, props, selectors } from "kea";
 
-import type { contactLogicType } from "./contactLogicType";
-import { Contact } from "./data/models";
-import { loaders } from "kea-loaders";
-import { appContainer } from "../../core/app-container";
+import type { contactLogicType } from "./contactLogicType"
+import { loaders } from "kea-loaders"
+import { appContainer } from "../../core/app-container"
+import { Contact } from "./data/models"
 
 export type ContactLogicProps = {
     contactId: number

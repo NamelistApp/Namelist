@@ -2,12 +2,12 @@ import { BindLogic, useValues } from 'kea'
 import { SceneExport } from '../sceneTypes'
 import contactsLogic from './contactsLogic'
 import { Avatar, Box, Button, Center, Group, Loader, Paper, Stack, Table, Text, Title } from '@mantine/core'
-import { IconUsers } from '@tabler/icons-react';
-import { Contact } from './data/models';
-import { humanFriendlyDetailedTime, valueOrEmpty } from '../../lib/utils';
-import AppHeader from '../app/components/AppHeader';
-import { router } from 'kea-router';
+import { IconUsers } from '@tabler/icons-react'
+import { humanFriendlyDetailedTime, valueOrEmpty } from '../../lib/utils'
+import AppHeader from '../app/components/AppHeader'
+import { router } from 'kea-router'
 import classes from './styles/Contacts.module.scss'
+import { Contact } from './data/models'
 
 export const scene: SceneExport = {
     component: Contacts,
@@ -64,8 +64,8 @@ export function ContactsScene() {
                                                     </Text>
                                                 </Group>
                                             </Table.Td>
-                                            <Table.Td>{valueOrEmpty(contact.emailAddress)}</Table.Td>
-                                            <Table.Td>{valueOrEmpty(contact.source)}</Table.Td>
+                                            <Table.Td>{valueOrEmpty(contact.property('email_address'))}</Table.Td>
+                                            <Table.Td>{valueOrEmpty(contact.property('source'))}</Table.Td>
                                             <Table.Td>{humanFriendlyDetailedTime(contact.createdAt)}</Table.Td>
                                         </Table.Tr>
                                     );

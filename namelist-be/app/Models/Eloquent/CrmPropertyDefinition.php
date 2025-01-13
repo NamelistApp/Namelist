@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CrmPropertyDefinition extends Model
 {
     protected $fillable = [
+        'key',
         'name',
         'type',
         'validations',
