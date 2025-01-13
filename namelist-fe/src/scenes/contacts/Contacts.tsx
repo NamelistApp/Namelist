@@ -2,12 +2,13 @@ import { BindLogic, useValues } from 'kea'
 import { SceneExport } from '../sceneTypes'
 import contactsLogic from './contactsLogic'
 import { Avatar, Box, Button, Center, Group, Loader, Paper, Stack, Table, Text, Title } from '@mantine/core'
-import { IconUsers } from '@tabler/icons-react'
+import { IconTrash, IconUsers } from '@tabler/icons-react'
 import { humanFriendlyDetailedTime, valueOrEmpty } from '../../lib/utils'
 import AppHeader from '../app/components/AppHeader'
 import { router } from 'kea-router'
 import classes from './styles/Contacts.module.scss'
 import { Contact } from './data/models'
+import { useContextMenu } from 'mantine-contextmenu'
 
 export const scene: SceneExport = {
     component: Contacts,
@@ -31,6 +32,7 @@ function didClickContact(contactId: number) {
 
 export function ContactsScene() {
     const { contacts, contactsLoading } = useValues(contactsLogic)
+    const { showContextMenu } = useContextMenu()
 
     return (
         <>
@@ -55,7 +57,14 @@ export function ContactsScene() {
                             <Table.Tbody>
                                 {contacts.data.map((contact: Contact) => {
                                     return (
-                                        <Table.Tr style={{ cursor: 'pointer' }} onClick={() => { didClickContact(contact.id) }} key={contact.id}>
+                                        <Table.Tr onContextMenu={showContextMenu([
+                                            {
+                                                key: 'delete',
+                                                icon: <IconTrash />,
+                                                title: 'Delete',
+                                                onClick: () => { },
+                                            },
+                                        ])} onClick={() => { didClickContact(contact.id) }} key={contact.id}>
                                             <Table.Td>
                                                 <Group gap="sm">
                                                     <Avatar size={26} radius={26} />

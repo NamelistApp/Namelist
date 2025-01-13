@@ -48,13 +48,6 @@ export function ContactScene() {
                         <Grid>
                             <Grid.Col span={3}>
                                 <Card withBorder padding="md" radius="md" className={classes.card}>
-                                    <Avatar
-                                        src={getGravatarUrl(contact.property('email_address'))}
-                                        size={80}
-                                        radius={80}
-                                        mx="auto"
-                                        className={classes.avatar}
-                                    />
                                     <Text ta="center" fz="lg" fw={500} mt="sm">
                                         {contact.displayName}
                                     </Text>
@@ -65,14 +58,14 @@ export function ContactScene() {
                                     )}
                                     <Group mt="md" justify="center" gap={30}>
                                         <Stack align="center" gap={5}>
-                                            <Button radius={'xl'} p={0} w={40} h={40}>
+                                            <Button radius={'xl'} p={0} w={40} h={40} variant='light'>
                                                 <IconPhone size={18} stroke={1.5} />
                                             </Button>
                                             <Text size="xs" c="dimmed">Call</Text>
                                         </Stack>
 
                                         <Stack align="center" gap={5}>
-                                            <Button radius={'xl'} p={0} w={40} h={40}>
+                                            <Button radius={'xl'} p={0} w={40} h={40} variant='light'>
                                                 <IconMail size={18} stroke={1.5} />
                                             </Button>
                                             <Text size="xs" c="dimmed">Email</Text>
@@ -97,13 +90,13 @@ export function ContactScene() {
                             </Grid.Col>
                             <Grid.Col span={6}>
                                 <Title pb={20} order={3} fw={500}>Upcoming</Title>
-                                <Timeline active={1} bulletSize={24} lineWidth={2}>
-                                    <Timeline.Item bullet={<IconGitBranch size={12} />} title="New branch">
+                                <Timeline bulletSize={30} lineWidth={2}>
+                                    <Timeline.Item lineVariant="dashed" bullet={<Stack gap={0}><Text fw={500} size="xs">Tue</Text></Stack>} title="Meeting with David">
                                         <Text c="dimmed" size="sm">You&apos;ve created new branch <Text variant="link" component="span" inherit>fix-notifications</Text> from master</Text>
                                         <Text size="xs" mt={4}>2 hours ago</Text>
                                     </Timeline.Item>
 
-                                    <Timeline.Item bullet={<IconGitCommit size={12} />} title="Commits">
+                                    <Timeline.Item bullet={<Text fw={500} size="xs">12</Text>} title="Commits" lineVariant="dashed">
                                         <Text c="dimmed" size="sm">You&apos;ve pushed 23 commits to<Text variant="link" component="span" inherit>fix-notifications branch</Text></Text>
                                         <Text size="xs" mt={4}>52 minutes ago</Text>
                                     </Timeline.Item>
@@ -113,13 +106,13 @@ export function ContactScene() {
                                         <Text size="xs" mt={4}>34 minutes ago</Text>
                                     </Timeline.Item>
 
-                                    <Timeline.Item title="Code review" bullet={<IconMessageDots size={12} />}>
+                                    <Timeline.Item title="Code review" bullet={<IconMessageDots size={12} />} lineVariant="dashed">
                                         <Text c="dimmed" size="sm"><Text variant="link" component="span" inherit>Robert Gluesticker</Text> left a code review on your pull request</Text>
                                         <Text size="xs" mt={4}>12 minutes ago</Text>
                                     </Timeline.Item>
                                 </Timeline>
-                                <Title pb={20} order={3} fw={500}>Recent Activity</Title>
-                                <Timeline active={1} bulletSize={24} lineWidth={2}>
+                                <Title mt={40} pb={20} order={3} fw={500}>Recent Activity</Title>
+                                <Timeline active={100} bulletSize={30} lineWidth={2}>
                                     <Timeline.Item bullet={<IconGitBranch size={12} />} title="New branch">
                                         <Text c="dimmed" size="sm">You&apos;ve created new branch <Text variant="link" component="span" inherit>fix-notifications</Text> from master</Text>
                                         <Text size="xs" mt={4}>2 hours ago</Text>
@@ -142,7 +135,7 @@ export function ContactScene() {
                                 </Timeline>
                             </Grid.Col>
                             <Grid.Col span={3}>
-                                <Paper>
+                                <Paper withBorder p="sm" radius="md">
                                     Associations
                                 </Paper>
                             </Grid.Col>
