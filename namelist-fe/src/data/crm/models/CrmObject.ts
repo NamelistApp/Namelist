@@ -1,9 +1,9 @@
 export enum CrmObjectTypeId {
-    Contact = 1
+    Contact = 'contact'
 }
 
 export enum CrmObjectSource {
-    Manual = "manual"
+    Manual = "web_app"
 }
 
 export interface CreateCrmObjectRequestInterface {
@@ -16,29 +16,15 @@ export class CreateCrmObjectRequest {
     ) { }
 }
 
-export class RawCrmProperty {
-    constructor(
-        public id: number,
-        public object_id: number,
-        public property_definition_id: number,
-        public name: string,
-        public version: number,
-        public value: any,
-        public created_at: Date,
-        public updated_at: Date | null,
-        public deleted_at: Date | null,
-    ) { }
-}
-
 export class RawCrmObject {
     constructor(
         public id: number,
-        public object_type_id: number,
+        public crm_object_type_id: string,
         public portal_id: number,
         public created_at: Date,
         public updated_at: Date | null,
         public deleted_at: Date | null,
-        public properties: RawCrmProperty[]
+        public properties: Record<string, any>
     ) { }
 }
 
@@ -58,7 +44,7 @@ export class CrmObjectProperty implements CrmObjectPropertyInterface {
 
 export interface CrmObjectInterface {
     id: number
-    objectTypeId: number
+    objectTypeId: string
     properties: CrmObjectPropertyInterface[]
     createdAt: Date
     updatedAt: Date | null

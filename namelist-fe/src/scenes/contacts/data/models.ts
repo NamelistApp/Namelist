@@ -1,7 +1,7 @@
 export class Contact {
     constructor(
         public id: number,
-        public objectTypeId: number,
+        public objectTypeId: string,
         public firstName: string | null,
         public lastName: string | null,
         public emailAddress: string | null,

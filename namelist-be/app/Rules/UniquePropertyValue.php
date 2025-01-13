@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Models\Portal;
+use App\Models\Eloquent\Portal;
 use Closure;
 use Illuminate\Contracts\Validation\DataAwareRule;
 use Illuminate\Contracts\Validation\ValidationRule;
@@ -18,7 +18,7 @@ class UniquePropertyValue implements DataAwareRule, ValidationRule
 
     protected $propertyName;
 
-    public function __construct(Portal $portal, int $objectTypeId, string $propertyName)
+    public function __construct(Portal $portal, string $objectTypeId, string $propertyName)
     {
         $this->portal = $portal;
         $this->objectTypeId = $objectTypeId;
@@ -40,14 +40,9 @@ class UniquePropertyValue implements DataAwareRule, ValidationRule
             'value' => $value,
         ]);
 
-        //where json contains case insensitive
-
-        $exists = $this->portal->objectProperties()
-            ->where([
-                'object_type_id' => $this->objectTypeId,
-                'name' => $this->propertyName,
-            ])
-            ->whereRaw('LOWER(value) = LOWER(?)', $value)
+        $exists = $this->portal->crmObjects()
+            ->where('crm_object_type_id', $this->objectTypeId)
+            ->whereRaw('LOWER(properties->>?) = LOWER(?)', [$this->propertyName, $value])
             ->exists();
 
         if ($exists) {

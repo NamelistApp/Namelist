@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Eloquent;
 
+use App\Models\Eloquent\Objects\Contact;
 use App\Models\Enum\ObjectTypeId;
-use App\Models\Objects\Contact;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,13 +27,8 @@ class Portal extends Model
         return $this->hasMany(CrmObject::class);
     }
 
-    public function objectProperties(): HasMany
-    {
-        return $this->hasMany(ObjectProperties::class);
-    }
-
     public function contacts(): HasMany
     {
-        return $this->hasMany(Contact::class)->where('object_type_id', ObjectTypeId::Contact);
+        return $this->hasMany(Contact::class)->where('crm_object_type_id', ObjectTypeId::Contact);
     }
 }

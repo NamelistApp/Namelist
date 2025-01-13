@@ -1,4 +1,5 @@
 #!/bin/bash
 
+cd namelist-be
 ./vendor/bin/sail artisan migrate:fresh --seed --seeder=DevSeeder
-./vendor/bin/sail artisan db:seed --class=ObjectTypeSeeder
+./vendor/bin/sail artisan db:seed --class=ContactTypeSeeder

@@ -2,16 +2,16 @@
 
 namespace App\Http\Requests\Crm;
 
+use App\Models\Eloquent\CrmObjectType;
+use App\Models\Eloquent\Portal;
 use App\Models\Enum\ObjectTypeId;
-use App\Models\ObjectType;
-use App\Models\Portal;
 use App\Rules\UniquePropertyValue;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Log;
 
 class CrmObjectCreateRequest extends FormRequest
 {
-    public function __construct(Portal $portal, ObjectType $objectType) {}
+    public function __construct(Portal $portal, CrmObjectType $objectType) {}
 
     public function attributes(): array
     {
@@ -33,7 +33,7 @@ class CrmObjectCreateRequest extends FormRequest
 
         $validations = $this->objectType->propertyDefinitions
             ->pluck('validations', 'name')
-            ->mapWithKeys(fn ($validations, $name) => ["properties.$name" => explode('|', $validations)])
+            ->mapWithKeys(fn ($validations, $name) => ["properties.$name" => $validations])
             ->toArray();
 
         $uniqueProperties = $uniqueObjectTypeProperties[$this->objectType->id] ?? [];

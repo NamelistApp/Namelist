@@ -4,51 +4,41 @@ namespace App\Http\Controllers\Crm;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Crm\CrmObjectCreateRequest;
-use App\Models\CrmObject;
-use App\Models\ObjectType;
-use App\Models\Portal;
+use App\Models\Eloquent\CrmObject;
+use App\Models\Eloquent\CrmObjectType;
+use App\Models\Eloquent\Portal;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class CrmObjectController extends Controller
 {
-    public function index(Portal $portal, ObjectType $objectType)
+    public function index(Portal $portal, CrmObjectType $objectType)
     {
         return $portal
             ->crmObjects()
-            ->where('object_type_id', $objectType->id)
+            ->where('crm_object_type_id', $objectType->id)
             ->paginate();
     }
 
-    public function store(Portal $portal, ObjectType $objectType, CrmObjectCreateRequest $request)
+    public function store(Portal $portal, CrmObjectType $objectType, CrmObjectCreateRequest $request)
     {
         return DB::transaction(function () use ($portal, $objectType, $request) {
-            $crmObject = $portal->crmObjects()->forceCreate([
-                'object_type_id' => $objectType->id,
-            ]);
             $properties = $objectType->propertyDefinitions;
-
-            foreach ($properties as $property) {
+            $objectProperties = $properties->mapWithKeys(function ($property) use ($request) {
                 $propertySetValue = $request->validated('properties.'.$property->name);
                 Log::debug('propertySetValue', [$property->name => $propertySetValue]);
 
-                // if the propertySetValue is null we can skip b/c if passed validation it is not a required property
-                if ($propertySetValue) {
-                    $crmObject->properties()->forceCreate([
-                        'property_definition_id' => $property->id,
-                        'portal_id' => $portal->id,
-                        'object_type_id' => $objectType->id,
-                        'name' => $property->name,
-                        'value' => $propertySetValue,
-                    ]);
-                }
-            }
+                return $propertySetValue ? [$property->name => $propertySetValue] : [];
+            })->toArray();
 
-            return $crmObject;
+            return $portal->crmObjects()->forceCreate([
+                'crm_object_type_id' => $objectType->id,
+                'properties' => $objectProperties,
+            ]);
         });
     }
 
-    public function show(Portal $portal, ObjectType $objectType, CrmObject $crmObject)
+    public function show(Portal $portal, CrmObjectType $objectType, CrmObject $crmObject)
     {
         return $crmObject;
     }

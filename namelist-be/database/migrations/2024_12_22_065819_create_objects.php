@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('object_types', function (Blueprint $table) {
-            $table->id();
+        Schema::create('crm_object_types', function (Blueprint $table) {
+            $table->string('id')->primary();
             $table->string('name');
             $table->timestamps();
             $table->softDeletes();
@@ -20,54 +20,33 @@ return new class extends Migration
 
         Schema::create('crm_objects', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('object_type_id')->constrained()->onDelete('restrict');
+            $table->string('crm_object_type_id')->index();
             $table->foreignId('portal_id')->constrained()->cascadeOnDelete();
+            $table->jsonb('properties')->default('{}');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('crm_object_type_id')->references('id')->on('crm_object_types')->restrictOnDelete();
         });
 
-        Schema::create('property_definitions', function (Blueprint $table) {
+        Schema::create('crm_property_definitions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('object_type_id')->constrained()->onDelete('restrict');
+            $table->string('crm_object_type_id')->index();
+            $table->foreignId('portal_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('name')->index();
             $table->string('type');
-            $table->text('validations')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
-        Schema::create('object_properties', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('crm_object_id')
-                ->constrained()
-                ->onDelete('cascade');
-            $table->foreignId('portal_id')
-                ->constrained()
-                ->onDelete('cascade');
-            $table->foreignId('object_type_id')
-                ->constrained()
-                ->onDelete('restrict');
-            $table->foreignId('property_definition_id')
-                ->constrained()
-                ->onDelete('restrict');
-            $table->string('name')->index();
-            $table->integer('version')->default(1);
-            $table->text('value');
+            $table->jsonb('validations')->default('[]');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->primary(['property_definition_id', 'crm_object_id']);
+            $table->foreign('crm_object_type_id')->references('id')->on('crm_object_types')->restrictOnDelete();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('object_properties');
-        Schema::dropIfExists('property_definitions');
-        Schema::dropIfExists('object_types');
-        Schema::dropIfExists('objects');
+        Schema::drop('crm_property_definitions');
+        Schema::drop('crm_object_types');
+        Schema::drop('crm_objects');
     }
 };

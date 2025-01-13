@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\User;
+use App\Models\Eloquent\User;
 
 class UserCreated
 {

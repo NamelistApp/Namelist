@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Eloquent\User;
 use Illuminate\Database\Seeder;
 
 class DevSeeder extends Seeder
@@ -14,7 +14,7 @@ class DevSeeder extends Seeder
     {
         $user = User::create([
             'email' => 'david@namelist.app',
-            'name' => 'David',
+            'first_name' => 'David',
             'password' => 'password',
             'is_staff' => true,
         ]);

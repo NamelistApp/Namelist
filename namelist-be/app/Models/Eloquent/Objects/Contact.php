@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Objects;
+namespace App\Models\Eloquent\Objects;
 
-use App\Models\CRMObject;
+use App\Models\Eloquent\CRMObject;
 use App\Models\Enum\ObjectTypeId;
 use Illuminate\Database\Eloquent\Builder;
 

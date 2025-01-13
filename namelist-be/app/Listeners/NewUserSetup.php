@@ -13,7 +13,7 @@ class NewUserSetup
     {
         $user = $event->user;
         $org = $user->organizations()->create([
-            'name' => $user->name,
+            'name' => 'Default organization',
         ]);
 
         $portal = $org->portals()->create([

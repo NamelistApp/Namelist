@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PropertyDefinition extends Model
+class CrmPropertyDefinition extends Model
 {
     protected $fillable = [
         'name',
         'type',
+        'validations',
     ];
 
     protected $casts = [
-        'metadata' => 'array',
+        'validations' => 'array',
     ];
 }
