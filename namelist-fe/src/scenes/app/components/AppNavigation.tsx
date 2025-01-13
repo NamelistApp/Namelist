@@ -6,7 +6,7 @@ import { userLogic } from '../../../auth/userLogic';
 import { sceneLogic } from '../../sceneLogic';
 import AppLogo from './AppLogo';
 import { IconHome, IconLifebuoy, IconLogout, IconUsers } from '@tabler/icons-react'
-import { urls } from '../../../domain/urls';
+import { urls } from '../../../core/urls';
 import { addPortalIdIfMissing } from '../../../lib/router-utils';
 import navigationLogic from './navigationLogic';
 

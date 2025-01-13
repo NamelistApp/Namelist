@@ -1,6 +1,6 @@
 import { combineUrl } from "kea-router"
 import { Params, SceneConfig, LoadedScene } from './sceneTypes'
-import { urls } from '../domain/urls'
+import { urls } from '../core/urls'
 import { Error404 } from "../layout/Error404"
 import { NetworkError } from "../layout/NetworkError"
 

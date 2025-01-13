@@ -1,5 +1,5 @@
 import { Notifications } from '@mantine/notifications'
-import { isDemo } from '../../../domain/constants'
+import { isDemo } from '../../../core/constants'
 import { DemoBanner } from './shared/DemoBanner'
 
 interface AppLayoutProps {

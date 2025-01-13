@@ -1,5 +1,5 @@
-import { Portal } from '../domain/types'
-import { AppContext } from '../MainContainer'
+import { Portal } from '../core/types'
+import { AppContext } from '../app-container'
 
 const pathsWithoutPortalId = [
     'login',

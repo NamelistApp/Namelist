@@ -2,7 +2,7 @@
 
 import type { Logic } from 'kea'
 
-import type { User } from '../../domain/types'
+import type { User } from '../../core/types'
 import type { ServerLoginError } from './loginLogic'
 import type { LoginRequest } from './AuthApiClient'
 import type { DeepPartial, DeepPartialMap, FieldName, ValidationErrorType } from 'kea-forms'

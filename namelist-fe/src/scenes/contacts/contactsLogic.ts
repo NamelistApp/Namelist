@@ -1,9 +1,9 @@
 import { actions, afterMount, defaults, kea, key, path, props } from 'kea'
 import type { contactsLogicType } from './contactsLogicType'
-import { Paginated } from '../../domain/api'
+import { Paginated } from '../../core/api'
 import { Contact } from './data/models'
 import { loaders } from 'kea-loaders'
-import { mainContainer } from '../../MainContainer'
+import { appContainer } from '../../core/app-container'
 
 const contactsLogic = kea<contactsLogicType>([
     path(['scenes', 'contacts', 'contactsLogic']),
@@ -14,7 +14,7 @@ const contactsLogic = kea<contactsLogicType>([
     loaders(({ values }) => ({
         contacts: {
             loadContacts: async () => {
-                return await mainContainer.buildContactsRepository().getContacts(values.page)
+                return await appContainer.buildContactsRepository().getContacts(values.page)
             }
         }
     })),

@@ -3,7 +3,7 @@ import React from 'react';
 
 import { Notifications } from '@mantine/notifications'
 import { DemoBanner } from './shared/DemoBanner'
-import { isDemo } from '../../../domain/constants'
+import { isDemo } from '../../../core/constants'
 import AppNavigation from '../components/AppNavigation'
 import { useValues } from 'kea';
 import navigationLogic from '../components/navigationLogic';

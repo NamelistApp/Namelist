@@ -3,7 +3,7 @@ import { afterMount, kea, key, listeners, path, props, selectors } from "kea";
 import type { contactLogicType } from "./contactLogicType";
 import { Contact } from "./data/models";
 import { loaders } from "kea-loaders";
-import { mainContainer } from "../../MainContainer";
+import { appContainer } from "../../core/app-container";
 
 export type ContactLogicProps = {
     contactId: number
@@ -20,7 +20,7 @@ const contactLogic = kea<contactLogicType>([
         contact: {
             __default: {} as Contact,
             loadContact: async (contactId = props.contactId) => {
-                return await mainContainer.buildContactsRepository().getContact(contactId)
+                return await appContainer.buildContactsRepository().getContact(contactId)
             }
         }
     })),

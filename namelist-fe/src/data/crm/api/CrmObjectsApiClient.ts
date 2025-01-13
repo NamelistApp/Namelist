@@ -1,5 +1,5 @@
 import { CreateCrmObjectRequest, CreateCrmObjectRequestInterface, RawCrmObject } from "../models/CrmObject"
-import { BaseApiClientInterface, Paginated } from "../../../domain/api"
+import { BaseApiClientInterface, Paginated } from "../../../core/api"
 
 export interface CrmObjectApiClientInterface {
     createObject(objectTypeId: string, request: CreateCrmObjectRequest): Promise<void>

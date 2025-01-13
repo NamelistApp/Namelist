@@ -1,5 +1,5 @@
-import { BaseApiClientInterface } from "../../domain/api"
-import { User } from "../../domain/types"
+import { BaseApiClientInterface } from "../../core/api"
+import { User } from "../../core/types"
 import { UserAdapter } from "./adapters/UserAdapter"
 
 export interface LoginRequest {

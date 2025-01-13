@@ -1,7 +1,7 @@
 import { Button, Flex, Group, Title } from '@mantine/core'
 import { rem } from '@mantine/core'
 import { IconInnerShadowBottom } from '@tabler/icons-react'
-import { urls } from '../../../domain/urls'
+import { urls } from '../../../core/urls'
 
 export default function AppLogo() {
     return (

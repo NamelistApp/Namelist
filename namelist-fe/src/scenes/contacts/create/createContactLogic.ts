@@ -3,7 +3,7 @@ import { forms } from 'kea-forms'
 import { notifications } from '@mantine/notifications'
 
 import type { createContactLogicType } from './createContactLogicType'
-import { mainContainer } from '../../../MainContainer'
+import { appContainer } from '../../../core/app-container'
 import { toastError } from '../../app/utils'
 import { CreateContactRequest } from '../data/models'
 import contactsLogic from '../contactsLogic'
@@ -32,7 +32,7 @@ const createContactLogic = kea<createContactLogicType>([
             }),
             submit: async (req) => {
                 try {
-                    const contactsRepository = mainContainer.buildContactsRepository()
+                    const contactsRepository = appContainer.buildContactsRepository()
                     await contactsRepository.createContact(req)
 
                     actions.resetCreateContactForm()

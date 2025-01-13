@@ -2,11 +2,11 @@ import { actions, afterMount, defaults, kea, listeners, path } from "kea"
 import type { userLogicType } from "./userLogicType"
 import { loaders } from "kea-loaders"
 import { router } from "kea-router"
-import { User } from "../domain/types"
-import { urls } from "../domain/urls"
-import { AppContext, mainContainer } from "../MainContainer"
+import { User } from "../core/types"
+import { urls } from "../core/urls"
+import { AppContext, appContainer } from "../core/app-container"
 
-const authApiClient = mainContainer.buildAuthApiClient()
+const authApiClient = appContainer.buildAuthApiClient()
 
 export const userLogic = kea<userLogicType>([
     path(["src", "userLogic"]),

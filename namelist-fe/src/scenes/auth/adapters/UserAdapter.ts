@@ -1,4 +1,4 @@
-import { User } from "../../../domain/types";
+import { User } from "../../../core/types";
 import { UserResponse } from "../AuthApiClient";
 
 export class UserAdapter {

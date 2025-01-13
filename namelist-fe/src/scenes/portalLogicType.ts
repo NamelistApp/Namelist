@@ -2,7 +2,7 @@
 
 import type { Logic } from 'kea'
 
-import type { Portal } from '../domain/types'
+import type { Portal } from '../core/types'
 
 export interface portalLogicType extends Logic {
     actionCreators: {

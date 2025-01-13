@@ -2,8 +2,8 @@ import { kea, path, actions, connect, reducers, selectors, listeners, afterMount
 import { loaders } from 'kea-loaders'
 import { userLogic } from '../auth/userLogic'
 import type { portalLogicType } from './portalLogicType';
-import { Portal } from '../domain/types';
-import { AppContext, mainContainer } from '../MainContainer';
+import { Portal } from '../core/types';
+import { AppContext, appContainer } from '../core/app-container';
 
 export const portalLogic = kea<portalLogicType>([
     path(['scenes', 'portalLogic']),

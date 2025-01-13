@@ -1,5 +1,5 @@
 import { CreateCrmObjectRequest, CreateCrmObjectRequestInterface, CrmObjectProperty, CrmObjectSource, RawCrmObject } from "../../../data/crm/models/CrmObject";
-import { Paginated } from "../../../domain/api";
+import { Paginated } from "../../../core/api";
 import { Contact, CreateContactRequest } from "../data/models";
 
 export class ContactsAdapter {

@@ -2,7 +2,7 @@
 
 import type { Logic } from 'kea'
 
-import type { User } from '../domain/types'
+import type { User } from '../core/types'
 
 export interface userLogicType extends Logic {
     actionCreators: {

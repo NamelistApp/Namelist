@@ -1,6 +1,6 @@
-import { AuthApiClient, AuthApiClientInterface } from "./scenes/auth/AuthApiClient";
-import { BaseApiClient, BaseApiClientInterface, PortalApiClient } from "./domain/api";
-import { posthogKey, sentryDsn } from './domain/constants'
+import { AuthApiClient, AuthApiClientInterface } from "../scenes/auth/AuthApiClient";
+import { BaseApiClient, BaseApiClientInterface, PortalApiClient } from './api'
+import { posthogKey, sentryDsn } from './constants'
 import { formsPlugin } from 'kea-forms'
 import { loadersPlugin } from 'kea-loaders'
 import { routerPlugin } from 'kea-router'
@@ -8,9 +8,9 @@ import { KeaPlugin, resetContext } from 'kea'
 import posthog from 'posthog-js'
 import * as Sentry from "@sentry/react"
 import { notifications } from '@mantine/notifications';
-import { CrmObjectApiClient, CrmObjectApiClientInterface } from "./data/crm/api/CrmObjectsApiClient";
-import { ContactsRepository, ContactsRepositoryInterface } from "./scenes/contacts/data/ContactsRepository";
-import { addPortalIdIfMissing, removePortalIdIfPresent } from "./lib/router-utils";
+import { CrmObjectApiClient, CrmObjectApiClientInterface } from "../data/crm/api/CrmObjectsApiClient";
+import { ContactsRepository, ContactsRepositoryInterface } from "../scenes/contacts/data/ContactsRepository";
+import { addPortalIdIfMissing, removePortalIdIfPresent } from "../lib/router-utils";
 
 interface InitKeaProps {
     state?: Record<string, any>
@@ -34,7 +34,7 @@ export class AppContext {
     }
 }
 
-class MainContainer {
+class AppContainer {
     private readonly apiClient = this.buildBaseApiClient()
 
     init() {
@@ -123,4 +123,4 @@ class MainContainer {
     }
 }
 
-export const mainContainer = new MainContainer()
+export const appContainer = new AppContainer()

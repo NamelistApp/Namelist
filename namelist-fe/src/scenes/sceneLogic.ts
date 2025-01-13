@@ -8,7 +8,7 @@ import posthog from 'posthog-js'
 import type { sceneLogicType } from "./sceneLogicType";
 import { userLogic } from '../auth/userLogic'
 import { handleLoginRedirect } from './auth/loginLogic'
-import { urls } from '../domain/urls'
+import { urls } from '../core/urls'
 import { addPortalIdIfMissing } from '../lib/router-utils'
 
 export const sceneLogic = kea<sceneLogicType>([

@@ -1,4 +1,4 @@
-import { Paginated } from "../../../domain/api"
+import { Paginated } from "../../../core/api"
 import { ContactsAdapter } from "../adapters/ContactsAdapter"
 import { CrmObjectApiClientInterface } from "../../../data/crm/api/CrmObjectsApiClient"
 import { Contact, CreateContactRequest } from "./models"

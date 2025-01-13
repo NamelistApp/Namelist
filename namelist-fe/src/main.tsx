@@ -5,9 +5,9 @@ import { ModalsProvider } from '@mantine/modals'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { App } from './scenes/app/App'
-import { mainContainer } from './MainContainer'
+import { appContainer } from './core/app-container'
 
-mainContainer.init()
+appContainer.init()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
