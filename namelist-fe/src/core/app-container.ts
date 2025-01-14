@@ -48,7 +48,7 @@ class AppContainer {
         return new ContactsRepository(this.buildCrmObjectApiClient(AppContext.getCurrentPortalId()))
     }
 
-    buildFormsRepository(): FormsRepositoryInterface {
+    formsRepository(): FormsRepositoryInterface {
         return new FormsRepository(this.buildCrmObjectApiClient(AppContext.getCurrentPortalId()))
     }
 

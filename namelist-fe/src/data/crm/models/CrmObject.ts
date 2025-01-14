@@ -8,12 +8,12 @@ export enum CrmObjectSource {
 }
 
 export interface CreateCrmObjectRequestInterface {
-    properties: Record<string, string | number | null>
+    properties: Record<string, string | number | {} | null>
 }
 
 export class CreateCrmObjectRequest {
     constructor(
-        public properties: Record<string, string | number | null>
+        public properties: Record<string, string | number | null | {}>
     ) { }
 }
 

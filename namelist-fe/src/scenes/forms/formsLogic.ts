@@ -16,7 +16,7 @@ export const formsLogic = kea<formsLogicType>([
     loaders(({ values }) => ({
         forms: {
             loadForms: async () => {
-                return await appContainer.buildFormsRepository().getForms(values.page)
+                return await appContainer.formsRepository().getForms(values.page)
             }
         }
     })),

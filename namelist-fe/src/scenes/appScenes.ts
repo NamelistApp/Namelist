@@ -8,7 +8,6 @@ export const appScenes: Record<Scene, () => any> = {
     [Scene.Dashboard]: () => import('./dashboard/Dashboard'),
     [Scene.Contacts]: () => import('./contacts/Contacts'),
     [Scene.Contact]: () => import('./contacts/Contact'),
-    [Scene.Dashboard]: () => import('./dashboard/Dashboard'),
     [Scene.Forms]: () => import('./forms/Forms'),
     [Scene.Form]: () => import('./dashboard/Dashboard'),
 }
