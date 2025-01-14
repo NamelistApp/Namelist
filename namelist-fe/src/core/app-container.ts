@@ -11,6 +11,7 @@ import { notifications } from '@mantine/notifications';
 import { CrmObjectApiClient, CrmObjectApiClientInterface } from "../data/crm/api/CrmObjectsApiClient";
 import { ContactsRepository, ContactsRepositoryInterface } from "../scenes/contacts/data/ContactsRepository";
 import { addPortalIdIfMissing, removePortalIdIfPresent } from "../lib/router-utils";
+import { FormsRepository, FormsRepositoryInterface } from "../scenes/forms/data/FormsRepository";
 
 interface InitKeaProps {
     state?: Record<string, any>
@@ -45,6 +46,10 @@ class AppContainer {
     // Repositories
     buildContactsRepository(): ContactsRepositoryInterface {
         return new ContactsRepository(this.buildCrmObjectApiClient(AppContext.getCurrentPortalId()))
+    }
+
+    buildFormsRepository(): FormsRepositoryInterface {
+        return new FormsRepository(this.buildCrmObjectApiClient(AppContext.getCurrentPortalId()))
     }
 
     // Api Clients

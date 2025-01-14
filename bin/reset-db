@@ -2,5 +2,6 @@
 
 cd namelist-be
 ./vendor/bin/sail artisan migrate:fresh --seed --seeder=DevSeeder
-./vendor/bin/sail artisan db:seed --class=ContactTypeSeeder
-./vendor/bin/sail artisan db:seed --class=EngagementTypeSeeder
+
+cd ..
+./bin/seed-object-types

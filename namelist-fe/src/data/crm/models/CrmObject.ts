@@ -1,5 +1,6 @@
 export enum CrmObjectTypeId {
-    Contact = 'contact'
+    Contact = 'contact',
+    Form = 'form'
 }
 
 export enum CrmObjectSource {

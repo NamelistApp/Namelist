@@ -16,4 +16,6 @@ export const urls = {
     dashboard: (): string => '/',
     contacts: (): string => '/contacts',
     contact: (contactId: string): string => `/contacts/${contactId}`,
+    forms: (): string => '/forms',
+    form: (formId: string): string => `/forms/${formId}`,
 }

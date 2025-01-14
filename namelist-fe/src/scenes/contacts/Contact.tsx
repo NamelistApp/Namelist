@@ -58,14 +58,14 @@ export function ContactScene() {
                                     )}
                                     <Group mt="md" justify="center" gap={30}>
                                         <Stack align="center" gap={5}>
-                                            <Button radius={'xl'} p={0} w={40} h={40} variant='light'>
+                                            <Button radius={'xl'} p={0} w={40} h={40} variant='light' disabled={contact.property('phone_nuber') ? false : true}>
                                                 <IconPhone size={18} stroke={1.5} />
                                             </Button>
                                             <Text size="xs" c="dimmed">Call</Text>
                                         </Stack>
 
                                         <Stack align="center" gap={5}>
-                                            <Button radius={'xl'} p={0} w={40} h={40} variant='light'>
+                                            <Button radius={'xl'} p={0} w={40} h={40} variant='light' disabled={contact.property('email_address') ? false : true}>
                                                 <IconMail size={18} stroke={1.5} />
                                             </Button>
                                             <Text size="xs" c="dimmed">Email</Text>

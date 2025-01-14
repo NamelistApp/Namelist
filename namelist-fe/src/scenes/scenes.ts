@@ -9,6 +9,8 @@ export enum Scene {
     Dashboard = 'Dashboard',
     Contacts = 'Contacts',
     Contact = 'Contact',
+    Form = 'Form',
+    Forms = 'Forms',
     Error404 = '404',
     ErrorNetwork = '4xx'
 }
@@ -52,6 +54,14 @@ export const sceneConfigurations: Record<Scene, SceneConfig> = {
         layout: 'app',
         portalBased: true
     },
+    [Scene.Forms]: {
+        layout: 'app',
+        portalBased: true
+    },
+    [Scene.Form]: {
+        layout: 'app',
+        portalBased: true
+    },
 }
 
 const preserveParams = (url: string) => (_params: Params, searchParams: Params, hashParams: Params) => {
@@ -69,4 +79,6 @@ export const routes: Record<string, Scene> = {
     [urls.dashboard()]: Scene.Dashboard,
     [urls.contacts()]: Scene.Contacts,
     [urls.contact(':contactId')]: Scene.Contact,
+    [urls.forms()]: Scene.Forms,
+    [urls.form(':formId')]: Scene.Form,
 }

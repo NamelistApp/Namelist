@@ -5,7 +5,7 @@ import { useActions, useValues } from 'kea';
 import { userLogic } from '../../../auth/userLogic';
 import { sceneLogic } from '../../sceneLogic';
 import AppLogo from './AppLogo';
-import { IconHome, IconLifebuoy, IconLogout, IconUsers } from '@tabler/icons-react'
+import { IconForms, IconHome, IconLifebuoy, IconLogout, IconUsers } from '@tabler/icons-react'
 import { urls } from '../../../core/urls';
 import { addPortalIdIfMissing } from '../../../lib/router-utils';
 import navigationLogic from './navigationLogic';
@@ -17,7 +17,8 @@ export default function AppNavigation() {
 
     const tabs = [
         { link: addPortalIdIfMissing(urls.dashboard()), label: 'Dashboard', scenes: ['Dashboard'], icon: IconHome },
-        { link: addPortalIdIfMissing(urls.contacts()), label: 'People', scenes: ['Contacts', 'Contact'], icon: IconUsers }
+        { link: addPortalIdIfMissing(urls.contacts()), label: 'People', scenes: ['Contacts', 'Contact'], icon: IconUsers },
+        { link: addPortalIdIfMissing(urls.forms()), label: 'Forms', scenes: ['Forms', 'Form'], icon: IconForms }
     ]
 
     const links = tabs.map((item) => (

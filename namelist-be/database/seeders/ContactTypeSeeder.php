@@ -11,6 +11,10 @@ class ContactTypeSeeder extends Seeder
 {
     public function run(): void
     {
+        if (CrmObjectType::where('id', ObjectTypeId::Contact)->exists()) {
+            return;
+        }
+
         $contactObjectType = CrmObjectType::create([
             'id' => ObjectTypeId::Contact,
             'name' => 'Contact',

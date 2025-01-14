@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd namelist-be
+./vendor/bin/sail artisan db:seed --class=ContactTypeSeeder
+./vendor/bin/sail artisan db:seed --class=EngagementTypeSeeder
+./vendor/bin/sail artisan db:seed --class=FormTypeSeeder
+./vendor/bin/sail artisan db:seed --class=FormSubmissionTypeSeeder
