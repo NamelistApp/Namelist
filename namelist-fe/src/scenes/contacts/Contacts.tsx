@@ -18,7 +18,7 @@ function Contacts(): JSX.Element {
     return (
         <BindLogic logic={contactsLogic} props={{}}>
             <AppHeader />
-            <Box px="sm">
+            <Box p="sm">
                 <ContactsScene />
             </Box>
         </BindLogic>
@@ -47,6 +47,7 @@ export function ContactsScene() {
                             <Table.Thead>
                                 <Table.Tr>
                                     <Table.Th>Name</Table.Th>
+                                    <Table.Th>Phone</Table.Th>
                                     <Table.Th>Email</Table.Th>
                                     <Table.Th>Source</Table.Th>
                                     <Table.Th>Created</Table.Th>
@@ -64,6 +65,7 @@ export function ContactsScene() {
                                                     </Text>
                                                 </Group>
                                             </Table.Td>
+                                            <Table.Td>{valueOrEmpty(contact.property('phone_number'))}</Table.Td>
                                             <Table.Td>{valueOrEmpty(contact.property('email_address'))}</Table.Td>
                                             <Table.Td>{valueOrEmpty(contact.property('source'))}</Table.Td>
                                             <Table.Td>{humanFriendlyDetailedTime(contact.createdAt)}</Table.Td>

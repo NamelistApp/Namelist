@@ -1,6 +1,6 @@
 import { Paginated } from "../../../core/api"
 import { CrmObjectApiClientInterface } from "../../../data/crm/api/CrmObjectsApiClient"
-import { CreateCrmObjectRequest, CreateCrmObjectRequestInterface, CrmObjectSource, CrmObjectTypeId } from "../../../data/crm/models/CrmObject"
+import { CreateCrmObjectRequest, CreateCrmObjectRequestInterface, CrmObject, CrmObjectSource, CrmObjectTypeId } from "../../../data/crm/models/CrmObject"
 import { CreateFormRequest, Form } from "./form-models"
 
 export interface FormsRepositoryInterface {
@@ -15,7 +15,7 @@ export class FormsRepository implements FormsRepositoryInterface {
         const response = await this.apiClient.getObjects(CrmObjectTypeId.Form, page)
         return {
             ...response,
-            data: response.data as Form[]
+            data: response.data.map((object) => this.toForm(object))
         }
     }
 
@@ -27,8 +27,18 @@ export class FormsRepository implements FormsRepositoryInterface {
         return new CreateCrmObjectRequest({
             name: request.name,
             type: request.type,
-            responses: [] // TODO
+            fields: request.fields
         })
+    }
+
+    private toForm(object: CrmObject): Form {
+        return new Form(
+            object.id,
+            object.object_type_id,
+            object.properties,
+            object.created_at,
+            object.updated_at
+        )
     }
 }
 

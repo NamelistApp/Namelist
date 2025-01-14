@@ -9,13 +9,13 @@ import { FormFieldType, FormType } from '../data/form-models'
 export function CreateForm({ onSuccess }: CreateFormProps): JSX.Element {
     const logicProps = { onSuccess } as CreateFormProps
     const formLogic = createFormLogic(logicProps)
-    const { isCrmFormSubmitting } = useValues(formLogic)
-    const { crmForm } = useValues(formLogic)
+    const { isCreateCrmFormSubmitting } = useValues(formLogic)
+    const { createCrmForm } = useValues(formLogic)
 
     return (
         <>
             <Form logic={createFormLogic} props={logicProps} formKey="createCrmForm" enableFormOnSubmit>
-                <Stack>
+                <Stack key="createCrmForm-stack">
                     <Field name="name">
                         {({ value, onChange }) => (
                             <TextInput
@@ -23,7 +23,7 @@ export function CreateForm({ onSuccess }: CreateFormProps): JSX.Element {
                                 label="Name"
                                 placeholder="Form name"
                                 radius="md"
-                                value={value || ''}
+                                value={value}
                                 onChange={(e) => onChange(e.currentTarget.value)}
                             />
                         )}
@@ -42,14 +42,14 @@ export function CreateForm({ onSuccess }: CreateFormProps): JSX.Element {
                         )}
                     </Field>
                     <Title order={4}>Fields</Title>
-                    {crmForm.fields.map((field, index) => (
-                        <Paper radius="md" pt="xs" px="md" pb="md" withBorder bg="gray.0">
+                    {createCrmForm.fields.map((field, index) => (
+                        <Paper key={`stack-${index}`} radius="md" pt="xs" px="md" pb="md" withBorder bg="gray.0">
                             <Group key={index} name={['fields', index]}>
-                                <Stack gap="xs">
-
+                                <Stack gap="xs" key={`stack-${index}`}>
                                     <Field name="name">
                                         {({ value, onChange }) => (
                                             <TextInput
+                                                disabled // only offering waitlist for now
                                                 data-autofocus
                                                 label="Field name"
                                                 placeholder="Field name"
@@ -61,6 +61,7 @@ export function CreateForm({ onSuccess }: CreateFormProps): JSX.Element {
                                     </Field>
                                     <Field name="type">
                                         <Select
+                                            disabled  // only offering waitlist for now
                                             label="Field type"
                                             placeholder="Field type"
                                             data={Object.values(FormFieldType)}
@@ -74,7 +75,7 @@ export function CreateForm({ onSuccess }: CreateFormProps): JSX.Element {
                     ))}
                 </Stack>
 
-                <Button type="submit" mt="xl" disabled={isCrmFormSubmitting}>Create Form</Button>
+                <Button type="submit" mt="xl" disabled={isCreateCrmFormSubmitting}>Create Form</Button>
             </Form>
         </>
     )

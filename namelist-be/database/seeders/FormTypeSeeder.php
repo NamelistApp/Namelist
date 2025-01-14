@@ -35,7 +35,7 @@ class FormTypeSeeder extends Seeder
             [
                 'name' => 'fields',
                 'type' => PropertyDefinitionType::json,
-                'validations' => ['required', 'json'],
+                'validations' => ['required', 'array'],
             ],
         ];
 

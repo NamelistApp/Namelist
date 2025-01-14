@@ -8,6 +8,7 @@ import { AxiosError } from 'axios'
 
 import type { createFormLogicType } from "./createFormLogicType";
 import { CreateFormRequest, FormFieldType, FormType } from '../data/form-models'
+import { formsLogic } from '../formsLogic'
 
 export type CreateFormProps = {
     onSuccess?: () => void
@@ -15,25 +16,29 @@ export type CreateFormProps = {
 
 export const createFormLogic = kea<createFormLogicType>([
     path(['scenes', 'forms', 'create', 'createFormLogic']),
+    connect({
+        actions: [formsLogic, ['loadForms']],
+    }),
     props({} as CreateFormProps),
     forms(({ actions, props }) => ({
-        crmForm: {
+        createCrmForm: {
             defaults: {
                 name: '',
                 type: FormType.Waitlist,
                 fields: [
-                    { name: 'Email', type: FormFieldType.Email, required: true }
+                    { name: 'Email Address', type: FormFieldType.Email, required: true }
                 ],
             } as CreateFormRequest,
             errors: (req: CreateFormRequest) => ({
                 name: !req.name ? 'Name is required' : null,
-                type: !(req.type in FormType) ? 'Type must be in ' + Object.values(FormType).join(', ') : null,
+                type: !Object.values(FormType).includes(req.type) ? 'Type must be in ' + Object.values(FormType).join(', ') : null,
             }),
             submit: async (req) => {
                 try {
                     await appContainer.formsRepository().createForm(req)
 
-                    actions.resetCrmForm()
+                    actions.loadForms()
+                    actions.resetCreateCrmForm()
                     props.onSuccess?.()
 
                     notifications.show({

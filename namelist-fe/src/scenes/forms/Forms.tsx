@@ -16,10 +16,10 @@ function Forms(): JSX.Element {
         <>
             <BindLogic logic={formsLogic} props={{}}>
                 <AppHeader />
-                <Box px="sm">
+                <Box p="sm">
                     <FormsScene />
                 </Box>
-            </BindLogic>
+            </BindLogic >
         </>
     )
 }

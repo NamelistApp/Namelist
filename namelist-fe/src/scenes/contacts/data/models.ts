@@ -1,4 +1,4 @@
-import { CrmObject, CrmProperty } from "../../../data/crm/models/CrmObject"
+import { CrmObjectPropertyInterface } from "../../../data/crm/models/CrmObject"
 
 export class Contact {
     private pinnedPropertyKeys = ['email_address', 'phone_number', 'first_name', 'last_name', 'source']
@@ -6,7 +6,7 @@ export class Contact {
     constructor(
         public id: number,
         public objectTypeId: string,
-        public properties: CrmProperty[],
+        public properties: CrmObjectPropertyInterface[],
         public createdAt: Date,
         public updatedAt: Date | null
     ) { }
@@ -16,11 +16,11 @@ export class Contact {
         return property ? property.value : null
     }
 
-    get pinnedProperties(): CrmProperty[] {
+    get pinnedProperties(): CrmObjectPropertyInterface[] {
         return this.properties.filter(property => this.pinnedPropertyKeys.includes(property.name))
     }
 
-    get displayProperties(): CrmProperty[] {
+    get displayProperties(): CrmObjectPropertyInterface[] {
         return [
             ...this.pinnedProperties,
             ...this.properties.filter(property => !this.pinnedPropertyKeys.includes(property.name))

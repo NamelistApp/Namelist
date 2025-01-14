@@ -16,13 +16,13 @@ class UniquePropertyValue implements DataAwareRule, ValidationRule
 
     protected $objectTypeId;
 
-    protected $propertyName;
+    protected $propertyKey;
 
-    public function __construct(Portal $portal, string $objectTypeId, string $propertyName)
+    public function __construct(Portal $portal, string $objectTypeId, string $propertyKey)
     {
         $this->portal = $portal;
         $this->objectTypeId = $objectTypeId;
-        $this->propertyName = $propertyName;
+        $this->propertyKey = $propertyKey;
     }
 
     public function setData(array $data): static
@@ -36,16 +36,20 @@ class UniquePropertyValue implements DataAwareRule, ValidationRule
     {
         Log::debug('UniquePropertyValue', [
             'crm_object_type_id' => $this->objectTypeId,
-            'name' => $this->propertyName,
+            'name' => $this->propertyKey,
             'value' => $value,
         ]);
+
+        $sql = <<<'EOF'
+lower(trim('"' FROM value::text)) = lower(?)
+EOF;
 
         $exists = $this->portal->objectProperties()
             ->where([
                 'crm_object_type_id' => $this->objectTypeId,
-                'name' => $this->propertyName,
+                'key' => $this->propertyKey,
             ])
-            ->whereRaw('LOWER(value) = LOWER(?)', $value)
+            ->whereRaw($sql, [$value])
             ->exists();
 
         if ($exists) {

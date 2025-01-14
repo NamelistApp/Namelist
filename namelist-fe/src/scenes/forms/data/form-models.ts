@@ -1,6 +1,19 @@
-import { CrmObject, CrmProperty } from "../../../data/crm/models/CrmObject"
+import { CrmObjectPropertyInterface } from "../../../data/crm/models/CrmObject"
 
-export class Form extends CrmObject {
+export class Form {
+    constructor(
+        public id: number,
+        public objectTypeId: string,
+        public properties: CrmObjectPropertyInterface[],
+        public createdAt: Date,
+        public updatedAt: Date | null
+    ) { }
+
+    property(key: string): string | null {
+        const property = this.properties.find(property => property.key === key)
+        return property ? property.value : null
+    }
+
     get name(): string | null {
         return this.property('name')
     }

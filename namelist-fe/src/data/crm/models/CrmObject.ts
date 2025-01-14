@@ -17,49 +17,25 @@ export class CreateCrmObjectRequest {
     ) { }
 }
 
-export class CrmProperty {
-    constructor(
-        public id: number,
-        public object_id: number,
-        public property_definition_id: number,
-        public key: string,
-        public name: string,
-        public version: number,
-        public value: any,
-        public created_at: Date,
-        public updated_at: Date | null,
-        public deleted_at: Date | null,
-    ) { }
-}
-
-export class CrmObject {
-    constructor(
-        public id: number,
-        public crm_object_type_id: string,
-        public portal_id: number,
-        public created_at: Date,
-        public updated_at: Date | null,
-        public deleted_at: Date | null,
-        public properties: CrmProperty[]
-    ) { }
-
-    property(name: string): string | null {
-        const property = this.properties.find(property => property.name === name)
-        return property ? property.value : null
-    }
-}
-
 export interface CrmObjectPropertyInterface {
     id: number
+    object_id: number
+    property_definition_id: number
     key: string
     name: string
+    version: number
     value: any
+    created_at: Date
+    updated_at: Date | null
+    deleted_at: Date | null
 }
 
 export interface CrmObjectInterface {
     id: number
-    objectTypeId: string
+    crm_object_type_id: string
+    portal_id: number
+    created_at: Date
+    updated_at: Date | null
+    deleted_at: Date | null
     properties: CrmObjectPropertyInterface[]
-    createdAt: Date
-    updatedAt: Date | null
 }

@@ -57,7 +57,7 @@ return new class extends Migration
             $table->string('key')->index();
             $table->string('name');
             $table->integer('version')->default(1);
-            $table->text('value');
+            $table->jsonb('value')->default('{}');
             $table->timestamps();
             $table->softDeletes();
 
