@@ -13,10 +13,6 @@ export class Form {
         const property = this.properties.find(property => property.key === key)
         return property ? property.value : null
     }
-
-    get name(): string | null {
-        return this.property('name')
-    }
 }
 
 export enum FormType {

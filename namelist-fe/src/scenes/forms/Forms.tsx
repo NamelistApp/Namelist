@@ -1,8 +1,8 @@
 import { BindLogic, useValues } from 'kea'
 import { SceneExport } from '../sceneTypes'
-import { Anchor, Badge, Box, Button, Card, Center, Flex, Grid, Group, Loader, Stack, Title, Text } from '@mantine/core'
+import { Anchor, Badge, Box, Button, Card, Center, Flex, Grid, Group, Loader, Stack, Title, Text, ThemeIcon } from '@mantine/core'
 import '@mantine/charts/styles.css'
-import { IconBolt, IconChevronRight, IconForms } from '@tabler/icons-react'
+import { IconArrowUpRight, IconBolt, IconChevronRight, IconForms } from '@tabler/icons-react'
 import AppHeader from '../app/components/AppHeader'
 import { formsLogic } from './formsLogic'
 
@@ -43,17 +43,49 @@ function FormsScene() {
                                 <Anchor underline="never" onClick={() => { }}>
                                     <Card shadow="sm" padding="md" radius="md" withBorder>
                                         <Flex align={"center"}>
-                                            <Stack w={"100%"} gap={10}>
-                                                <Text c={"primary"} fw={600}>{form.name}</Text>
+                                            <Stack gap={3} w={"100%"}>
+                                                <Text c={"primary"} fw={600}>{form.property('name')}</Text>
 
+                                                <Group gap={25}>
+                                                    <Stack gap={0}>
+                                                        <Text c="dimmed" tt="uppercase" fw={600} fz={10}>
+                                                            Views
+                                                        </Text>
+                                                        <Group gap={5}>
+                                                            <Text fw={500} fz={15}>
+                                                                150
+                                                            </Text>
+                                                            <ThemeIcon
+                                                                color="green"
+                                                                variant="light"
+                                                                radius="md"
+                                                                size={20}
+                                                            >
+                                                                <IconArrowUpRight stroke={1.5} />
+                                                            </ThemeIcon>
+                                                        </Group>
+                                                        <Text c="dimmed" fz={11}>
+                                                            <b>15</b> last week
+                                                        </Text>
+                                                    </Stack>
+                                                    <Stack gap={0}>
+                                                        <Text c="dimmed" tt="uppercase" fw={600} fz={10}>
+                                                            Submissions
+                                                        </Text>
+                                                        <Text fw={500} fz={15}>
+                                                            150
+                                                        </Text>
+                                                    </Stack>
+                                                </Group>
                                             </Stack>
+
                                             <IconChevronRight color="var(--mantine-color-dimmed)" />
                                         </Flex>
                                     </Card>
                                 </Anchor>
                             </Grid.Col>
                         ))}
-                    </Grid>
+                    </Grid >
                 ) : (
                     <Center>
                         <Stack align="center">
