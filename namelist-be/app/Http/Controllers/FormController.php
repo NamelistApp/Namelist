@@ -6,5 +6,9 @@ use App\Models\Eloquent\Portal;
 
 class FormController extends Controller
 {
-    public function index(Portal $portal) {}
+    public function index(Portal $portal)
+    {
+        $forms = $portal->forms()->get();
+        dd($forms);
+    }
 }

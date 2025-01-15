@@ -6,14 +6,10 @@ import AppHeader from '../app/components/AppHeader'
 import contactLogic, { ContactLogicProps } from './contactLogic'
 import classes from './styles/Contact.module.scss'
 
-interface ContactSceneProps {
-    contactId: number
-}
-
 export const scene: SceneExport = {
     component: Contact,
     logic: contactLogic,
-    paramsToProps: ({ params: { contactId } }: { params: ContactSceneProps }): ContactLogicProps => ({
+    paramsToProps: ({ params: { contactId } }): ContactLogicProps => ({
         contactId: contactId
     }),
 }

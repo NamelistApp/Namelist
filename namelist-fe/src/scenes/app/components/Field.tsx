@@ -8,7 +8,7 @@ export function Field({ children, name, ...props }: FieldProps): ReturnType<type
     const template: KeaFieldProps['template'] = ({ kids, error }) => {
         return (
             <Box>
-                {React.Children.map(kids, (child) =>
+                {React.Children.map(kids, (child: any) =>
                     React.cloneElement(child, { error })
                 )}
             </Box>

@@ -10,7 +10,7 @@ import { userLogic } from '../../auth/userLogic'
 
 const authApiClient = appContainer.buildAuthApiClient()
 
-enum ServerLoginError {
+export enum ServerLoginError {
     GoogleSignInAccountExists = 'GoogleSignInAccountExists',
 }
 

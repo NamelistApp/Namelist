@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Crm\CrmObjectController;
+use App\Http\Controllers\FormController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -12,6 +13,8 @@ Route::prefix('portal/{portal}')->middleware(['auth:sanctum'])->group(function (
     Route::get('crm-objects/{objectType}', [CrmObjectController::class, 'index']);
     Route::post('crm-objects/{objectType}', [CrmObjectController::class, 'store']);
     Route::get('crm-objects/{objectType}/{crmObject}', [CrmObjectController::class, 'show']);
+
+    Route::resource('forms', FormController::class);
 })->scopeBindings();
 
 // Called from clients who send a bearer token

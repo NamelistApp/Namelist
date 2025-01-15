@@ -14,7 +14,7 @@ export interface CrmFormSceneProps {
 export const scene: SceneExport = {
     component: CrmForm,
     logic: crmFormLogic,
-    paramsToProps: ({ params: { formId } }: { params: CrmFormSceneProps }): CrmFormSceneProps => ({
+    paramsToProps: ({ params: { formId } }): CrmFormSceneProps => ({
         formId: formId
     }),
 }
