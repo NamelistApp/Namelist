@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Relation::enforceMorphMap([
-            'contact' => \App\Models\Eloquent\Objects\Contact::class,
+            'portal' => \App\Models\Eloquent\Portal::class,
         ]);
     }
 }

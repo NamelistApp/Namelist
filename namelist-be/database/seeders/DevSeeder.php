@@ -18,5 +18,8 @@ class DevSeeder extends Seeder
             'password' => 'password',
             'is_staff' => true,
         ]);
+
+        $user->refresh();
+        echo 'Portal API Token: '.$user->currentPortal->createToken('Portal API Token')->plainTextToken."\n";
     }
 }
