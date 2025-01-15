@@ -1,6 +1,6 @@
 import { Paginated } from "../../../core/api"
 import { CrmObjectApiClientInterface } from "../../../data/crm/api/CrmObjectsApiClient"
-import { CreateCrmObjectRequest, CreateCrmObjectRequestInterface, CrmObject, CrmObjectSource, CrmObjectTypeId } from "../../../data/crm/models/CrmObject"
+import { CreateCrmObjectRequest, CreateCrmObjectRequestInterface, CrmObjectInterface, CrmObjectTypeId } from "../../../data/crm/models/CrmObject"
 import { CreateFormRequest, Form } from "./form-models"
 
 export interface FormsRepositoryInterface {
@@ -31,10 +31,10 @@ export class FormsRepository implements FormsRepositoryInterface {
         })
     }
 
-    private toForm(object: CrmObject): Form {
+    private toForm(object: CrmObjectInterface): Form {
         return new Form(
             object.id,
-            object.object_type_id,
+            object.crm_object_type_id,
             object.properties,
             object.created_at,
             object.updated_at

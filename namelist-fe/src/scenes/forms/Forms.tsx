@@ -5,10 +5,15 @@ import '@mantine/charts/styles.css'
 import { IconArrowUpRight, IconBolt, IconChevronRight, IconForms } from '@tabler/icons-react'
 import AppHeader from '../app/components/AppHeader'
 import { formsLogic } from './formsLogic'
+import { router } from 'kea-router'
 
 export const scene: SceneExport = {
     component: Forms,
     logic: formsLogic,
+}
+
+function didClickForm(formId: number) {
+    router.actions.push(`/forms/${formId}`)
 }
 
 function Forms(): JSX.Element {
@@ -40,7 +45,7 @@ function FormsScene() {
                     <Grid>
                         {forms.data.map((form) => (
                             <Grid.Col span={{ base: 12, md: 6 }} key={form.id}>
-                                <Anchor underline="never" onClick={() => { }}>
+                                <Anchor underline="never" onClick={() => { didClickForm(form.id) }}>
                                     <Card shadow="sm" padding="md" radius="md" withBorder>
                                         <Flex align={"center"}>
                                             <Stack gap={3} w={"100%"}>
@@ -49,7 +54,7 @@ function FormsScene() {
                                                 <Group gap={25}>
                                                     <Stack gap={0}>
                                                         <Text c="dimmed" tt="uppercase" fw={600} fz={10}>
-                                                            Views
+                                                            TODO
                                                         </Text>
                                                         <Group gap={5}>
                                                             <Text fw={500} fz={15}>
@@ -72,8 +77,21 @@ function FormsScene() {
                                                         <Text c="dimmed" tt="uppercase" fw={600} fz={10}>
                                                             Submissions
                                                         </Text>
-                                                        <Text fw={500} fz={15}>
-                                                            150
+                                                        <Group gap={5}>
+                                                            <Text fw={500} fz={15}>
+                                                                150
+                                                            </Text>
+                                                            <ThemeIcon
+                                                                color="green"
+                                                                variant="light"
+                                                                radius="md"
+                                                                size={20}
+                                                            >
+                                                                <IconArrowUpRight stroke={1.5} />
+                                                            </ThemeIcon>
+                                                        </Group>
+                                                        <Text c="dimmed" fz={11}>
+                                                            <b>15</b> last week
                                                         </Text>
                                                     </Stack>
                                                 </Group>

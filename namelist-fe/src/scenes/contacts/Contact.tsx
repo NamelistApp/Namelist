@@ -2,10 +2,9 @@ import { BindLogic, useValues } from 'kea'
 import { SceneExport } from '../sceneTypes'
 import { Avatar, Box, Button, Card, Center, Group, Loader, Paper, Text, SimpleGrid, Title, Grid, Timeline, Stack } from '@mantine/core'
 import { IconGitBranch, IconGitCommit, IconGitPullRequest, IconMail, IconMessageDots, IconPhone, IconUsers } from '@tabler/icons-react';
-import AppHeader from '../app/components/AppHeader';
-import contactLogic, { ContactLogicProps } from './contactLogic';
+import AppHeader from '../app/components/AppHeader'
+import contactLogic, { ContactLogicProps } from './contactLogic'
 import classes from './styles/Contact.module.scss'
-import { getGravatarUrl } from '../app/utils';
 
 interface ContactSceneProps {
     contactId: number
