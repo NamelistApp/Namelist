@@ -2,7 +2,7 @@
 
 namespace App\Models\Eloquent;
 
-use App\Models\Enum\ObjectTypeId;
+use App\Models\Eloquent\Objects\Form;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,7 +31,7 @@ class Portal extends Model implements AuthenticatableContract
 
     public function forms(): HasMany
     {
-        return $this->hasMany(CrmObject::class)->where('crm_object_type_id', ObjectTypeId::Form);
+        return $this->hasMany(Form::class);
     }
 
     public function objectProperties(): HasMany
@@ -42,5 +42,20 @@ class Portal extends Model implements AuthenticatableContract
     public function events(): HasMany
     {
         return $this->hasMany(Event::class);
+    }
+
+    public function appUsers(): HasMany
+    {
+        return $this->hasMany(AppUser::class);
+    }
+
+    public function appUserDistinctIds(): HasMany
+    {
+        return $this->hasMany(AppUserDistinctId::class);
+    }
+
+    public function fetchAppUser(string $distinctId): ?AppUser
+    {
+        return $this->appUserDistinctIds()->where('distinct_id', $distinctId)->first()?->appUser;
     }
 }

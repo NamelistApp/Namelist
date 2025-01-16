@@ -38,6 +38,7 @@ return new class extends Migration
             $table->string('name');
             $table->uuid('uuid');
             $table->string('distinct_id');
+            $table->foreignId('portal_id')->constrained()->cascadeOnDelete();
             $table->dateTime('timestamp'); // when the event happened in real life
             $table->jsonb('properties')->default('{}');
             $table->timestamps();

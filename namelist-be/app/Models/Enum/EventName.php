@@ -12,5 +12,5 @@ final class EventName
 
     public const appOpened = '$app_opened';
 
-    public const paywallVisit = '$paywall_visit';
+    public const formViewed = '$form_viewed';
 }

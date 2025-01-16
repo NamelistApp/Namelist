@@ -1,5 +1,5 @@
 import { useValues } from 'kea'
-import { Stack, TextInput, Button, Select, Title, Paper } from '@mantine/core'
+import { Stack, TextInput, Button, Select, Title, Paper, Tooltip } from '@mantine/core'
 import { Form, Group } from 'kea-forms'
 import { Field } from '../../app/components/Field'
 
@@ -43,7 +43,7 @@ export function CreateForm({ onSuccess }: CreateFormProps): JSX.Element {
                     </Field>
                     <Title order={4}>Fields</Title>
                     {createCrmForm.fields.map((field, index) => (
-                        <Paper key={`stack-${index}`} radius="md" pt="xs" px="md" pb="md" withBorder bg="gray.0">
+                        <Paper key={`stack-${index}`} radius="md" pt="xs" px="md" pb="md" withBorder>
                             <Group key={index} name={['fields', index]}>
                                 <Stack gap="xs" key={`stack-${index}`}>
                                     <Field name="name">

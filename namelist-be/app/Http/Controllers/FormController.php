@@ -8,7 +8,8 @@ class FormController extends Controller
 {
     public function index(Portal $portal)
     {
-        $forms = $portal->forms()->get();
-        dd($forms);
+        $forms = $portal->forms;
+
+        return $forms;
     }
 }
