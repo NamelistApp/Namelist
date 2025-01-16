@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd namelist-be
+./vendor/bin/sail artisan test

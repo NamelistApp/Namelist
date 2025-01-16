@@ -3,6 +3,7 @@
 namespace App\Models\Eloquent;
 
 use App\Models\Eloquent\Objects\Form;
+use Database\Factories\PortalFactory;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,6 +19,11 @@ class Portal extends Model implements AuthenticatableContract
     protected $fillable = [
         'name',
     ];
+
+    protected static function newFactory()
+    {
+        return PortalFactory::new();
+    }
 
     public function organization(): BelongsTo
     {

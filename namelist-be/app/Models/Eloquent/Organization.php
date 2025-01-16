@@ -2,6 +2,7 @@
 
 namespace App\Models\Eloquent;
 
+use Database\Factories\OrganizationFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -18,6 +19,11 @@ class Organization extends Model
     protected $with = [
         'portals',
     ];
+
+    protected static function newFactory()
+    {
+        return OrganizationFactory::new();
+    }
 
     public function portals(): HasMany
     {
