@@ -49,50 +49,28 @@ function FormsScene() {
                                     <Card shadow="sm" padding="md" radius="md" withBorder>
                                         <Flex align={"center"}>
                                             <Stack gap={3} w={"100%"}>
-                                                <Text c={"primary"} fw={600}>{form.property('name')}</Text>
+                                                <Text c={"primary"} fw={600}>{form.name}</Text>
 
                                                 <Group gap={25}>
                                                     <Stack gap={0}>
                                                         <Text c="dimmed" tt="uppercase" fw={600} fz={10}>
-                                                            TODO
+                                                            VIEWS
                                                         </Text>
                                                         <Group gap={5}>
                                                             <Text fw={500} fz={15}>
-                                                                150
+                                                                {form.viewCount}
                                                             </Text>
-                                                            <ThemeIcon
-                                                                color="green"
-                                                                variant="light"
-                                                                radius="md"
-                                                                size={20}
-                                                            >
-                                                                <IconArrowUpRight stroke={1.5} />
-                                                            </ThemeIcon>
                                                         </Group>
-                                                        <Text c="dimmed" fz={11}>
-                                                            <b>15</b> last week
-                                                        </Text>
                                                     </Stack>
                                                     <Stack gap={0}>
                                                         <Text c="dimmed" tt="uppercase" fw={600} fz={10}>
-                                                            Submissions
+                                                            SUBMISSIONS
                                                         </Text>
                                                         <Group gap={5}>
                                                             <Text fw={500} fz={15}>
-                                                                150
+                                                                {form.submissionCount}
                                                             </Text>
-                                                            <ThemeIcon
-                                                                color="green"
-                                                                variant="light"
-                                                                radius="md"
-                                                                size={20}
-                                                            >
-                                                                <IconArrowUpRight stroke={1.5} />
-                                                            </ThemeIcon>
                                                         </Group>
-                                                        <Text c="dimmed" fz={11}>
-                                                            <b>15</b> last week
-                                                        </Text>
                                                     </Stack>
                                                 </Group>
                                             </Stack>

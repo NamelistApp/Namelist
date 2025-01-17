@@ -9,5 +9,5 @@ export const appScenes: Record<Scene, () => any> = {
     [Scene.Contacts]: () => import('./contacts/Contacts'),
     [Scene.Contact]: () => import('./contacts/Contact'),
     [Scene.Forms]: () => import('./forms/Forms'),
-    [Scene.Form]: () => import('./forms/CrmForm'),
+    [Scene.Form]: () => import('./forms/Form'),
 }

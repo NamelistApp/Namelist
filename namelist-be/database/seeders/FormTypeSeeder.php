@@ -16,7 +16,7 @@ class FormTypeSeeder extends Seeder
             return;
         }
 
-        $objectType = CrmObjectType::create([
+        $objectType = CrmObjectType::updateOrCreate([
             'id' => ObjectTypeId::Form,
             'name' => 'Form',
         ]);
@@ -40,7 +40,7 @@ class FormTypeSeeder extends Seeder
         ];
 
         foreach ($properties as $property) {
-            $objectType->propertyDefinitions()->create([
+            $objectType->propertyDefinitions()->updateOrCreate([
                 'key' => $property['name'],
                 'name' => ucwords(str_replace('_', ' ', $property['name'])),
                 'type' => $property['type'],

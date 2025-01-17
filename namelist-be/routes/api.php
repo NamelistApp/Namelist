@@ -15,6 +15,7 @@ Route::prefix('portal/{portal}')->middleware(['auth:sanctum'])->group(function (
     Route::get('crm-objects/{objectType}/{crmObject}', [CrmObjectController::class, 'show']);
 
     Route::resource('forms', FormController::class);
+    Route::get('forms/{form}/stats', [FormController::class, 'stats']);
 })->scopeBindings();
 
 // Called from clients who send a bearer token

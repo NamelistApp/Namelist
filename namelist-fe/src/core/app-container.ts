@@ -12,6 +12,7 @@ import { CrmObjectApiClient, CrmObjectApiClientInterface } from "../data/crm/api
 import { ContactsRepository, ContactsRepositoryInterface } from "../scenes/contacts/data/ContactsRepository";
 import { addPortalIdIfMissing, removePortalIdIfPresent } from "../lib/router-utils";
 import { FormsRepository, FormsRepositoryInterface } from "../scenes/forms/data/FormsRepository";
+import { FormsApiClient, FormsApiClientInterface } from "../scenes/forms/data/FormsApiClient";
 
 interface InitKeaProps {
     state?: Record<string, any>
@@ -45,11 +46,14 @@ class AppContainer {
 
     // Repositories
     buildContactsRepository(): ContactsRepositoryInterface {
-        return new ContactsRepository(this.buildCrmObjectApiClient(AppContext.getCurrentPortalId()))
+        return new ContactsRepository(this.crmObjectApiClient())
     }
 
     formsRepository(): FormsRepositoryInterface {
-        return new FormsRepository(this.buildCrmObjectApiClient(AppContext.getCurrentPortalId()))
+        return new FormsRepository(
+            this.crmObjectApiClient(),
+            this.formsApiClient()
+        )
     }
 
     // Api Clients
@@ -58,8 +62,12 @@ class AppContainer {
     }
 
     // Private
-    private buildCrmObjectApiClient(portalId: number): CrmObjectApiClientInterface {
+    private crmObjectApiClient(): CrmObjectApiClientInterface {
         return new CrmObjectApiClient(this.apiClient, AppContext.getCurrentPortalId())
+    }
+
+    private formsApiClient(): FormsApiClientInterface {
+        return new FormsApiClient(this.apiClient, AppContext.getCurrentPortalId())
     }
 
     private buildBaseApiClient(): BaseApiClientInterface {

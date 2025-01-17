@@ -1,26 +1,39 @@
-import { Paginated } from "../../../core/api"
+import { BaseApiClientInterface, Paginated } from "../../../core/api"
 import { CrmObjectApiClientInterface } from "../../../data/crm/api/CrmObjectsApiClient"
 import { CreateCrmObjectRequest, CreateCrmObjectRequestInterface, CrmObjectInterface, CrmObjectTypeId } from "../../../data/crm/models/CrmObject"
-import { CreateFormRequest, Form } from "./form-models"
+import { DateRange } from "../../../lib/utils"
+import { CreateFormRequest, Form, FormResponse, FormStatsResponse } from "./form-models"
+import { FormsApiClientInterface } from "./FormsApiClient"
 
 export interface FormsRepositoryInterface {
     getForms(page: number): Promise<Paginated<Form>>
+    getForm(formId: number): Promise<Form>
+    getFormStats(formId: number, dateRange: DateRange): Promise<FormStatsResponse>
     createForm(form: CreateFormRequest): Promise<void>
 }
 
 export class FormsRepository implements FormsRepositoryInterface {
-    constructor(private apiClient: CrmObjectApiClientInterface) { }
+    constructor(private crmApiClient: CrmObjectApiClientInterface, private formsApiClient: FormsApiClientInterface) { }
 
     async getForms(page: number): Promise<Paginated<Form>> {
-        const response = await this.apiClient.getObjects(CrmObjectTypeId.Form, page)
+        const response = await this.formsApiClient.getForms(page)
         return {
             ...response,
             data: response.data.map((object) => this.toForm(object))
         }
     }
 
+    async getForm(formId: number): Promise<Form> {
+        const response = await this.formsApiClient.getForm(formId)
+        return this.toForm(response)
+    }
+
+    async getFormStats(formId: number, dateRange: DateRange): Promise<FormStatsResponse> {
+        return await this.formsApiClient.getFormStats(formId, dateRange)
+    }
+
     async createForm(form: CreateFormRequest): Promise<void> {
-        return await this.apiClient.createObject(CrmObjectTypeId.Form, this.toCrmObjectRequest(form))
+        return await this.crmApiClient.createObject(CrmObjectTypeId.Form, this.toCrmObjectRequest(form))
     }
 
     private toCrmObjectRequest(request: CreateFormRequest): CreateCrmObjectRequestInterface {
@@ -31,10 +44,12 @@ export class FormsRepository implements FormsRepositoryInterface {
         })
     }
 
-    private toForm(object: CrmObjectInterface): Form {
+    private toForm(object: FormResponse): Form {
         return new Form(
             object.id,
             object.crm_object_type_id,
+            object.view_count,
+            object.submission_count,
             object.properties,
             object.created_at,
             object.updated_at

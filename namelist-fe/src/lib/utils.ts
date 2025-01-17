@@ -1,4 +1,13 @@
-import dayjs, { Dayjs as DayjsOriginal, isDayjs } from 'dayjs'
+import dayjs from 'dayjs'
+
+export type DateRange = [Date, Date]
+
+export function humanFriendlyDate(
+    date: dayjs.Dayjs | Date | string | null | undefined,
+    formatDate = 'MMMM DD, YYYY'
+): string {
+    return humanFriendlyDetailedTime(date, formatDate, '')
+}
 
 export function humanFriendlyDetailedTime(
     date: dayjs.Dayjs | Date | string | null | undefined,

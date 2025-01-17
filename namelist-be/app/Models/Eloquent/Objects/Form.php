@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Form extends CrmObject
 {
-    protected $appends = ['viewCount'];
+    protected $appends = ['view_count', 'submission_count'];
 
     protected static function booted(): void
     {
@@ -25,6 +25,13 @@ class Form extends CrmObject
     public function getViewCountAttribute()
     {
         return Event::where('name', '$form_viewed')
+            ->whereRaw("properties->>'\$form_id' = ?", [$this->id])
+            ->count();
+    }
+
+    public function getSubmissionCountAttribute()
+    {
+        return Event::where('name', '$form_submitted')
             ->whereRaw("properties->>'\$form_id' = ?", [$this->id])
             ->count();
     }

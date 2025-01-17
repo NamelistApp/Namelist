@@ -1,9 +1,31 @@
 import { CrmObjectPropertyInterface } from "../../../data/crm/models/CrmObject"
 
+export interface FormResponse {
+    id: number
+    crm_object_type_id: string
+    portal_id: number
+    submission_count: number
+    view_count: number
+    created_at: Date
+    updated_at: Date | null
+    deleted_at: Date | null
+    properties: CrmObjectPropertyInterface[]
+}
+
+export interface FormStatsResponse {
+    start_date: Date
+    end_date: Date
+    submission_count: number
+    view_count: number
+    chart: { date: string, Views: number, Submissions: number, 'Conversion Rate': number }[]
+}
+
 export class Form {
     constructor(
         public id: number,
         public objectTypeId: string,
+        public viewCount: number,
+        public submissionCount: number,
         public properties: CrmObjectPropertyInterface[],
         public createdAt: Date,
         public updatedAt: Date | null
@@ -12,6 +34,10 @@ export class Form {
     property(key: string): string | null {
         const property = this.properties.find(property => property.key === key)
         return property ? property.value : null
+    }
+
+    get name(): string | null {
+        return this.property('name')
     }
 }
 
