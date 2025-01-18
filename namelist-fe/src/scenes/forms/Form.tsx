@@ -54,7 +54,7 @@ function CrmFormScene() {
                         label="Date Range"
                         placeholder="Pick a range"
                         highlightToday={true}
-                        leftSection={<IconCalendarFilled stroke={1} />}
+                        leftSection={<IconCalendarFilled color="dark" stroke={1} />}
                         firstDayOfWeek={0}
                         defaultValue={dateRange}
                         onChange={(value) => value[0] && value[1] && setDateRange(value as [Date, Date])}
@@ -73,7 +73,7 @@ function CrmFormScene() {
                                 {humanFriendlyDate(formStats.start_date)} &mdash; {humanFriendlyDate(formStats.end_date)}
                             </Title>
 
-                            <Divider mt={10} mb={30} color="gray" />
+                            <Divider mt={10} mb={30} color={'gray.4'} />
 
                             <LineChart
                                 h={300}

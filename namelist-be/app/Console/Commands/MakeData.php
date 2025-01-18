@@ -7,12 +7,15 @@ use App\Jobs\ProcessEventJob;
 use App\Models\Eloquent\Portal;
 use Illuminate\Console\Command;
 
-class MakeEvents extends Command
+class MakeData extends Command
 {
-    protected $signature = 'app:makeevents {portalId}';
+    protected $signature = 'app:make-data {portalId}';
 
     protected $description = 'Command description';
 
+    /**
+     * Given the portal id, make a bunch of people, forms, events, etc. There should be dummy data for all object types
+     */
     public function handle()
     {
         $eventsJson = '[
