@@ -7,6 +7,7 @@ use App\Models\Eloquent\Event;
 use App\Models\Eloquent\Objects\Form;
 use App\Models\Eloquent\Portal;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class FormController extends Controller
 {
@@ -22,17 +23,22 @@ class FormController extends Controller
 
     public function stats(Portal $portal, Form $form, FormStatsRequest $request)
     {
-        $startDate = (new Carbon($request->validated('startDate')))->startOfDay();
-        $endDate = (new Carbon($request->validated('endDate')))->endOfDay();
+        Log::debug('request', $request->all());
+        $startDate = (new Carbon($request->validated('startDate')));
+        $endDate = (new Carbon($request->validated('endDate')));
+        Log::debug('after carbon', [$startDate, $endDate]);
 
-        $viewCount = Event::where('name', '$form_viewed')
-            ->whereRaw("properties->>'\$form_id' = ?", [$form->id])
-            ->whereBetween('timestamp', [$startDate, $endDate])
-            ->count();
-        $submissionCount = Event::where('name', '$form_submitted')
-            ->whereRaw("properties->>'\$form_id' = ?", [$form->id])
-            ->whereBetween('timestamp', [$startDate, $endDate])
-            ->count();
+        $eventQuery = Event::whereRaw("properties->>'\$form_id' = ?", [$form->id])
+            ->whereBetween('timestamp', [$startDate, $endDate]);
+
+        $counts = $eventQuery->selectRaw('
+                COUNT(CASE WHEN name = ? THEN 1 END) AS views,
+                COUNT(CASE WHEN name = ? THEN 1 END) AS submissions',
+            ['$form_viewed', '$form_submitted']
+        )->first();
+        $conversionRate = $counts->views > 0
+            ? round(($counts->submissions / $counts->views) * 100)
+            : 0;
         $chart = Event::selectRaw("
                 TO_CHAR(timestamp, 'Mon DD') as date,
                 COUNT(CASE WHEN name = '\$form_viewed' THEN 1 END) AS \"Views\",
@@ -47,10 +53,11 @@ class FormController extends Controller
             ->get();
 
         return [
-            'start_date' => $startDate,
-            'end_date' => $endDate,
-            'view_count' => $viewCount,
-            'submission_count' => $submissionCount,
+            'start_date' => $startDate->format('Y-m-d'),
+            'end_date' => $endDate->format('Y-m-d'),
+            'view_count' => $counts->views,
+            'submission_count' => $counts->submissions,
+            'conversion_rate' => $conversionRate,
             'chart' => $chart,
         ];
     }

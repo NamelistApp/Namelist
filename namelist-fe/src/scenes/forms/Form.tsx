@@ -1,6 +1,6 @@
 import { BindLogic, useActions, useValues } from 'kea'
 import { SceneExport } from '../sceneTypes'
-import { Box, Divider, Group, Loader, Paper, SimpleGrid, Stack, Text, ThemeIcon, Title } from '@mantine/core'
+import { Box, Center, Divider, Group, Loader, Paper, SimpleGrid, Stack, Text, ThemeIcon, Title } from '@mantine/core'
 import { LineChart } from '@mantine/charts'
 import '@mantine/charts/styles.css'
 import '@mantine/dates/styles.css';
@@ -9,6 +9,7 @@ import { IconArrowDownRight, IconArrowUpRight, IconCalendarFilled, IconForms } f
 import AppHeader from '../app/components/AppHeader'
 import { formLogic } from './formLogic'
 import { humanFriendlyDate } from '../../lib/utils'
+import { FormStats } from './data/form-models'
 
 export interface CrmFormSceneProps {
     formId: string
@@ -56,11 +57,12 @@ function CrmFormScene() {
                         leftSection={<IconCalendarFilled stroke={1} />}
                         firstDayOfWeek={0}
                         defaultValue={dateRange}
-                        onChange={(value) => setDateRange(value)}
+                        onChange={(value) => value[0] && value[1] && setDateRange(value as [Date, Date])}
+                        allowSingleDateInRange
                     />
                 </Box>
 
-                <StatsGridIcons />
+                <StatsGridIcons formStats={formStats} />
 
                 <Paper p="md" withBorder>
                     {formStatsLoading ? (
@@ -71,7 +73,7 @@ function CrmFormScene() {
                                 {humanFriendlyDate(formStats.start_date)} &mdash; {humanFriendlyDate(formStats.end_date)}
                             </Title>
 
-                            <Divider mt={10} mb={30} color="gray.2" />
+                            <Divider mt={10} mb={30} color="gray" />
 
                             <LineChart
                                 h={300}
@@ -92,44 +94,52 @@ function CrmFormScene() {
     )
 }
 
-export function StatsGridIcons() {
+export function StatsGridIcons({ formStats }: { formStats: FormStats }) {
+    const { formStatsLoading } = useValues(formLogic)
+
     const data = [
-        { title: 'Views', value: '$4,145', diff: -13 },
-        { title: 'Submissions', value: '745', diff: 18 },
-        { title: 'Conversion Rate', value: '745%', diff: 18 }
+        { title: 'Views', value: formStats.view_count, diff: formStats.view_count_delta, prevValue: formStats.prev_view_count, isPerc: false },
+        { title: 'Submissions', value: formStats.submission_count, diff: formStats.submissions_count_delta, prevValue: formStats.prev_submission_count, isPerc: false },
+        { title: 'Conversion Rate', value: formStats.conversion_rate, diff: formStats.conversion_rate_delta, prevValue: formStats.prev_conversion_rate, isPerc: true },
     ];
     const stats = data.map((stat) => {
         const DiffIcon = stat.diff > 0 ? IconArrowUpRight : IconArrowDownRight
 
         return (
             <Paper withBorder p="md" radius="md" key={stat.title}>
-                <Group justify="apart">
-                    <div>
-                        <Text c="dimmed" tt="uppercase" fw={700} fz="xs">
-                            {stat.title}
+                {formStatsLoading ? (
+                    <Center><Loader color="blue" /></Center>
+                ) : (
+                    <>
+                        <Group justify="apart">
+                            <div>
+                                <Text c="dimmed" tt="uppercase" fw={700} fz="xs">
+                                    {stat.title}
+                                </Text>
+                                <Text fw={700} fz="xl">
+                                    {stat.isPerc ? `${stat.value}%` : stat.value}
+                                </Text>
+                            </div>
+                            <ThemeIcon
+                                color="gray"
+                                variant="light"
+                                style={{
+                                    color: stat.diff > 0 ? 'var(--mantine-color-teal-6)' : 'var(--mantine-color-red-6)',
+                                }}
+                                size={38}
+                                radius="md"
+                            >
+                                <DiffIcon size={28} stroke={1.5} />
+                            </ThemeIcon>
+                        </Group>
+                        <Text c="dimmed" fz="sm" mt="md">
+                            <Text component="span" c={stat.diff > 0 ? 'teal' : 'red'} fw={700}>
+                                {stat.diff}%
+                            </Text>{' '}
+                            {stat.diff > 0 ? 'increase' : 'decrease'} compared to previous {formStats.timespan} ({stat.isPerc ? `${stat.prevValue}%` : stat.prevValue})
                         </Text>
-                        <Text fw={700} fz="xl">
-                            {stat.value}
-                        </Text>
-                    </div>
-                    <ThemeIcon
-                        color="gray"
-                        variant="light"
-                        style={{
-                            color: stat.diff > 0 ? 'var(--mantine-color-teal-6)' : 'var(--mantine-color-red-6)',
-                        }}
-                        size={38}
-                        radius="md"
-                    >
-                        <DiffIcon size={28} stroke={1.5} />
-                    </ThemeIcon>
-                </Group>
-                <Text c="dimmed" fz="sm" mt="md">
-                    <Text component="span" c={stat.diff > 0 ? 'teal' : 'red'} fw={700}>
-                        {stat.diff}%
-                    </Text>{' '}
-                    {stat.diff > 0 ? 'increase' : 'decrease'} compared to last month
-                </Text>
+                    </>
+                )}
             </Paper>
         );
     });

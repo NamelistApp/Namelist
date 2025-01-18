@@ -2,12 +2,13 @@ import { path, kea, key, props, selectors, afterMount, defaults, reducers, actio
 
 import { CrmFormSceneProps } from "./Form"
 import { loaders } from "kea-loaders"
-import { Form, FormStatsResponse } from "./data/form-models"
+import { Form, FormStats, FormStatsResponse } from "./data/form-models"
 import { appContainer } from "../../core/app-container"
 
 import type { formLogicType } from "./formLogicType";
 import dayjs from "dayjs"
 import { DateRange } from "../../lib/utils"
+import { FormFactory } from "./forms-factory"
 
 export const formLogic = kea<formLogicType>([
     path((key) => ['scenes', 'forms', 'crmFormLogic', key]),
@@ -20,7 +21,7 @@ export const formLogic = kea<formLogicType>([
         dateRange: [
             [dayjs().subtract(1, 'month').startOf('day').toDate(), dayjs().toDate()] as DateRange,
             {
-                setDateRange: (dateRange: DateRange) => dateRange
+                setDateRange: (_, dateRange: DateRange) => dateRange
             }
         ]
     }),
@@ -35,14 +36,30 @@ export const formLogic = kea<formLogicType>([
             }
         },
         formStats: {
-            __default: {} as FormStatsResponse,
+            __default: {} as FormStats,
             loadFormStats: async (formId = props.formId) => {
-                return await appContainer.formsRepository().getFormStats(formId, values.dateRange)
+                const [startDate, endDate] = values.dateRange.map(date => dayjs(date))
+                const daysBetween = endDate.diff(startDate, 'day') + 1
+
+                console.log('are equal', endDate.isSame(startDate, 'day'))
+                console.log('daysBetween', daysBetween)
+
+                const prevDateRange = [
+                    startDate.subtract(daysBetween, 'day').toDate(),
+                    endDate.subtract(daysBetween, 'day').toDate()
+                ] as DateRange
+                const [prevStats, currentStats] = await Promise.all([
+                    appContainer.formsRepository().getFormStats(formId, prevDateRange),
+                    appContainer.formsRepository().getFormStats(formId, values.dateRange)
+                ])
+
+                return FormFactory.makeFormStats(prevStats, currentStats)
             }
-        }
+        },
     })),
-    listeners(({ actions }) => ({
+    listeners(({ actions, values }) => ({
         setDateRange: () => {
+            console.log('dateRange', values.dateRange)
             actions.loadFormStats()
         }
     })),

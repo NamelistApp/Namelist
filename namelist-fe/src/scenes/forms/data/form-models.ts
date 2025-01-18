@@ -17,6 +17,23 @@ export interface FormStatsResponse {
     end_date: Date
     submission_count: number
     view_count: number
+    conversion_rate: number
+    chart: { date: string, Views: number, Submissions: number, 'Conversion Rate': number }[]
+}
+
+export interface FormStats {
+    start_date: Date
+    end_date: Date
+    submission_count: number
+    view_count: number
+    prev_submission_count: number
+    prev_view_count: number
+    prev_conversion_rate: number
+    submissions_count_delta: number
+    view_count_delta: number
+    conversion_rate: number
+    conversion_rate_delta: number
+    timespan: string
     chart: { date: string, Views: number, Submissions: number, 'Conversion Rate': number }[]
 }
 
