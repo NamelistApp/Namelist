@@ -15,7 +15,7 @@ class FormController extends Controller
 {
     public function index(Portal $portal)
     {
-        return $portal->forms()->paginate();
+        return $portal->forms()->orderBy('created_at', 'asc')->paginate();
     }
 
     public function show(Portal $portal, Form $form)
