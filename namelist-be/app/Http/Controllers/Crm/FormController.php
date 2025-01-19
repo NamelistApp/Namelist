@@ -7,6 +7,7 @@ use App\Http\Requests\FormStatsRequest;
 use App\Models\Eloquent\Event;
 use App\Models\Eloquent\Objects\Form;
 use App\Models\Eloquent\Portal;
+use App\Models\Enum\EventName;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
@@ -35,7 +36,7 @@ class FormController extends Controller
         $counts = $eventQuery->selectRaw('
                 COUNT(CASE WHEN name = ? THEN 1 END) AS views,
                 COUNT(CASE WHEN name = ? THEN 1 END) AS submissions',
-            ['$form_viewed', '$form_submitted']
+            [EventName::formViewed, EventName::formSubmitted]
         )->first();
         $conversionRate = $counts->views > 0
             ? round(($counts->submissions / $counts->views) * 100)

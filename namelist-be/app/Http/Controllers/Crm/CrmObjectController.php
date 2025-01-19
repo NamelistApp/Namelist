@@ -17,7 +17,7 @@ class CrmObjectController extends Controller
             ->crmObjects()
             ->where('crm_object_type_id', $objectType->id)
             ->orderBy('created_at', 'desc')
-            ->paginate(100);
+            ->paginate();
     }
 
     public function store(Portal $portal, CrmObjectType $objectType, CrmObjectCreateRequest $request)

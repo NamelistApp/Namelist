@@ -82,7 +82,6 @@ function CrmFormScene() {
                                 series={[
                                     { name: 'Views', color: 'blue.9' },
                                     { name: 'Submissions', color: 'green.9' },
-                                    { name: 'Conversion Rate', color: 'yellow.9' },
                                 ]}
                                 curveType="linear"
                             />
