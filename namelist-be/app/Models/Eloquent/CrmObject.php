@@ -2,17 +2,28 @@
 
 namespace App\Models\Eloquent;
 
+use Database\Factories\CrmObjectFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CrmObject extends Model
 {
+    use HasFactory;
+
     protected $table = 'crm_objects';
+
+    protected $perPage = 50;
 
     protected $with = [
         'properties',
     ];
+
+    protected static function newFactory()
+    {
+        return CrmObjectFactory::new();
+    }
 
     public function portal(): BelongsTo
     {

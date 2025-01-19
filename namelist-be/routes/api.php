@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Crm\CrmObjectController;
-use App\Http\Controllers\FormController;
+use App\Http\Controllers\Crm\FormController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

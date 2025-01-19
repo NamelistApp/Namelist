@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Crm;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\FormStatsRequest;
 use App\Models\Eloquent\Event;
 use App\Models\Eloquent\Objects\Form;

@@ -5,7 +5,7 @@ import { LineChart } from '@mantine/charts'
 import '@mantine/charts/styles.css'
 import '@mantine/dates/styles.css';
 import { DatePickerInput } from '@mantine/dates'
-import { IconArrowDownRight, IconArrowUpRight, IconCalendarFilled, IconForms } from '@tabler/icons-react'
+import { IconArrowDownRight, IconArrowUpRight, IconCalendarWeek, IconForms } from '@tabler/icons-react'
 import AppHeader from '../app/components/AppHeader'
 import { formLogic } from './formLogic'
 import { humanFriendlyDate } from '../../lib/utils'
@@ -54,7 +54,7 @@ function CrmFormScene() {
                         label="Date Range"
                         placeholder="Pick a range"
                         highlightToday={true}
-                        leftSection={<IconCalendarFilled color="dark" stroke={1} />}
+                        leftSection={<IconCalendarWeek stroke={1} />}
                         firstDayOfWeek={0}
                         defaultValue={dateRange}
                         onChange={(value) => value[0] && value[1] && setDateRange(value as [Date, Date])}
@@ -73,7 +73,7 @@ function CrmFormScene() {
                                 {humanFriendlyDate(formStats.start_date)} &mdash; {humanFriendlyDate(formStats.end_date)}
                             </Title>
 
-                            <Divider mt={10} mb={30} color={'gray.4'} />
+                            <Divider mt={10} mb={30} />
 
                             <LineChart
                                 h={300}
