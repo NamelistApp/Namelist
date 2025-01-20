@@ -1,4 +1,5 @@
-import { CrmObjectPropertyInterface } from "../../../data/crm/models/CrmObject"
+import { filterRecord } from "../../../core/utils"
+import { CrmProperties, CrmPropertyValue } from "../../../data/crm/models/CrmObject"
 
 export class Contact {
     private pinnedPropertyKeys = ['email_address', 'phone_number', 'first_name', 'last_name', 'source']
@@ -6,25 +7,25 @@ export class Contact {
     constructor(
         public id: number,
         public objectTypeId: string,
-        public properties: CrmObjectPropertyInterface[],
+        public properties: CrmProperties,
         public createdAt: Date,
         public updatedAt: Date | null
     ) { }
 
-    property(key: string): string | null {
-        const property = this.properties.find(property => property.key === key)
-        return property ? property.value : null
+    property(key: string): CrmPropertyValue {
+        return this.properties[key]
     }
 
-    get pinnedProperties(): CrmObjectPropertyInterface[] {
-        return this.properties.filter(property => this.pinnedPropertyKeys.includes(property.name))
+    get pinnedProperties(): CrmProperties {
+        return filterRecord(this.properties, this.pinnedPropertyKeys)
     }
 
-    get displayProperties(): CrmObjectPropertyInterface[] {
-        return [
+    get displayProperties(): CrmProperties {
+        // return all pinned properties first. Then all all other properties after (filter out pinned properties)
+        return {
             ...this.pinnedProperties,
-            ...this.properties.filter(property => !this.pinnedPropertyKeys.includes(property.name))
-        ]
+            ...filterRecord(this.properties, Object.keys(this.properties).filter(key => !this.pinnedPropertyKeys.includes(key)))
+        }
     }
 
     get displayName(): string | null {

@@ -40,9 +40,8 @@ class FormTypeSeeder extends Seeder
         ];
 
         foreach ($properties as $property) {
-            $objectType->propertyDefinitions()->updateOrCreate([
+            $objectType->propertyDefinitions()->create([
                 'key' => $property['name'],
-                'name' => ucwords(str_replace('_', ' ', $property['name'])),
                 'type' => $property['type'],
                 'validations' => $property['validations'],
             ]);

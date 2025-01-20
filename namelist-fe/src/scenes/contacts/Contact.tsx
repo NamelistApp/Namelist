@@ -68,14 +68,14 @@ export function ContactScene() {
                                     </Group>
 
                                     <Stack mt="md" gap="xs">
-                                        {contact.displayProperties.map((property) => {
+                                        {Object.entries(contact.displayProperties).map(([key, value]) => {
                                             return (
-                                                <Stack key={property.key} gap={0}>
+                                                <Stack key={key} gap={0}>
                                                     <Text c="dimmed" tt="uppercase" fw={600} fz={10}>
-                                                        {property.name}
+                                                        {key}
                                                     </Text>
                                                     <Text fw={500} fz={15}>
-                                                        {property.value}
+                                                        {value}
                                                     </Text>
                                                 </Stack>
                                             )

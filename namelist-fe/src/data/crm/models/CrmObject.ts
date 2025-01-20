@@ -17,18 +17,8 @@ export class CreateCrmObjectRequest {
     ) { }
 }
 
-export interface CrmObjectPropertyInterface {
-    id: number
-    object_id: number
-    property_definition_id: number
-    key: string
-    name: string
-    version: number
-    value: any
-    created_at: Date
-    updated_at: Date | null
-    deleted_at: Date | null
-}
+export type CrmPropertyValue = string | number | null
+export type CrmProperties = Record<string, CrmPropertyValue>
 
 export interface CrmObjectInterface {
     id: number
@@ -37,5 +27,5 @@ export interface CrmObjectInterface {
     created_at: Date
     updated_at: Date | null
     deleted_at: Date | null
-    properties: CrmObjectPropertyInterface[]
+    properties: CrmProperties
 }

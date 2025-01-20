@@ -7,7 +7,6 @@ use Database\Factories\CrmObjectFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
 
 class CrmObject extends Model
@@ -18,8 +17,8 @@ class CrmObject extends Model
 
     protected $perPage = 50;
 
-    protected $with = [
-        'properties',
+    protected $casts = [
+        'properties' => 'array',
     ];
 
     protected static function newFactory()
@@ -35,11 +34,6 @@ class CrmObject extends Model
     public function objectType(): BelongsTo
     {
         return $this->belongsTo(CrmObjectType::class);
-    }
-
-    public function properties(): HasMany
-    {
-        return $this->hasMany(CrmObjectProperty::class, 'crm_object_id', 'id');
     }
 
     public static function firstOrCreateWithProperty(string $propertyKey, string $propertyValue, Portal $portal, string $objectTypeId)

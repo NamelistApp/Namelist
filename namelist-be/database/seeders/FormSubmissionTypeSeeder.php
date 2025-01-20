@@ -22,7 +22,7 @@ class FormSubmissionTypeSeeder extends Seeder
 
         $properties = [
             [
-                'name' => 'responses',
+                'name' => 'fields',
                 'type' => PropertyDefinitionType::json,
                 'validations' => ['required', 'json'],
             ],
@@ -31,7 +31,6 @@ class FormSubmissionTypeSeeder extends Seeder
         foreach ($properties as $property) {
             $objectType->propertyDefinitions()->create([
                 'key' => $property['name'],
-                'name' => ucwords(str_replace('_', ' ', $property['name'])),
                 'type' => $property['type'],
                 'validations' => $property['validations'],
             ]);

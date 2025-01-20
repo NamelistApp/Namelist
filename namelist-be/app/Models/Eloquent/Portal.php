@@ -46,11 +46,6 @@ class Portal extends Model implements AuthenticatableContract
         return $this->hasMany(Form::class);
     }
 
-    public function objectProperties(): HasMany
-    {
-        return $this->hasMany(CrmObjectProperty::class);
-    }
-
     public function events(): HasMany
     {
         return $this->hasMany(Event::class);

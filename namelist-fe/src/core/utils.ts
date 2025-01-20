@@ -8,3 +8,9 @@ export function objectClean<T extends Record<string | number | symbol, unknown>>
     })
     return response
 }
+
+export function filterRecord<T>(record: Record<string, T>, keys: string[]): Record<string, T> {
+    return Object.fromEntries(
+        Object.entries(record).filter(([key]) => keys.includes(key))
+    );
+}

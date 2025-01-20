@@ -8,7 +8,6 @@ class CrmPropertyDefinition extends Model
 {
     protected $fillable = [
         'key',
-        'name',
         'type',
         'validations',
     ];
@@ -16,4 +15,9 @@ class CrmPropertyDefinition extends Model
     protected $casts = [
         'validations' => 'array',
     ];
+
+    public function getNameAttribute(): string
+    {
+        return ucfirst(str_replace('_', ' ', $this->key));
+    }
 }

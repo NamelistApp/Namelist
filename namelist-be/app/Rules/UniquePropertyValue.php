@@ -44,12 +44,12 @@ class UniquePropertyValue implements DataAwareRule, ValidationRule
 lower(trim('"' FROM value::text)) = lower(?)
 EOF;
 
-        $exists = $this->portal->objectProperties()
-            ->where([
-                'crm_object_type_id' => $this->objectTypeId,
-                'key' => $this->propertyKey,
-            ])
-            ->whereRaw($sql, [$value])
+        $exists = $this->portal->crmObjects()
+            ->where('crm_object_type_id', $this->objectTypeId)
+            ->whereRaw(
+                'properties->>? = ?',
+                [$this->propertyKey, $value]
+            )
             ->exists();
 
         if ($exists) {

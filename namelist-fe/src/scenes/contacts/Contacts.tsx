@@ -42,7 +42,7 @@ export function ContactsScene() {
         <>
             <Group mb="md">
                 <IconUsers size={30} />
-                <Title order={2}>{contacts?.total ? `${contacts.total} ${contacts.total === 1 ? 'Person' : 'People'}` : <Skeleton height={30} width={100} visible />}</Title>
+                <Title order={2}>{!contactsLoading ? `${contacts.total} ${contacts.total === 1 ? 'Person' : 'People'}` : <Skeleton height={30} width={100} visible />}</Title>
             </Group>
             {
                 contactsLoading ? (

@@ -81,7 +81,6 @@ class ContactTypeSeeder extends Seeder
         foreach (static::CONTACT_PROPERTIES as $property) {
             $contactObjectType->propertyDefinitions()->create([
                 'key' => $property['name'],
-                'name' => ucwords(str_replace('_', ' ', $property['name'])),
                 'type' => $property['type'],
                 'validations' => $property['validations'],
             ]);
