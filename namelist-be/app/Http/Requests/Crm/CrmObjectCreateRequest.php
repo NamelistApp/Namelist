@@ -29,7 +29,7 @@ class CrmObjectCreateRequest extends FormRequest
     public function rules(): array
     {
         $uniqueObjectTypeProperties = [
-            ObjectTypeId::Contact->value => ['email_address'],
+            ObjectTypeId::Contact => ['email_address'],
         ];
 
         $validations = $this->objectType->propertyDefinitions

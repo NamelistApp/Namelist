@@ -2,8 +2,11 @@
 
 namespace App\Listeners;
 
+use App\Actions\Crm\CrmObjectAction;
 use App\Events\EventCreated;
 use App\Models\Eloquent\CrmObject;
+use App\Models\Eloquent\CrmObjectAssociation;
+use App\Models\Eloquent\CrmObjectType;
 use App\Models\Enum\CrmObjectSource;
 use App\Models\Enum\EventName;
 use App\Models\Enum\EventProperty;
@@ -43,6 +46,7 @@ class NewContactFromFormSubmission implements ShouldQueue
 
         $emailAddress = $validator->safe()[$emailKey];
         $formId = $validator->safe()[$formIdKey];
+        $fields = $validator->safe()[EventProperty::fields];
 
         $contact = CrmObject::firstOrCreateWithProperty(
             'email_address',
@@ -53,9 +57,22 @@ class NewContactFromFormSubmission implements ShouldQueue
                 PropertyName::source => CrmObjectSource::formSubmission,
             ],
             $event->portal,
-            ObjectTypeId::Contact->value
+            ObjectTypeId::Contact
         );
 
-        // TODO: create submission object
+        $submission = CrmObjectAction::create(
+            $event->portal,
+            CrmObjectType::find(ObjectTypeId::FormSubmission),
+            [
+                'fields' => $fields,
+            ]
+        );
+
+        CrmObjectAssociation::forceCreate([
+            'crm_object_id' => $contact->id,
+            'crm_object_type_id' => ObjectTypeId::Contact,
+            'associated_crm_object_id' => $submission->id,
+            'associated_crm_object_type_id' => ObjectTypeId::FormSubmission,
+        ]);
     }
 }
