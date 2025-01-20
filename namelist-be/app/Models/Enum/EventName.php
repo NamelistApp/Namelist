@@ -15,6 +15,4 @@ final class EventName
     public const formViewed = '$form_viewed';
 
     public const formSubmitted = '$form_submitted';
-
-    public const formId = '$form_id';
 }

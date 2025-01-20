@@ -5,6 +5,7 @@ namespace App\Models\Eloquent\Objects;
 use App\Models\Eloquent\CrmObject;
 use App\Models\Eloquent\Event;
 use App\Models\Enum\EventName;
+use App\Models\Enum\EventProperty;
 use App\Models\Enum\ObjectTypeId;
 use Database\Factories\FormFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -35,14 +36,14 @@ class Form extends CrmObject
     public function getViewCountAttribute()
     {
         return Event::where('name', EventName::formViewed)
-            ->whereRaw("properties->>'".EventName::formId."' = ?", [$this->id])
+            ->whereRaw("properties->>'".EventProperty::formId."' = ?", [$this->id])
             ->count();
     }
 
     public function getSubmissionCountAttribute()
     {
         return Event::where('name', EventName::formSubmitted)
-            ->whereRaw("properties->>'".EventName::formId."' = ?", [$this->id])
+            ->whereRaw("properties->>'".EventProperty::formId."' = ?", [$this->id])
             ->count();
     }
 }

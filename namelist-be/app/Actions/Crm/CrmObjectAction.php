@@ -2,7 +2,6 @@
 
 namespace App\Actions\Crm;
 
-use App\Http\Requests\Crm\CrmObjectCreateRequest;
 use App\Models\Eloquent\CrmObject;
 use App\Models\Eloquent\CrmObjectType;
 use App\Models\Eloquent\Portal;
@@ -11,16 +10,16 @@ use Illuminate\Support\Facades\Log;
 
 class CrmObjectAction
 {
-    public static function create(Portal $portal, CrmObjectType $objectType, CrmObjectCreateRequest $request): CrmObject
+    public static function create(Portal $portal, CrmObjectType $objectType, array $properties): CrmObject
     {
-        return DB::transaction(function () use ($portal, $objectType, $request) {
+        return DB::transaction(function () use ($portal, $objectType, $properties) {
             $crmObject = $portal->crmObjects()->forceCreate([
                 'crm_object_type_id' => $objectType->id,
             ]);
-            $properties = $objectType->propertyDefinitions;
+            $propertyDefinitions = $objectType->propertyDefinitions;
 
-            foreach ($properties as $property) {
-                $propertySetValue = $request->validated('properties.'.$property->key);
+            foreach ($propertyDefinitions as $property) {
+                $propertySetValue = data_get($properties, 'properties.'.$property->key);
                 Log::debug('propertySetValue', [$property->key => $propertySetValue]);
 
                 // if the propertySetValue is null we can skip b/c if passed validation it is not a required property

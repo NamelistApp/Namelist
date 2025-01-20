@@ -58,13 +58,13 @@ final class ProcessEvent
             ];
         });
 
-        $setProperties = [...$userProperties, ...$properties->get(EventProperty::set->value, [])];
+        $setProperties = [...$userProperties, ...$properties->get(EventProperty::set, [])];
 
         if (count($setProperties)) {
-            $properties->put(EventProperty::set->value, $setProperties);
+            $properties->put(EventProperty::set, $setProperties);
         }
         if (count($setOnceProperties)) {
-            $properties->put(EventProperty::setOnce->value, [...$properties->get(EventProperty::setOnce->value, []), ...$setOnceProperties]);
+            $properties->put(EventProperty::setOnce, [...$properties->get(EventProperty::setOnce, []), ...$setOnceProperties]);
         }
 
         return $properties->all();

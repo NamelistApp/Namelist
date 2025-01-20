@@ -2,6 +2,7 @@
 
 namespace App\Models\Eloquent;
 
+use App\Models\Eloquent\Objects\Contact;
 use App\Models\Eloquent\Objects\Form;
 use Database\Factories\PortalFactory;
 use Illuminate\Auth\Authenticatable;
@@ -33,6 +34,11 @@ class Portal extends Model implements AuthenticatableContract
     public function crmObjects(): HasMany
     {
         return $this->hasMany(CrmObject::class);
+    }
+
+    public function contacts(): HasMany
+    {
+        return $this->hasMany(Contact::class);
     }
 
     public function forms(): HasMany

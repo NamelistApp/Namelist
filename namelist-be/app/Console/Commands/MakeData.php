@@ -11,6 +11,7 @@ use App\Models\Eloquent\Objects\Contact;
 use App\Models\Eloquent\Objects\Form;
 use App\Models\Eloquent\Portal;
 use App\Models\Enum\EventName;
+use App\Models\Enum\EventProperty;
 use Illuminate\Console\Command;
 
 class MakeData extends Command
@@ -90,11 +91,16 @@ class MakeData extends Command
         }
 
         for ($i = 0; $i < mt_rand(2000, 6000); $i++) {
-            ProcessEventJob::dispatch($portal, ProcessEvent::dummyEvent(EventName::formViewed, [EventName::formId => $form->id]));
+            ProcessEventJob::dispatch($portal, ProcessEvent::dummyEvent(EventName::formViewed, [EventProperty::formId => $form->id]));
         }
 
         for ($i = 0; $i < mt_rand(2000, 4000); $i++) {
-            ProcessEventJob::dispatch($portal, ProcessEvent::dummyEvent(EventName::formSubmitted, [EventName::formId => $form->id]));
+            ProcessEventJob::dispatch($portal, ProcessEvent::dummyEvent(EventName::formSubmitted, [
+                EventProperty::formId => $form->id,
+                EventProperty::fields => [
+                    'email_address' => fake()->email(),
+                ],
+            ]));
         }
 
         $this->info('Created form. Run events queue to process events.');

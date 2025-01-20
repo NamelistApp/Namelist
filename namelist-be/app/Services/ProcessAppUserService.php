@@ -71,19 +71,19 @@ class ProcessAppUserService
                     EventName::createAlias,
                     EventName::mergeDangerously,
                 ])->contains($this->event->name)
-                && isset($this->event->properties[EventProperty::alias->value])
+                && isset($this->event->properties[EventProperty::alias])
             ) {
                 return $this->merge(
-                    (string) $this->event->properties[EventProperty::alias->value],
+                    (string) $this->event->properties[EventProperty::alias],
                     $this->event->distinctId
                 );
             } elseif (
                 $this->event->name == EventName::identify
-                && $anonDistinctId = $this->event->properties[EventProperty::anonDistinctId->value] ?? null
+                && $anonDistinctId = $this->event->properties[EventProperty::anonDistinctId] ?? null
             ) {
                 // Merge anonomous distinct id into identified distinct id
                 return $this->merge(
-                    $this->event->properties[EventProperty::anonDistinctId->value],
+                    $this->event->properties[EventProperty::anonDistinctId],
                     $this->event->distinctId
                 );
             }
@@ -92,8 +92,8 @@ class ProcessAppUserService
                 'location' => 'handleIdentifyOrAlias',
                 'event' => $this->event,
                 'distinctId' => $this->event->distinctId,
-                'anonDistinctId' => $this->event->properties[EventProperty::anonDistinctId->value] ?? null,
-                'alias' => $this->event->properties[EventProperty::alias->value] ?? null,
+                'anonDistinctId' => $this->event->properties[EventProperty::anonDistinctId] ?? null,
+                'alias' => $this->event->properties[EventProperty::alias] ?? null,
             ]);
         }
 
@@ -161,7 +161,7 @@ class ProcessAppUserService
         }
 
         $appUser = $this->portal->appUsers()->forceCreate([
-            'properties' => array_merge($properties, [EventProperty::creatorEventUuid->value => $createdEventUuid]),
+            'properties' => array_merge($properties, [EventProperty::creatorEventUuid => $createdEventUuid]),
             'is_identified' => $isIdentified,
             'created_at' => $timestamp,
         ]);
@@ -241,9 +241,9 @@ class ProcessAppUserService
 
     private function eventPropertiesUpdated(array $personProperties = []): array
     {
-        $properties = $this->event->properties[EventProperty::set->value] ?? [];
-        $setOnceProperties = $this->event->properties[EventProperty::setOnce->value] ?? [];
-        $unsetProperties = $this->event->properties[EventProperty::unset->value] ?? [];
+        $properties = $this->event->properties[EventProperty::set] ?? [];
+        $setOnceProperties = $this->event->properties[EventProperty::setOnce] ?? [];
+        $unsetProperties = $this->event->properties[EventProperty::unset] ?? [];
 
         foreach ($properties as $key => $value) {
             if (! isset($personProperties[$key]) || $personProperties[$key] !== $value) {

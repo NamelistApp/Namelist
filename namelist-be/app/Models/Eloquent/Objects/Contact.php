@@ -35,4 +35,10 @@ class Contact extends CrmObject
         return $this->hasManyThrough(CrmObject::class, CrmObjectAssociation::class, 'crm_object_id', 'associated_crm_object_id')
             ->where('crm_object_type_id', ObjectTypeId::Engagement);
     }
+
+    public function forms(): HasManyThrough
+    {
+        return $this->hasManyThrough(CrmObject::class, CrmObjectAssociation::class, 'crm_object_id', 'associated_crm_object_id')
+            ->where('crm_object_type_id', ObjectTypeId::Engagement);
+    }
 }

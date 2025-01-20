@@ -22,7 +22,7 @@ class CrmObjectController extends Controller
 
     public function store(Portal $portal, CrmObjectType $objectType, CrmObjectCreateRequest $request)
     {
-        return CrmObjectAction::create($portal, $objectType, $request);
+        return CrmObjectAction::create($portal, $objectType, $request->validated());
     }
 
     public function show(Portal $portal, CrmObjectType $objectType, CrmObject $crmObject)
