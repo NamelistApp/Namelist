@@ -53,4 +53,10 @@ final class PropertyName
     const networkCellular = '$network_cellular';
 
     const sessionDurationSeconds = '$session_duration_seconds';
+
+    const initialFormId = 'initial_form_id';
+
+    const source = 'source';
+
+    const emailAddress = 'email_address';
 }

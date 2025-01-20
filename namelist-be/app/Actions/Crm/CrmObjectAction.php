@@ -12,6 +12,8 @@ class CrmObjectAction
 {
     public static function create(Portal $portal, CrmObjectType $objectType, array $requestProperties): CrmObject
     {
+        Log::debug('creating crm object', [$portal->id, $objectType->id, $requestProperties]);
+
         return DB::transaction(function () use ($portal, $objectType, $requestProperties) {
             $propertyDefinitions = $objectType->propertyDefinitions;
             $properties = [];

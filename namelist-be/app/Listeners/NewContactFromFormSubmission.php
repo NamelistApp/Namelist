@@ -4,9 +4,11 @@ namespace App\Listeners;
 
 use App\Events\EventCreated;
 use App\Models\Eloquent\CrmObject;
+use App\Models\Enum\CrmObjectSource;
 use App\Models\Enum\EventName;
 use App\Models\Enum\EventProperty;
 use App\Models\Enum\ObjectTypeId;
+use App\Models\Enum\PropertyName;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -45,6 +47,11 @@ class NewContactFromFormSubmission implements ShouldQueue
         $contact = CrmObject::firstOrCreateWithProperty(
             'email_address',
             $emailAddress,
+            [
+                PropertyName::emailAddress => $emailAddress,
+                PropertyName::initialFormId => $formId,
+                PropertyName::source => CrmObjectSource::formSubmission,
+            ],
             $event->portal,
             ObjectTypeId::Contact->value
         );

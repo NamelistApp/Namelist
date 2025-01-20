@@ -82,15 +82,17 @@ export function ContactsScene() {
                                 </Table.Tbody>
                             </Table>
                         </Paper>
-                        <Center mt="md">
-                            <Pagination
-                                total={contacts.total / contacts.per_page}
-                                value={page}
-                                onChange={(page) => {
-                                    setPage(page)
-                                }}
-                            />
-                        </Center>
+                        {contacts.total / contacts.per_page > 1 && (
+                            <Center mt="md">
+                                <Pagination
+                                    total={contacts.total / contacts.per_page}
+                                    value={page}
+                                    onChange={(page) => {
+                                        setPage(page)
+                                    }}
+                                />
+                            </Center>
+                        )}
                     </>
                 ) : (
                     <Center>

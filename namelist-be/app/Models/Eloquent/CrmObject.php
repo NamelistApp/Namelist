@@ -7,7 +7,6 @@ use Database\Factories\CrmObjectFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Facades\DB;
 
 class CrmObject extends Model
 {
@@ -36,24 +35,22 @@ class CrmObject extends Model
         return $this->belongsTo(CrmObjectType::class);
     }
 
-    public static function firstOrCreateWithProperty(string $propertyKey, string $propertyValue, Portal $portal, string $objectTypeId)
+    public static function firstOrCreateWithProperty(string $propertyKey, string $propertyValue, array $properties, Portal $portal, string $objectTypeId)
     {
-        $objectId = DB::select(<<<'SQL'
-select c.id from crm_objects c
-left join crm_object_properties op on op.crm_object_id = c.id
-where op.key = ? and op.value::jsonb = to_jsonb(?::text)
-and c.portal_id = ? and c.crm_object_type_id = ?
-limit 1
-SQL, [$propertyKey, $propertyValue, $portal->id, $objectTypeId]);
+        $record = $portal->crmObjects()
+            ->where('crm_object_type_id', $objectTypeId)
+            ->whereRaw(
+                'properties->>? = ?',
+                [$propertyKey, $propertyValue]
+            )
+            ->first();
 
-        if ($objectId[0]?->id ?? null) {
-            return self::find($objectId);
+        if ($record) {
+            return $record;
         }
 
         return CrmObjectAction::create($portal, CrmObjectType::find($objectTypeId), [
-            'properties' => [
-                $propertyKey => $propertyValue,
-            ],
+            'properties' => $properties,
         ]);
     }
 }

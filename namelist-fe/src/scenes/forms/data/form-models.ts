@@ -1,4 +1,4 @@
-import { CrmObjectPropertyInterface } from "../../../data/crm/models/CrmObject"
+import { CrmProperties, CrmPropertyValue } from "../../../data/crm/models/CrmObject"
 
 export interface FormResponse {
     id: number
@@ -9,7 +9,7 @@ export interface FormResponse {
     created_at: Date
     updated_at: Date | null
     deleted_at: Date | null
-    properties: CrmObjectPropertyInterface[]
+    properties: CrmProperties
 }
 
 export interface FormStatsResponse {
@@ -43,17 +43,16 @@ export class Form {
         public objectTypeId: string,
         public viewCount: number,
         public submissionCount: number,
-        public properties: CrmObjectPropertyInterface[],
+        public properties: CrmProperties,
         public createdAt: Date,
         public updatedAt: Date | null
     ) { }
 
-    property(key: string): string | null {
-        const property = this.properties.find(property => property.key === key)
-        return property ? property.value : null
+    property(key: string): CrmPropertyValue {
+        return this.properties[key]
     }
 
-    get name(): string | null {
+    get name(): CrmPropertyValue {
         return this.property('name')
     }
 }

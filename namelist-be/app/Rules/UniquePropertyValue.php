@@ -40,10 +40,6 @@ class UniquePropertyValue implements DataAwareRule, ValidationRule
             'value' => $value,
         ]);
 
-        $sql = <<<'EOF'
-lower(trim('"' FROM value::text)) = lower(?)
-EOF;
-
         $exists = $this->portal->crmObjects()
             ->where('crm_object_type_id', $this->objectTypeId)
             ->whereRaw(

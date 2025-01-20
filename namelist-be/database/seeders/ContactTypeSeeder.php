@@ -56,6 +56,11 @@ class ContactTypeSeeder extends Seeder
             'validations' => ['nullable', 'integer'],
         ],
         [
+            'name' => 'initial_form_id',
+            'type' => PropertyDefinitionType::number,
+            'validations' => ['nullable', 'integer'],
+        ],
+        [
             'name' => 'last_touched_at',
             'type' => PropertyDefinitionType::date,
             'validations' => ['nullable', 'date'],
