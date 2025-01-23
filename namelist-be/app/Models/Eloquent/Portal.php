@@ -21,6 +21,10 @@ class Portal extends Model implements AuthenticatableContract
         'name',
     ];
 
+    protected $casts = [
+        'mongodb_metadata' => 'array',
+    ];
+
     protected static function newFactory()
     {
         return PortalFactory::new();

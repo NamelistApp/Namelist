@@ -23,6 +23,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('organization_id')->constrained()->restrictOnDelete();
+            $table->jsonb('mongodb_metadata')->nullable()->default(null);
             $table->softDeletes();
             $table->timestamps();
         });
@@ -40,6 +41,7 @@ return new class extends Migration
             $table->foreignId('current_portal_id')
                 ->nullable()
                 ->onDelete('set null');
+            $table->jsonb('mongodb_metadata')->nullable()->default(null);
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
