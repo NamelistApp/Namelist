@@ -9,6 +9,7 @@ use App\Models\Eloquent\Objects\Form;
 use App\Models\Eloquent\Portal;
 use App\Models\Enum\EventName;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Log;
 
 class FormController extends Controller
@@ -30,6 +31,12 @@ class FormController extends Controller
         $endDate = (new Carbon($request->validated('endDate')));
         Log::debug('after carbon', [$startDate, $endDate]);
 
+        $period = CarbonPeriod::create($startDate, '1 day', $endDate);
+        $days = array_map(
+            fn ($date) => $date->format('Y-m-d'),
+            iterator_to_array($period)
+        );
+
         $eventQuery = Event::whereRaw("properties->>'\$form_id' = ?", [$form->id])
             ->whereBetween('timestamp', [$startDate, $endDate]);
 
@@ -42,7 +49,7 @@ class FormController extends Controller
             ? round(($counts->submissions / $counts->views) * 100)
             : 0;
         $chart = Event::selectRaw("
-                TO_CHAR(timestamp, 'Mon DD') as date,
+                TO_CHAR(timestamp, 'YYYY-MM-DD') as date,
                 COUNT(CASE WHEN name = '\$form_viewed' THEN 1 END) AS \"Views\",
                 COUNT(CASE WHEN name = '\$form_submitted' THEN 1 END) AS \"Submissions\",
                 COALESCE(
@@ -52,7 +59,20 @@ class FormController extends Controller
             ")
             ->whereBetween('timestamp', [$startDate, $endDate])
             ->groupByRaw('date')
-            ->get();
+            ->get()
+            ->groupBy('date');
+
+        $columns = ['Views', 'Submissions', 'Conversion Rate'];
+        $chart = collect($days)->map(function ($day) use ($chart, $columns) {
+            $row = ['date' => $day];
+            if (isset($chart[$day])) {
+                $row = $chart[$day]->first();
+            } else {
+                $row = array_merge($row, array_fill_keys($columns, 0));
+            }
+
+            return $row;
+        })->values();
 
         return [
             'start_date' => $startDate->format('Y-m-d'),
