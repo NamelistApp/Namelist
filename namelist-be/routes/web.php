@@ -8,3 +8,6 @@ Route::get('/auth/google/callback', SocialAuthController::class.'@getGoogleCallb
 
 Route::get('/auth/apple/redirect', SocialAuthController::class.'@getAppleRedirect');
 Route::get('/auth/apple/callback', SocialAuthController::class.'@getAppleCallback');
+
+Route::post('/auth/google/mobile', [SocialAuthController::class, 'googleMobileSignin']);
+Route::get('/auth/apple/callback', SocialAuthController::class.'@getAppleCallback');

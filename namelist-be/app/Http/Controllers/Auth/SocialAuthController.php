@@ -4,87 +4,66 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Eloquent\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialAuthController extends Controller
 {
-    public function getGoogleRedirect()
-    {
-        return Socialite::driver('google')->redirect();
-    }
-
-    public function getGoogleCallback()
-    {
-        $googleUser = Socialite::driver('google')->user();
-        $user = User::where('email', $googleUser->email)->first();
-
-        // if the user was already created first without useing
-        // google sign in don't allow them to login with google sign in
-        // they will need to use thir initial login method (ie. user/password)
-        // In the future we can direct the user to a page to confirm their password
-        // and link the accounts
-        // if ($user && $user->google_id != $googleUser->id) {
-        //     return redirect(env('FE_BASE_PATH').'/login?loginError=GoogleSignInAccountExists');
-        // }
-
-        // UPDATE: Allowing users to link accounts during migration period (2025-01-23)
-
-        if (! $user) {
-            $user = User::unguarded(function () use ($googleUser) {
-                return User::create([
-                    'name' => $googleUser->name,
-                    'email' => $googleUser->email,
-                    'google_id' => $googleUser->id,
-                ]);
-            });
-        } else {
-            $user->google_id = $googleUser->id;
-            $user->save();
-        }
-
-        Auth::login($user);
-
-        return redirect(env('FE_BASE_PATH'));
-    }
-
     public function getAppleRedirect()
     {
         return Socialite::driver('sign-in-with-apple')
             ->redirect();
     }
 
+    public function getGoogleRedirect()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function googleMobileSignin(Request $request)
+    {
+        $token = $request->input('access_token');
+        $oauthUser = Socialite::driver('google')->userFromToken($token);
+
+        $this->processUser($oauthUser, 'google_id');
+
+        return response()->noContent(200);
+    }
+
+    public function getGoogleCallback()
+    {
+        $oauthUser = Socialite::driver('google')->user();
+
+        $this->processUser($oauthUser, 'google_id');
+
+        return redirect(env('FE_BASE_PATH'));
+    }
+
     public function getAppleCallback()
     {
-        $appleUser = Socialite::driver('sign-in-with-apple')->user();
+        $oauthUser = Socialite::driver('sign-in-with-apple')->user();
 
-        dd($appleUser);
-        $user = User::where('email', $appleUser->email)->first();
+        $this->processUser($oauthUser, 'apple_id');
 
-        // if the user was already created first without useing
-        // google sign in don't allow them to login with google sign in
-        // they will need to use thir initial login method (ie. user/password)
-        // In the future we can direct the user to a page to confirm their password
-        // and link the accounts
-        // if ($user && $user->google_id != $googleUser->id) {
-        //     return redirect(env('FE_BASE_PATH').'/login?loginError=GoogleSignInAccountExists');
-        // }
+        return redirect(env('FE_BASE_PATH'));
+    }
 
-        // UPDATE: Allowing users to link accounts during migration period (2025-01-23)
+    private function processUser($oauthUser, $idField)
+    {
+        $user = User::where('email', $oauthUser->email)->first();
 
-        if (! $user) {
+        if (! $oauthUser) {
             $user = User::forceCreate([
-                'name' => $appleUser->name,
-                'email' => $appleUser->email,
-                'apple_id' => $appleUser->id,
+                'first_name' => $oauthUser->name,
+                'email' => $oauthUser->email,
+                $idField => $oauthUser->id,
             ]);
         } else {
-            $user->apple_id = $appleUser->id;
+            $user->{$idField} = $oauthUser->id;
             $user->save();
         }
 
         Auth::login($user);
-
-        return redirect(env('FE_BASE_PATH'));
     }
 }
