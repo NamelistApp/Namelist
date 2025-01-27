@@ -4,42 +4,66 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Eloquent\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialAuthController extends Controller
 {
+    public function getAppleRedirect()
+    {
+        return Socialite::driver('sign-in-with-apple')
+            ->redirect();
+    }
+
     public function getGoogleRedirect()
     {
         return Socialite::driver('google')->redirect();
     }
 
+    public function googleMobileSignin(Request $request)
+    {
+        $token = $request->input('access_token');
+        $oauthUser = Socialite::driver('google')->userFromToken($token);
+
+        $this->processUser($oauthUser, 'google_id');
+
+        return response()->noContent(200);
+    }
+
     public function getGoogleCallback()
     {
-        $googleUser = Socialite::driver('google')->user();
-        $user = User::where('email', $googleUser->email)->first();
+        $oauthUser = Socialite::driver('google')->user();
 
-        // if the user was already created first without useing
-        // google sign in don't allow them to login with google sign in
-        // they will need to use thir initial login method (ie. user/password)
-        // In the future we can direct the user to a page to confirm their password
-        // and link the accounts
-        if ($user && $user->google_id != $googleUser->id) {
-            return redirect(env('FE_BASE_PATH').'/login?loginError=GoogleSignInAccountExists');
-        }
+        $this->processUser($oauthUser, 'google_id');
 
-        if (! $user) {
-            $user = User::unguarded(function () use ($googleUser) {
-                return User::create([
-                    'name' => $googleUser->name,
-                    'email' => $googleUser->email,
-                    'google_id' => $googleUser->id,
-                ]);
-            });
+        return redirect(env('FE_BASE_PATH'));
+    }
+
+    public function getAppleCallback()
+    {
+        $oauthUser = Socialite::driver('sign-in-with-apple')->user();
+
+        $this->processUser($oauthUser, 'apple_id');
+
+        return redirect(env('FE_BASE_PATH'));
+    }
+
+    private function processUser($oauthUser, $idField)
+    {
+        $user = User::where('email', $oauthUser->email)->first();
+
+        if (! $oauthUser) {
+            $user = User::forceCreate([
+                'first_name' => $oauthUser->name,
+                'email' => $oauthUser->email,
+                $idField => $oauthUser->id,
+            ]);
+        } else {
+            $user->{$idField} = $oauthUser->id;
+            $user->save();
         }
 
         Auth::login($user);
-
-        return redirect(env('FE_BASE_PATH'));
     }
 }

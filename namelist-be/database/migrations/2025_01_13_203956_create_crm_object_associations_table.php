@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('crm_object_associations', function (Blueprint $table) {
+        Schema::create('crm_object_association', function (Blueprint $table) {
             $table->id();
             $table->foreignId('crm_object_id')->constrained()->cascadeOnDelete();
             $table->foreignId('associated_crm_object_id')->references('id')->on('crm_objects')->cascadeOnDelete();
+            $table->string('crm_object_type_id')->index();
             $table->string('associated_crm_object_type_id')->index();
-            $table->string('label');
+            $table->string('label')->nullable();
             $table->timestamps();
 
             $table->foreign('associated_crm_object_type_id')->references('id')->on('crm_object_types')->restrictOnDelete();

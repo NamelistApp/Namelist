@@ -4,7 +4,7 @@ set -e
 
 export VITE_BACKEND_HOST="http://localhost"
 export VITE_IS_DEBUG=true
-export VITE_CHATWOOT_KEY="qSwTJ9duLDAXuKjBYcLSpcmz"
+# export VITE_CHATWOOT_KEY="qSwTJ9duLDAXuKjBYcLSpcmz"
 # export VITE_IS_DEMO=true
 
 cd namelist-fe

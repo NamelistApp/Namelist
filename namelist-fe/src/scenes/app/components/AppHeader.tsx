@@ -1,13 +1,15 @@
 import { Drawer, Burger, Button, Combobox, Flex, Group, Text, useCombobox } from '@mantine/core'
 import Breadcrumb from './breadcrumb/Breadcrumb';
-import { IconPlus, IconUser } from '@tabler/icons-react';
+import { IconForms, IconPlus, IconUser } from '@tabler/icons-react';
 import { useDisclosure } from '@mantine/hooks';
 import { CreateContactForm } from '../../contacts/create/CreateContactForm';
 import { useActions, useValues } from 'kea';
 import navigationLogic from './navigationLogic';
+import { CreateForm } from '../../forms/create/CreateForm';
 
 export default function AppHeader() {
     const [contactOpened, contactHandler] = useDisclosure(false);
+    const [formOpened, formHander] = useDisclosure(false);
     const combobox = useCombobox({
         onDropdownClose: () => combobox.resetSelectedOption(),
     });
@@ -35,6 +37,9 @@ export default function AppHeader() {
                                 case 'contact':
                                     contactHandler.open();
                                     break;
+                                case 'form':
+                                    formHander.open();
+                                    break;
                             }
                             combobox.closeDropdown();
                         }}
@@ -51,6 +56,12 @@ export default function AppHeader() {
                                         <Text fw={700} size={"sm"}>Person</Text>
                                     </Group>
                                 </Combobox.Option>
+                                <Combobox.Option value={'form'} key={'form'}>
+                                    <Group>
+                                        <IconForms />
+                                        <Text fw={700} size={"sm"}>Form</Text>
+                                    </Group>
+                                </Combobox.Option>
                             </Combobox.Options>
                         </Combobox.Dropdown>
                     </Combobox>
@@ -58,6 +69,9 @@ export default function AppHeader() {
             </Flex>
             <Drawer overlayProps={{ backgroundOpacity: 0.5, blur: 4 }} opened={contactOpened} onClose={contactHandler.close} title="Create Person" position="right">
                 <CreateContactForm onSuccess={contactHandler.close} />
+            </Drawer>
+            <Drawer overlayProps={{ backgroundOpacity: 0.5, blur: 4 }} opened={formOpened} onClose={formHander.close} title="Create Form" position="right">
+                <CreateForm onSuccess={formHander.close} />
             </Drawer>
         </>
     );

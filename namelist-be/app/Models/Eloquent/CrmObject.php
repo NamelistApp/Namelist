@@ -2,17 +2,28 @@
 
 namespace App\Models\Eloquent;
 
+use App\Actions\Crm\CrmObjectAction;
+use Database\Factories\CrmObjectFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CrmObject extends Model
 {
+    use HasFactory;
+
     protected $table = 'crm_objects';
 
-    protected $with = [
-        'properties',
+    protected $perPage = 50;
+
+    protected $casts = [
+        'properties' => 'array',
     ];
+
+    protected static function newFactory()
+    {
+        return CrmObjectFactory::new();
+    }
 
     public function portal(): BelongsTo
     {
@@ -24,8 +35,22 @@ class CrmObject extends Model
         return $this->belongsTo(CrmObjectType::class);
     }
 
-    public function properties(): HasMany
+    public static function firstOrCreateWithProperty(string $propertyKey, string $propertyValue, array $properties, Portal $portal, string $objectTypeId)
     {
-        return $this->hasMany(CrmObjectProperty::class);
+        $record = $portal->crmObjects()
+            ->where('crm_object_type_id', $objectTypeId)
+            ->whereRaw(
+                'properties->>? = ?',
+                [$propertyKey, $propertyValue]
+            )
+            ->first();
+
+        if ($record) {
+            return $record;
+        }
+
+        return CrmObjectAction::create($portal, CrmObjectType::find($objectTypeId), [
+            'properties' => $properties,
+        ]);
     }
 }

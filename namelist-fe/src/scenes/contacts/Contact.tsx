@@ -2,19 +2,14 @@ import { BindLogic, useValues } from 'kea'
 import { SceneExport } from '../sceneTypes'
 import { Avatar, Box, Button, Card, Center, Group, Loader, Paper, Text, SimpleGrid, Title, Grid, Timeline, Stack } from '@mantine/core'
 import { IconGitBranch, IconGitCommit, IconGitPullRequest, IconMail, IconMessageDots, IconPhone, IconUsers } from '@tabler/icons-react';
-import AppHeader from '../app/components/AppHeader';
-import contactLogic, { ContactLogicProps } from './contactLogic';
+import AppHeader from '../app/components/AppHeader'
+import contactLogic, { ContactLogicProps } from './contactLogic'
 import classes from './styles/Contact.module.scss'
-import { getGravatarUrl } from '../app/utils';
-
-interface ContactSceneProps {
-    contactId: number
-}
 
 export const scene: SceneExport = {
     component: Contact,
     logic: contactLogic,
-    paramsToProps: ({ params: { contactId } }: { params: ContactSceneProps }): ContactLogicProps => ({
+    paramsToProps: ({ params: { contactId } }): ContactLogicProps => ({
         contactId: contactId
     }),
 }
@@ -73,14 +68,14 @@ export function ContactScene() {
                                     </Group>
 
                                     <Stack mt="md" gap="xs">
-                                        {contact.displayProperties.map((property) => {
+                                        {Object.entries(contact.displayProperties).map(([key, value]) => {
                                             return (
-                                                <Stack key={property.key} gap={0}>
+                                                <Stack key={key} gap={0}>
                                                     <Text c="dimmed" tt="uppercase" fw={600} fz={10}>
-                                                        {property.name}
+                                                        {key}
                                                     </Text>
                                                     <Text fw={500} fz={15}>
-                                                        {property.value}
+                                                        {value}
                                                     </Text>
                                                 </Stack>
                                             )

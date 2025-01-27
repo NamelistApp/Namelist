@@ -1,14 +1,19 @@
 import { BindLogic, useValues } from 'kea'
 import { SceneExport } from '../sceneTypes'
-import { Anchor, Badge, Box, Button, Card, Center, Flex, Grid, Group, Loader, Stack, Title, Text } from '@mantine/core'
+import { Anchor, Badge, Box, Button, Card, Center, Flex, Grid, Group, Loader, Stack, Title, Text, ThemeIcon } from '@mantine/core'
 import '@mantine/charts/styles.css'
-import { IconBolt, IconChevronRight, IconForms } from '@tabler/icons-react'
+import { IconArrowUpRight, IconBolt, IconChevronRight, IconForms } from '@tabler/icons-react'
 import AppHeader from '../app/components/AppHeader'
 import { formsLogic } from './formsLogic'
+import { router } from 'kea-router'
 
 export const scene: SceneExport = {
     component: Forms,
     logic: formsLogic,
+}
+
+function didClickForm(formId: number) {
+    router.actions.push(`/forms/${formId}`)
 }
 
 function Forms(): JSX.Element {
@@ -16,10 +21,10 @@ function Forms(): JSX.Element {
         <>
             <BindLogic logic={formsLogic} props={{}}>
                 <AppHeader />
-                <Box px="sm">
+                <Box p="sm">
                     <FormsScene />
                 </Box>
-            </BindLogic>
+            </BindLogic >
         </>
     )
 }
@@ -40,20 +45,43 @@ function FormsScene() {
                     <Grid>
                         {forms.data.map((form) => (
                             <Grid.Col span={{ base: 12, md: 6 }} key={form.id}>
-                                <Anchor underline="never" onClick={() => { }}>
+                                <Anchor underline="never" onClick={() => { didClickForm(form.id) }}>
                                     <Card shadow="sm" padding="md" radius="md" withBorder>
                                         <Flex align={"center"}>
-                                            <Stack w={"100%"} gap={10}>
+                                            <Stack gap={3} w={"100%"}>
                                                 <Text c={"primary"} fw={600}>{form.name}</Text>
 
+                                                <Group gap={25}>
+                                                    <Stack gap={0}>
+                                                        <Text c="dimmed" tt="uppercase" fw={600} fz={10}>
+                                                            VIEWS
+                                                        </Text>
+                                                        <Group gap={5}>
+                                                            <Text fw={500} fz={15}>
+                                                                {form.viewCount}
+                                                            </Text>
+                                                        </Group>
+                                                    </Stack>
+                                                    <Stack gap={0}>
+                                                        <Text c="dimmed" tt="uppercase" fw={600} fz={10}>
+                                                            SUBMISSIONS
+                                                        </Text>
+                                                        <Group gap={5}>
+                                                            <Text fw={500} fz={15}>
+                                                                {form.submissionCount}
+                                                            </Text>
+                                                        </Group>
+                                                    </Stack>
+                                                </Group>
                                             </Stack>
+
                                             <IconChevronRight color="var(--mantine-color-dimmed)" />
                                         </Flex>
                                     </Card>
                                 </Anchor>
                             </Grid.Col>
                         ))}
-                    </Grid>
+                    </Grid >
                 ) : (
                     <Center>
                         <Stack align="center">

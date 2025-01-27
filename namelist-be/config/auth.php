@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'portal' => [
+            'driver' => 'sanctum',
+            'provider' => 'portals',
+        ],
     ],
 
     /*
@@ -65,10 +69,10 @@ return [
             'model' => env('AUTH_MODEL', App\Models\Eloquent\User::class),
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'portals' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Eloquent\Portal::class,
+        ],
     ],
 
     /*

@@ -3,16 +3,22 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
         "filament/filament": "^3.2",
+        "genealabs/laravel-sign-in-with-apple": "^0.8.0",
         "laravel/fortify": "^1.25",
         "laravel/framework": "^11.31",
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9",
+        "mongodb/laravel-mongodb": "^5.1",
+        "predis/predis": "^2.0",
         "sentry/sentry-laravel": "^4.10"
     },
     "require-dev": {
@@ -25,6 +31,9 @@
         "phpunit/phpunit": "^11.0.1"
     },
     "autoload": {
+        "files": [
+            "app/helpers.php"
+        ],
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",

@@ -10,7 +10,7 @@ import { userLogic } from '../../auth/userLogic'
 
 const authApiClient = appContainer.buildAuthApiClient()
 
-enum ServerLoginError {
+export enum ServerLoginError {
     GoogleSignInAccountExists = 'GoogleSignInAccountExists',
 }
 
@@ -55,7 +55,7 @@ const loginLogic = kea<loginLogicType>([
     forms(({ actions }) => ({
         loginForm: {
             defaults: {
-                email: isDemo ? 'demo@namelist.app' : 'david@namelist.app',
+                email: isDemo ? 'demo@namelist.dev' : 'davidmoreen@namelist.dev',
                 password: isDemo ? 'DemoPassword' : 'password',
             } as LoginRequest,
             errors: ({ email, password }: LoginRequest) => ({

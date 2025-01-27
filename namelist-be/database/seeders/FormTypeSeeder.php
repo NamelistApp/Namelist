@@ -16,7 +16,7 @@ class FormTypeSeeder extends Seeder
             return;
         }
 
-        $objectType = CrmObjectType::create([
+        $objectType = CrmObjectType::updateOrCreate([
             'id' => ObjectTypeId::Form,
             'name' => 'Form',
         ]);
@@ -35,14 +35,13 @@ class FormTypeSeeder extends Seeder
             [
                 'name' => 'fields',
                 'type' => PropertyDefinitionType::json,
-                'validations' => ['required', 'json'],
+                'validations' => ['required', 'array'],
             ],
         ];
 
         foreach ($properties as $property) {
             $objectType->propertyDefinitions()->create([
                 'key' => $property['name'],
-                'name' => ucwords(str_replace('_', ' ', $property['name'])),
                 'type' => $property['type'],
                 'validations' => $property['validations'],
             ]);

@@ -30,7 +30,15 @@ return [
     */
 
     'connections' => [
-
+        'mongodb' => [
+            'driver' => 'mongodb',
+            'dsn' => env('MONGO_DB_CONNECTION_STRING'),
+            'database' => env('MONGO_DB_DATABASE'),
+            'options' => [
+                'retryWrites' => true,
+                'w' => 'majority',
+            ],
+        ],
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DB_URL'),

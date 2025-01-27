@@ -2,9 +2,8 @@
 
 namespace App\Models\Eloquent;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
 use App\Events\UserCreated;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -40,7 +39,13 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'mongodb_metadata' => 'array',
         ];
+    }
+
+    protected static function newFactory()
+    {
+        return UserFactory::new();
     }
 
     public function organizations(): BelongsToMany
