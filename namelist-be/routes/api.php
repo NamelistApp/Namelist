@@ -19,7 +19,7 @@ Route::prefix('portal/{portal}')->middleware(['auth:sanctum'])->group(function (
 })->scopeBindings();
 
 // Called from clients who send a bearer token
-Route::middleware('auth:portal')->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('app_users/{distinct_id}', [App\Http\Controllers\AppUserController::class, 'show']);
     Route::post('ingest', App\Http\Controllers\IngestController::class)->name('ingest');
 });
